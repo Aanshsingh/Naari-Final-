@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>About Us | NAARI Ethnic Wear</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600&amp;family=Manrope:wght@200;300;400;600;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            color: #f5bd53;
+        }
+        .gold-gradient-text {
+            background: linear-gradient(to right, #f5bd53, #c9962f, #fbe194);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gold-border {
+            border: 1px solid rgba(245, 189, 83, 0.3);
+        }
+        .gold-glow {
+            box-shadow: 0 0 20px rgba(201, 150, 47, 0.08);
+        }
+        .founder-signature {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-style: italic;
+            opacity: 0.8;
+        }
+        .vignette-overlay {
+            background: radial-gradient(circle, transparent 20%, rgba(17, 19, 25, 0.8) 100%);
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary": "#422d00",
+                    "surface": "#111319",
+                    "on-error-container": "#ffdad6",
+                    "surface-dim": "#111319",
+                    "surface-tint": "#f5bd53",
+                    "on-secondary-fixed-variant": "#564505",
+                    "on-error": "#690005",
+                    "inverse-primary": "#7c5800",
+                    "tertiary-container": "#9c9ea8",
+                    "error-container": "#93000a",
+                    "surface-variant": "#33353b",
+                    "secondary": "#dec57a",
+                    "primary-container": "#c9962f",
+                    "on-surface-variant": "#d3c4b0",
+                    "primary": "#f5bd53",
+                    "surface-container-lowest": "#0c0e14",
+                    "on-tertiary-fixed": "#181b23",
+                    "on-secondary": "#3c2f00",
+                    "surface-container-low": "#191b21",
+                    "background": "#111319",
+                    "on-background": "#e2e2ea",
+                    "error": "#ffb4ab",
+                    "on-secondary-container": "#cbb36b",
+                    "on-primary-container": "#493200",
+                    "on-tertiary-fixed-variant": "#44474f",
+                    "on-tertiary-container": "#33363e",
+                    "outline": "#9c8f7c",
+                    "tertiary": "#c4c6d0",
+                    "surface-container": "#1d1f26",
+                    "surface-container-highest": "#33353b",
+                    "on-primary-fixed-variant": "#5e4200",
+                    "on-primary-fixed": "#271900",
+                    "on-secondary-fixed": "#231b00",
+                    "secondary-fixed": "#fbe194",
+                    "on-tertiary": "#2d3038",
+                    "on-surface": "#e2e2ea",
+                    "inverse-surface": "#e2e2ea",
+                    "inverse-on-surface": "#2e3037",
+                    "surface-container-high": "#282a30",
+                    "primary-fixed": "#ffdea8",
+                    "outline-variant": "#4f4536",
+                    "tertiary-fixed": "#e0e2ed",
+                    "primary-fixed-dim": "#f5bd53",
+                    "surface-bright": "#373940",
+                    "secondary-container": "#564505",
+                    "tertiary-fixed-dim": "#c4c6d0",
+                    "secondary-fixed-dim": "#dec57a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "margin-desktop": "64px",
+                    "container-max": "1280px",
+                    "gutter": "24px",
+                    "unit": "8px",
+                    "section-gap": "120px",
+                    "margin-mobile": "20px"
+            },
+            "fontFamily": {
+                    "display-brand": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Manrope"],
+                    "body-md": ["Manrope"],
+                    "headline-md": ["Manrope"],
+                    "headline-lg-mobile": ["Manrope"],
+                    "body-lg": ["Manrope"],
+                    "label-sm": ["Manrope"]
+            },
+            "fontSize": {
+                    "display-brand": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.4", "letterSpacing": "0.15em", "fontWeight": "300"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "1.4", "letterSpacing": "0.1em", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "letterSpacing": "0.1em", "fontWeight": "300"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-surface text-on-surface selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 shadow-sm h-20">
+<div class="flex justify-between items-center px-margin-desktop h-full max-w-container-max mx-auto">
+<div class="flex gap-unit items-center">
+<span class="font-display-brand text-display-brand text-primary">NAARI</span>
+</div>
+<div class="hidden md:flex gap-10 items-center">
+<a class="font-body-md text-body-md uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors duration-300 cursor-pointer active:scale-95" href="#">Collections</a>
+<a class="font-body-md text-body-md uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors duration-300 cursor-pointer active:scale-95" href="#">New Arrivals</a>
+<a class="font-body-md text-body-md uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors duration-300 cursor-pointer active:scale-95" href="#">Best Sellers</a>
+<a class="font-body-md text-body-md uppercase tracking-widest text-primary border-b border-primary pb-1 transition-colors duration-300 cursor-pointer active:scale-95" href="#">About Us</a>
+</div>
+<div class="flex gap-6 items-center">
+<span class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors" data-icon="favorite">favorite</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors" data-icon="shopping_bag">shopping_bag</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors" data-icon="person">person</span>
+</div>
+</div>
+</nav>
+<main class="pt-20">
+<!-- Section 1: Hero -->
+<section class="relative h-[921px] flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover" data-alt="A high-fashion, editorial cinematic photograph of a woman wearing a rich gold-embroidered charcoal silk saree, standing in a dimly lit heritage haveli courtyard with soft amber spotlighting. The atmosphere is luxurious and mysterious, with subtle dust motes dancing in the light. The color palette is dominated by deep blacks and shimmering gold accents, reflecting a high-end festive luxury aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDC5nrLRfsjW8pZEFolBBQXFrl9GWBlh4wl4ncwWZbke6fKh_PBAff96eCtXhRymY3fQjOvdJgEGTWAuEYED5GzXuxYDZoBq7Pp73XmErEtx8PjKy81BFrFYg4R-cTKP_Aw4zfCmG3KXozezr2Qn6uOXCqD2MMH9rSijiiAmfc16AUxQ8umKZ5PIK8_6ytfwm5rsRnypWlOHlu3wZ5WOEzLGBkGMXxDNO63Cv8IXKGZch38LCCLhSrw"/>
+<div class="absolute inset-0 bg-surface/40 vignette-overlay"></div>
+</div>
+<div class="relative z-10 text-center space-y-6 max-w-4xl px-margin-desktop">
+<p class="font-label-sm text-label-sm tracking-[0.4em] uppercase text-primary">Est. 1994</p>
+<h1 class="font-headline-lg text-[64px] leading-tight gold-gradient-text">Our Story</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
+                    A journey of reviving forgotten threads, honoring the hands that weave magic, and bringing the timeless elegance of Indian heritage to the modern world.
+                </p>
+<div class="pt-8">
+<span class="material-symbols-outlined text-4xl animate-bounce" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+</section>
+<!-- Section 2: Heritage -->
+<section class="py-section-gap px-margin-desktop max-w-container-max mx-auto">
+<div class="grid grid-cols-12 gap-gutter items-center">
+<div class="col-span-12 md:col-span-6 space-y-8">
+<h2 class="font-headline-lg text-headline-lg gold-gradient-text">Heritage &amp; Lineage</h2>
+<div class="w-20 h-[1px] bg-primary"></div>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+                        At NAARI, we believe that every weave tells a story of generations. Our 'Certified Handloom Craftsmanship' is not just a label; it's a commitment to the artisan families of Banaras, Chanderi, and Kanchipuram who have preserved these techniques for centuries.
+                    </p>
+<p class="font-body-md text-body-md text-on-surface-variant/80">
+                        We work directly with master weavers, bypassing intermediaries to ensure that the soul of Indian textile art remains pure and the artists who create it are celebrated and sustained.
+                    </p>
+<div class="flex gap-8 pt-4">
+<div class="text-center">
+<p class="font-headline-md text-primary">300+</p>
+<p class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant">Loom Types</p>
+</div>
+<div class="text-center">
+<p class="font-headline-md text-primary">15</p>
+<p class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant">States Covered</p>
+</div>
+</div>
+</div>
+<div class="col-span-12 md:col-span-6 grid grid-cols-2 gap-4 relative">
+<div class="pt-12">
+<img class="gold-border rounded-lg shadow-2xl" data-alt="A close-up, high-detail macro photograph of an elderly artisan's hands meticulously working on a traditional wooden loom, weaving intricate gold silk threads. The lighting is warm and directional, highlighting the texture of the fabric and the weathered details of the hands. The background is a dark, soft-focus weaver's studio, maintaining the dark charcoal and gold luxury aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1Y-T4xEEDaomqLf1f3QeTtHwbZdrJBiYqTanB6628UbXl4yyKs7WsQe8UomfFlETXKX7WFbCxEoNLYiuJT8CtBJWeqUEsUQS6Q-LxJfPENdFt8uQBMxZWVMxtO4-SCyIoi4mfe735L7Gm6c8KnUYmBM3Ys9jK8fpVkujt_2kcTow83uWM1eR359Zia3bX0ydiOm886xC-eQ1HGIh0aEu_WT5bYXBk5NQlCMpofZQfyQdSyvsl4xx-"/>
+</div>
+<div>
+<img class="gold-border rounded-lg shadow-2xl transform translate-y-12" data-alt="An artistic side-profile shot of a master weaver in a sun-drenched traditional workshop in Varanasi, surrounded by hanging skeins of gold and silk yarn. The image captures the focus and dedication of the craft. The overall tone is sophisticated and editorial, with high contrast between deep shadows and warm gold highlights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoSTrWWw0gt3fEfiX2IgbBfkoEk49w8U6seMq7dFfU0uYDDBA72feucJEmZZ5uOJxw8SqVh5M1PLCOB4a4rO4RBP-uriW7rlU5azJJ72BGw_ogYf7zhbKwqAB4gRSHbJ-FIw5jKomnR4BixldvbWlnD9KSIETTnPQ5qGgWtJkiViTc_1KMuWfVjU-tXon6jOvF4Q2VL0gcerBpAGn5MIWdsMFDtoUNtCD0a1ECBAxPXac6aFE5_yHF"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: The Naari Woman -->
+<section class="py-section-gap bg-surface-container-low">
+<div class="px-margin-desktop max-w-container-max mx-auto text-center space-y-16">
+<div class="space-y-4">
+<h2 class="font-headline-lg text-headline-lg gold-gradient-text uppercase">The Naari Woman</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xl mx-auto">Three facets of a single soul. Defined by elegance, driven by purpose.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+<div class="space-y-6 group">
+<div class="w-16 h-16 mx-auto flex items-center justify-center rounded-full border border-primary/30 group-hover:bg-primary/10 transition-all duration-500">
+<span class="material-symbols-outlined text-3xl" data-icon="auto_awesome">auto_awesome</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary">Grace Understated</h3>
+<p class="font-body-md text-body-md text-on-surface-variant/70 leading-relaxed">
+                            For the woman who speaks in whispers of silk and subtle drapes. Elegance that doesn't scream, but lingers.
+                        </p>
+</div>
+<div class="space-y-6 group">
+<div class="w-16 h-16 mx-auto flex items-center justify-center rounded-full border border-primary/30 group-hover:bg-primary/10 transition-all duration-500">
+<span class="material-symbols-outlined text-3xl" data-icon="flare">flare</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary">The Modern Muse</h3>
+<p class="font-body-md text-body-md text-on-surface-variant/70 leading-relaxed">
+                            A bridge between heritage and tomorrow. Bold silhouettes meeting traditional weaves for the contemporary visionary.
+                        </p>
+</div>
+<div class="space-y-6 group">
+<div class="w-16 h-16 mx-auto flex items-center justify-center rounded-full border border-primary/30 group-hover:bg-primary/10 transition-all duration-500">
+<span class="material-symbols-outlined text-3xl" data-icon="eco">eco</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary">Conscious Luxury</h3>
+<p class="font-body-md text-body-md text-on-surface-variant/70 leading-relaxed">
+                            Sustainability as the ultimate status symbol. Ethical sourcing that respects the earth as much as the craft.
+                        </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 4: Social Impact -->
+<section class="py-section-gap px-margin-desktop max-w-container-max mx-auto overflow-hidden">
+<div class="bg-surface-container rounded-xl p-12 md:p-20 relative gold-border overflow-hidden">
+<div class="absolute top-0 right-0 w-1/3 h-full opacity-10 pointer-events-none">
+
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+<div class="space-y-8 relative z-10">
+<h2 class="font-headline-lg text-headline-lg gold-gradient-text">Social Impact: The Vankar Foundation</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+                            Radical transparency is at our core. Through the Vankar Foundation, we reinvest 15% of our proceeds back into the weaving communities for education, healthcare, and loom upgrades.
+                        </p>
+<div class="grid grid-cols-2 gap-8">
+<div class="space-y-2">
+<h4 class="text-[40px] font-extrabold text-primary">500+</h4>
+<p class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant">Artisans Supported</p>
+</div>
+<div class="space-y-2">
+<h4 class="text-[40px] font-extrabold text-primary">12</h4>
+<p class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant">Rural Schools Funded</p>
+</div>
+</div>
+<button class="bg-primary text-on-primary px-10 py-4 font-label-sm text-label-sm uppercase tracking-[0.2em] font-bold hover:bg-secondary-fixed transition-all duration-300">Read our Impact Report</button>
+</div>
+<div class="relative group">
+<img class="rounded-lg shadow-xl gold-border grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="A candid, joyful group portrait of woman weavers in a rural Indian village setting, smiling together. They are dressed in colorful but elegantly muted local garments. The background shows a sustainable community center built with local materials. The photo style is professional documentary, warm-toned, and feels authentic and empowering, consistent with the brand's festive luxury and charcoal/gold theme." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOqLFRUYVyrlbcVClik6G0u8ih3eTeR2NMe8uZdXvunItM8gxf3sC5ROtCf6DpuB30SUFt40P3HJjWUHRgUjCsdswKbFqrOyeFuxvpnNPPLQ4RSutJakmj3CDAOE40lf5bSqqO4dGi_DJiJ2qsXvaialFef-9yd1oVyuQ8NR_Tc2cjjKrfzkWCW0Jd3MW2FGZa3gMJqnpLtnud81VNIuV5pV6e4AZQpmMoa3P_921_Cz_S7OkGIAS_"/>
+<div class="absolute -bottom-6 -right-6 bg-surface p-6 gold-border hidden md:block">
+<p class="font-body-md text-primary italic">"Empowering one loom at a time."</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 5: Founder's Note -->
+<section class="py-section-gap px-margin-desktop max-w-container-max mx-auto">
+<div class="flex flex-col md:flex-row items-center gap-20">
+<div class="w-full md:w-2/5 order-2 md:order-1">
+<div class="relative">
+<img class="w-full rounded-sm gold-border shadow-2xl" data-alt="A sophisticated black-and-white portrait of Ananya Sharma, a woman in her late 30s with an air of creative leadership, wearing a bespoke modern-ethnic charcoal ensemble. She is posed thoughtfully in a high-end minimalist office with traditional Indian artifacts in the background. The lighting is dramatic chiaroscuro, emphasizing elegance and authority. High-end luxury fashion photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdqGb_FBXZGuRM5yAtX5GIUZS_ICNmX3NEagiF0WrGDaK8FUaaC1rR5Dvtl5ToaJ1NnjLxL3obZxdXQ7wdPDs-jknWcGZF4loQgfJzRqzGdlttSFYRc39IBt1cYbYBewGvybrujX108d0ECqWIhdZ1ywYKLfFBCy2vIzJ-tnlf3ePPlywG10ZL_Lu7ZF20iGjdxiMjTYEi3QJkTXF8f-1YjdwRGMA4B9U8kf3VQwaVwBY6_x4papou"/>
+<div class="absolute inset-0 border-[20px] border-surface/20 -m-4 pointer-events-none"></div>
+</div>
+</div>
+<div class="w-full md:w-3/5 space-y-8 order-1 md:order-2">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-primary">From the Creative Director</span>
+<h2 class="font-headline-lg text-headline-lg gold-gradient-text italic">Reclaiming Soulful Artistry</h2>
+<blockquote class="font-body-lg text-body-lg text-on-surface leading-relaxed border-l-2 border-primary/40 pl-8">
+                        "Naari was born from a desire to see Indian craft not as a relic of the past, but as a luxury of the future. We don't just sell clothes; we curate pieces of art that carry the heartbeat of the artisan who made them. It is about reclaiming a sense of soul in a fast-fashion world."
+                    </blockquote>
+<div class="space-y-2">
+<p class="founder-signature text-3xl text-primary">Ananya Sharma</p>
+<p class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant">Founder &amp; Creative Director</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 6: CTA -->
+<section class="py-section-gap text-center space-y-12 relative overflow-hidden">
+
+<div class="relative z-10 space-y-8">
+<h2 class="font-headline-lg text-headline-lg gold-gradient-text uppercase">Join Our Legacy</h2>
+<div class="flex flex-col md:flex-row justify-center gap-6">
+<a class="inline-block bg-primary text-on-primary px-12 py-5 font-label-sm text-label-sm uppercase tracking-[0.2em] font-bold hover:bg-secondary-fixed hover:scale-105 active:scale-95 transition-all duration-300" href="#">Explore Collections</a>
+<a class="inline-block border border-primary text-primary px-12 py-5 font-label-sm text-label-sm uppercase tracking-[0.2em] font-bold hover:bg-primary/10 hover:scale-105 active:scale-95 transition-all duration-300" href="#">Visit Our Studio</a>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 bg-surface-container-lowest dark:bg-surface-container-lowest border-t border-outline-variant/20">
+<div class="flex flex-col items-center gap-unit px-margin-desktop w-full max-w-container-max mx-auto">
+<span class="font-display-brand text-headline-md text-primary mb-6">NAARI</span>
+<div class="flex flex-wrap justify-center gap-8 mb-8">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary-fixed transition-colors underline-offset-4 hover:underline" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary-fixed transition-colors underline-offset-4 hover:underline" href="#">Terms of Service</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary-fixed transition-colors underline-offset-4 hover:underline" href="#">Shipping Info</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary-fixed transition-colors underline-offset-4 hover:underline" href="#">Contact Us</a>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant opacity-60">© 2024 NAARI ETHNIC WEAR. ALL RIGHTS RESERVED.</p>
+</div>
+</footer>
+<script>
+        // Micro-interactions for scrolling
+        document.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('bg-surface/95', 'shadow-lg');
+            } else {
+                nav.classList.remove('bg-surface/95', 'shadow-lg');
+            }
+        });
+
+        // Simple Fade-in Observer
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            section.classList.add('transition-all', 'duration-1000', 'opacity-0', 'translate-y-10');
+            observer.observe(section);
+        });
+    </script>
+</body></html>

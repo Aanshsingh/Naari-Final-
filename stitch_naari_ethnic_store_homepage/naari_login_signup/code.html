@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Naari | Festive Luxury Authentication</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&family=Plus+Jakarta+Sans:wght@600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@100..900&family=Plus+Jakarta+Sans:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-variant": "#33353b",
+                    "on-secondary-fixed": "#231b00",
+                    "on-secondary-container": "#cbb36b",
+                    "tertiary": "#c4c6d0",
+                    "on-tertiary-container": "#33363e",
+                    "on-primary-fixed": "#271900",
+                    "on-background": "#e2e2ea",
+                    "surface-container-low": "#191b21",
+                    "tertiary-fixed": "#e0e2ed",
+                    "surface-container-lowest": "#0c0e14",
+                    "inverse-on-surface": "#2e3037",
+                    "on-primary-fixed-variant": "#5e4200",
+                    "secondary-fixed": "#fbe194",
+                    "surface-container-highest": "#33353b",
+                    "secondary-container": "#564505",
+                    "tertiary-container": "#9c9ea8",
+                    "on-surface-variant": "#d3c4b0",
+                    "surface-container-high": "#282a30",
+                    "inverse-surface": "#e2e2ea",
+                    "error-container": "#93000a",
+                    "surface-dim": "#111319",
+                    "on-tertiary-fixed": "#181b23",
+                    "on-primary-container": "#493200",
+                    "surface-bright": "#373940",
+                    "tertiary-fixed-dim": "#c4c6d0",
+                    "primary-fixed-dim": "#f5bd53",
+                    "primary": "#f5bd53",
+                    "on-secondary-fixed-variant": "#564505",
+                    "surface-container": "#1d1f26",
+                    "outline-variant": "#4f4536",
+                    "on-secondary": "#3c2f00",
+                    "surface": "#111319",
+                    "secondary": "#dec57a",
+                    "on-error": "#690005",
+                    "secondary-fixed-dim": "#dec57a",
+                    "error": "#ffb4ab",
+                    "inverse-primary": "#7c5800",
+                    "on-tertiary-fixed-variant": "#44474f",
+                    "on-tertiary": "#2d3038",
+                    "on-surface": "#e2e2ea",
+                    "primary-fixed": "#ffdea8",
+                    "surface-tint": "#f5bd53",
+                    "background": "#111319",
+                    "outline": "#9c8f7c",
+                    "on-primary": "#422d00",
+                    "primary-container": "#c9962f",
+                    "on-error-container": "#ffdad6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "unit": "8px",
+                    "section-gap": "120px",
+                    "margin-mobile": "20px",
+                    "container-max": "1280px",
+                    "margin-desktop": "64px"
+            },
+            "fontFamily": {
+                    "label-sm": ["Manrope"],
+                    "headline-lg": ["Manrope"],
+                    "headline-md": ["Manrope"],
+                    "display-brand": ["Plus Jakarta Sans"],
+                    "body-md": ["Manrope"],
+                    "body-lg": ["Manrope"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.4", "letterSpacing": "0.15em", "fontWeight": "300"}],
+                    "headline-md": ["24px", {"lineHeight": "1.4", "letterSpacing": "0.1em", "fontWeight": "400"}],
+                    "display-brand": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        
+        .gold-gradient {
+            background: linear-gradient(135deg, #f5bd53 0%, #c9962f 100%);
+        }
+
+        .gold-border {
+            border: 1px solid transparent;
+            background-image: linear-gradient(#111319, #111319), linear-gradient(135deg, #f5bd53 0%, #4f4536 100%);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+        }
+
+        .gold-glow:hover {
+            box-shadow: 0 0 20px rgba(245, 189, 83, 0.15);
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hide Scrollbar */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #0c0e14; }
+        ::-webkit-scrollbar-thumb { background: #4f4536; border-radius: 10px; }
+
+        .auth-transition {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface selection:bg-primary/30 min-h-screen flex items-center justify-center overflow-x-hidden">
+<!-- Auth Container -->
+<main class="w-full h-screen md:h-[921px] md:max-w-[1440px] flex flex-col md:flex-row bg-surface-container-lowest md:rounded-xl overflow-hidden shadow-2xl relative">
+<!-- Left Side: Editorial Lifestyle Image (Suppressed Nav for Transactional focus) -->
+<section class="hidden md:block md:w-1/2 relative overflow-hidden group">
+<div class="absolute inset-0 z-10 bg-gradient-to-r from-transparent via-transparent to-surface-container-lowest"></div>
+<div class="absolute inset-0 z-10 bg-black/20 group-hover:bg-black/10 transition-colors duration-700"></div>
+<div class="absolute inset-0 scale-105 group-hover:scale-100 transition-transform duration-[3000ms]" data-alt="A high-fashion editorial portrait of a woman in a heavy gold-embroidered deep navy silk saree, posing in a dimly lit heritage Haveli. The ambient lighting is warm and cinematic, catching the metallic glint of the zari work. The color palette is dominated by charcoal, deep blues, and shimmering champagne golds. The atmosphere is one of exclusive festive luxury, with soft depth-of-field blurring the intricate architectural details in the background." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC3cyWcodkRHHktXtWp0FTwSCeGmJOAboW4QvUzNwU_tDOkcgq8ILMj0TXXIqZ4bFzvHO65WoUaQDrVRMtaG7lZ0ghWHDR-KdaMxe-zn9MpM2Y_zpg3hYIE1DB0G_T86Pk87FcOeUdIDZEG4Un-nybnDtWXtjwnoijsE6Kpq6OGM6TD5NOSEX_op-L231LqPJpCSnUw4jqAHisWiIEeyISddTC7WY2iP2q8X-NdGc8QgMjaS1Em6uTN')">
+</div>
+<!-- Brand Overlay -->
+<div class="absolute top-margin-desktop left-margin-desktop z-20">
+<h1 class="font-display-brand text-display-brand text-primary uppercase tracking-wider">Naari</h1>
+<p class="font-label-sm text-label-sm text-primary/80 mt-2">ESTABLISHED IN ELEGANCE</p>
+</div>
+<!-- Floating Quote -->
+<div class="absolute bottom-margin-desktop left-margin-desktop z-20 max-w-md">
+<p class="font-headline-lg text-headline-lg text-white/90 leading-relaxed italic">"Every thread tells a story of heritage reimagined."</p>
+<div class="w-12 h-[1px] bg-primary mt-6"></div>
+</div>
+</section>
+<!-- Right Side: Auth Forms -->
+<section class="w-full md:w-1/2 flex flex-col justify-center items-center p-6 md:p-12 lg:p-24 bg-surface-container-lowest relative z-20">
+<!-- Mobile Brand Header -->
+<div class="md:hidden mb-12 text-center">
+<h1 class="font-display-brand text-display-brand text-primary uppercase tracking-wider text-4xl">Naari</h1>
+</div>
+<div class="w-full max-w-md fade-in">
+<!-- Header Toggle -->
+<div class="flex items-center justify-between mb-12">
+<div id="auth-header-texts">
+<h2 class="font-headline-md text-headline-md text-on-surface" id="auth-title">Welcome Back</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2" id="auth-subtitle">Enter your details to access your curated wardrobe.</p>
+</div>
+</div>
+<!-- Tabs -->
+<div class="flex gap-8 mb-10 border-b border-outline-variant/30">
+<button class="pb-4 font-label-sm text-label-sm uppercase tracking-widest text-primary border-b-2 border-primary transition-all duration-300" id="tab-login" onclick="switchAuth('login')">Login</button>
+<button class="pb-4 font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant hover:text-on-surface transition-all duration-300" id="tab-signup" onclick="switchAuth('signup')">Sign Up</button>
+</div>
+<!-- Auth Form -->
+<form class="space-y-8" id="auth-form" onsubmit="event.preventDefault()">
+<!-- Signup Only Field: Full Name -->
+<div class="hidden auth-transition opacity-0" id="field-name">
+<label class="block font-label-sm text-label-sm text-primary uppercase mb-1">Full Name</label>
+<input class="w-full bg-transparent border-b border-outline-variant py-3 font-body-md text-on-surface placeholder:text-on-surface-variant/30 focus:outline-none focus:border-primary transition-colors" placeholder="ARJUN KAPOOR" type="text"/>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-primary uppercase mb-1">Email Address</label>
+<input class="w-full bg-transparent border-b border-outline-variant py-3 font-body-md text-on-surface placeholder:text-on-surface-variant/30 focus:outline-none focus:border-primary transition-colors" placeholder="NAME@VOGUE.IN" type="email"/>
+</div>
+<div class="relative">
+<label class="block font-label-sm text-label-sm text-primary uppercase mb-1">Password</label>
+<input class="w-full bg-transparent border-b border-outline-variant py-3 font-body-md text-on-surface placeholder:text-on-surface-variant/30 focus:outline-none focus:border-primary transition-colors" placeholder="••••••••" type="password"/>
+<button class="absolute right-0 bottom-3 text-on-surface-variant hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</div>
+<div class="flex items-center justify-between font-label-sm text-label-sm" id="login-extras">
+<label class="flex items-center gap-2 cursor-pointer group">
+<div class="w-4 h-4 rounded-sm border border-outline-variant group-hover:border-primary flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-[12px] text-primary opacity-0 group-hover:opacity-100">check</span>
+</div>
+<span class="text-on-surface-variant">Remember me</span>
+</label>
+<a class="text-secondary hover:text-primary transition-colors underline decoration-secondary/30 underline-offset-4" href="#">Forgot Password?</a>
+</div>
+<!-- CTA Button -->
+<button class="w-full gold-gradient py-5 rounded-sm font-label-sm text-label-sm text-on-primary-container uppercase tracking-[0.2em] shadow-lg active:scale-95 transition-transform gold-glow flex items-center justify-center gap-3">
+<span id="btn-text">Sign In</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</form>
+<!-- Divider -->
+<div class="flex items-center gap-4 my-10">
+<div class="h-[1px] flex-grow bg-outline-variant/30"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant/50 uppercase tracking-widest">Or continue with</span>
+<div class="h-[1px] flex-grow bg-outline-variant/30"></div>
+</div>
+<!-- Social Logins -->
+<div class="grid grid-cols-2 gap-4">
+<button class="gold-border flex items-center justify-center gap-3 py-4 rounded-sm font-label-sm text-label-sm text-on-surface uppercase tracking-wider hover:bg-surface-container-high transition-colors group">
+<svg class="w-5 h-5 group-hover:scale-110 transition-transform" viewbox="0 0 24 24">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
+</svg>
+                        Google
+                    </button>
+<button class="gold-border flex items-center justify-center gap-3 py-4 rounded-sm font-label-sm text-label-sm text-on-surface uppercase tracking-wider hover:bg-surface-container-high transition-colors group">
+<svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="currentColor" viewbox="0 0 24 24">
+<path d="M17.05 20.28c-.96.95-2.06 2.15-3.41 2.15-1.31 0-1.74-.83-3.29-.83-1.54 0-2.03.81-3.28.83-1.26.02-2.31-1.1-3.32-2.13C2.1 18.66.5 15.11.5 11.66c0-3.37 2.1-5.16 4.15-5.16 1.05 0 2.04.44 2.8.44.7 0 1.95-.53 3.16-.53 1.5 0 2.65.68 3.38 1.57-3.04 1.76-2.54 5.92.51 7.21-.68 1.83-1.57 3.63-2.95 5.09zM12.03 5.48c-.04-2.18 1.8-4.04 3.91-4.09.05 2.19-1.89 4.16-3.91 4.09z"></path>
+</svg>
+                        Apple
+                    </button>
+</div>
+<!-- Footer Terms -->
+<footer class="mt-12 text-center">
+<p class="font-label-sm text-[10px] text-on-surface-variant/40 leading-relaxed max-w-xs mx-auto">
+                        BY CONTINUING, YOU AGREE TO NAARI'S <a class="underline" href="#">TERMS OF SERVICE</a> AND <a class="underline" href="#">PRIVACY POLICY</a>.
+                    </p>
+</footer>
+</div>
+</section>
+</main>
+<!-- Background Atmospheric Effect -->
+<div class="fixed inset-0 pointer-events-none -z-10 bg-surface">
+<div class="absolute top-0 right-0 w-1/3 h-1/3 bg-primary/5 blur-[120px] rounded-full"></div>
+<div class="absolute bottom-0 left-0 w-1/3 h-1/3 bg-secondary/5 blur-[120px] rounded-full"></div>
+</div>
+<script>
+        function switchAuth(mode) {
+            const tabLogin = document.getElementById('tab-login');
+            const tabSignup = document.getElementById('tab-signup');
+            const fieldName = document.getElementById('field-name');
+            const loginExtras = document.getElementById('login-extras');
+            const authTitle = document.getElementById('auth-title');
+            const authSubtitle = document.getElementById('auth-subtitle');
+            const btnText = document.getElementById('btn-text');
+            const form = document.getElementById('auth-form');
+
+            // Apply fade effect to form fields
+            form.classList.add('opacity-0');
+            
+            setTimeout(() => {
+                if (mode === 'signup') {
+                    // Update Tabs
+                    tabLogin.classList.remove('text-primary', 'border-primary', 'border-b-2');
+                    tabLogin.classList.add('text-on-surface-variant');
+                    tabSignup.classList.add('text-primary', 'border-primary', 'border-b-2');
+                    tabSignup.classList.remove('text-on-surface-variant');
+
+                    // Update Texts
+                    authTitle.innerText = "Join the Circle";
+                    authSubtitle.innerText = "Create an account to experience the heritage of Naari.";
+                    btnText.innerText = "Create Account";
+
+                    // Toggle Fields
+                    fieldName.classList.remove('hidden');
+                    fieldName.classList.add('block');
+                    setTimeout(() => fieldName.classList.add('opacity-100'), 50);
+                    loginExtras.classList.add('hidden');
+                } else {
+                    // Update Tabs
+                    tabSignup.classList.remove('text-primary', 'border-primary', 'border-b-2');
+                    tabSignup.classList.add('text-on-surface-variant');
+                    tabLogin.classList.add('text-primary', 'border-primary', 'border-b-2');
+                    tabLogin.classList.remove('text-on-surface-variant');
+
+                    // Update Texts
+                    authTitle.innerText = "Welcome Back";
+                    authSubtitle.innerText = "Enter your details to access your curated wardrobe.";
+                    btnText.innerText = "Sign In";
+
+                    // Toggle Fields
+                    fieldName.classList.remove('opacity-100');
+                    setTimeout(() => {
+                        fieldName.classList.remove('block');
+                        fieldName.classList.add('hidden');
+                    }, 500);
+                    loginExtras.classList.remove('hidden');
+                }
+                form.classList.remove('opacity-0');
+            }, 300);
+        }
+
+        // Add subtle mouse-tracking glow to buttons
+        document.querySelectorAll('.gold-glow').forEach(button => {
+            button.addEventListener('mousemove', e => {
+                const rect = button.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                button.style.setProperty('--x', `${x}px`);
+                button.style.setProperty('--y', `${y}px`);
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Naari - Login & Sign Up</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@100..900&family=Plus+Jakarta+Sans:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary": "#c4c6d0",
+                        "outline-variant": "#4f4536",
+                        "error": "#ffb4ab",
+                        "surface-bright": "#373940",
+                        "on-secondary-container": "#cbb36b",
+                        "secondary-fixed-dim": "#dec57a",
+                        "inverse-surface": "#e2e2ea",
+                        "surface-container-highest": "#33353b",
+                        "background": "#111319",
+                        "on-secondary-fixed-variant": "#564505",
+                        "on-secondary": "#3c2f00",
+                        "primary": "#f5bd53",
+                        "surface-container-low": "#191b21",
+                        "surface-container-high": "#282a30",
+                        "outline": "#9c8f7c",
+                        "surface-dim": "#111319",
+                        "surface-tint": "#f5bd53",
+                        "on-primary": "#422d00",
+                        "surface-container": "#1d1f26",
+                        "on-secondary-fixed": "#231b00",
+                        "tertiary-fixed-dim": "#c4c6d0",
+                        "surface": "#111319",
+                        "on-primary-fixed-variant": "#5e4200",
+                        "tertiary-container": "#9c9ea8",
+                        "surface-container-lowest": "#0c0e14",
+                        "on-tertiary-fixed-variant": "#44474f",
+                        "tertiary-fixed": "#e0e2ed",
+                        "on-error": "#690005",
+                        "on-surface-variant": "#d3c4b0",
+                        "on-primary-fixed": "#271900",
+                        "secondary": "#dec57a",
+                        "on-tertiary": "#2d3038",
+                        "primary-fixed-dim": "#f5bd53",
+                        "on-error-container": "#ffdad6",
+                        "secondary-fixed": "#fbe194",
+                        "secondary-container": "#564505",
+                        "on-background": "#e2e2ea",
+                        "primary-container": "#c9962f",
+                        "error-container": "#93000a",
+                        "on-tertiary-fixed": "#181b23",
+                        "inverse-primary": "#7c5800",
+                        "inverse-on-surface": "#2e3037",
+                        "primary-fixed": "#ffdea8",
+                        "on-surface": "#e2e2ea",
+                        "on-primary-container": "#493200",
+                        "on-tertiary-container": "#33363e",
+                        "surface-variant": "#33353b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "margin-mobile": "20px",
+                        "gutter": "24px",
+                        "container-max": "1280px",
+                        "section-gap": "120px",
+                        "margin-desktop": "64px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Manrope"],
+                        "display-brand": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Manrope"],
+                        "body-lg": ["Manrope"],
+                        "headline-md": ["Manrope"],
+                        "body-md": ["Manrope"],
+                        "headline-lg-mobile": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", { "lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "display-brand": ["48px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.4", "letterSpacing": "0.15em", "fontWeight": "300" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "1.4", "letterSpacing": "0.1em", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "1.3", "letterSpacing": "0.1em", "fontWeight": "300" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .gold-gradient {
+            background: linear-gradient(135deg, #f5bd53 0%, #c9962f 50%, #f5bd53 100%);
+        }
+        .gold-border {
+            border: 1px solid transparent;
+            background: linear-gradient(#111319, #111319) padding-box,
+                        linear-gradient(135deg, #f5bd53, #4f4536) border-box;
+        }
+        .soft-gold-glow {
+            box-shadow: 0 0 25px rgba(245, 189, 83, 0.05);
+        }
+        .tab-active {
+            color: #f5bd53;
+            border-bottom: 2px solid #f5bd53;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col hide-scrollbar">
+<!-- Top Imagery Section -->
+<section class="relative h-[397px] w-full overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="A cinematic, high-fashion close-up of an elegant Indian woman draped in a rich, dark charcoal silk saree with intricate gold Zari embroidery. The lighting is dramatic and moody, casting soft shadows that highlight the metallic sheen of the fabric. The atmosphere is one of festive luxury, featuring a warm, sophisticated color palette of deep blacks, shimmering golds, and muted shadows. The overall aesthetic is editorial and premium." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAoMncT49YIhHSCxnqfbZYJsLpH_a1smMnNcT-x5-tcjHEPxLfcGrFB4jOIDjuBPF12s7_4wuY1Ri8RtSsZ0hFIvb8TWvndPk3jvK2TSRhe89i8pCVTaGlIoR9rF0zhpjfuiM8lMM_5QoKHekQpOZukj0C1eCtVHa2eMdpveYH-TRZzsWPYllyvgBdNd56vEGuS-bZgAo6le7XkoiKZFqjpShO0sytaPMys0WDr64BrViN6Z1MZtZjE')">
+<div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
+</div>
+<div class="absolute inset-x-0 bottom-0 px-margin-mobile pb-8 text-center">
+<h1 class="font-display-brand text-headline-lg-mobile text-primary uppercase tracking-widest mb-2">NAARI</h1>
+<p class="font-headline-lg-mobile italic text-on-surface-variant max-w-[280px] mx-auto">
+                "Grace is the only beauty that never fades."
+            </p>
+</div>
+</section>
+<!-- Main Content Canvas -->
+<main class="flex-grow bg-background px-margin-mobile pb-12 -mt-4 relative z-10 rounded-t-[32px] soft-gold-glow">
+<!-- Tab Navigation -->
+<div class="flex justify-center gap-12 pt-8 mb-8 border-b border-outline-variant/30">
+<button class="pb-3 font-label-sm uppercase transition-all tab-active" id="tab-login" onclick="switchTab('login')">
+                Login
+            </button>
+<button class="pb-3 font-label-sm uppercase transition-all text-on-surface-variant" id="tab-signup" onclick="switchTab('signup')">
+                Sign Up
+            </button>
+</div>
+<!-- Login Form Container -->
+<div class="space-y-6 block" id="login-section">
+<div class="space-y-6">
+<div class="relative group">
+<input class="w-full bg-transparent border-0 border-b border-outline py-3 text-on-surface focus:ring-0 focus:border-primary transition-colors peer" placeholder=" " type="email"/>
+<label class="absolute left-0 top-3 text-label-sm uppercase text-on-surface-variant transition-all peer-placeholder-shown:text-body-md peer-placeholder-shown:top-3 peer-focus:top-[-12px] peer-focus:text-label-sm peer-focus:text-primary pointer-events-none">Email Address</label>
+</div>
+<div class="relative group">
+<input class="w-full bg-transparent border-0 border-b border-outline py-3 text-on-surface focus:ring-0 focus:border-primary transition-colors peer" placeholder=" " type="password"/>
+<label class="absolute left-0 top-3 text-label-sm uppercase text-on-surface-variant transition-all peer-placeholder-shown:text-body-md peer-placeholder-shown:top-3 peer-focus:top-[-12px] peer-focus:text-label-sm peer-focus:text-primary pointer-events-none">Password</label>
+<button class="absolute right-0 top-3 text-primary-container">
+<span class="material-symbols-outlined text-[20px]">visibility_off</span>
+</button>
+</div>
+<div class="flex justify-end">
+<a class="text-label-sm text-primary/70 hover:text-primary transition-colors" href="#">Forgot Password?</a>
+</div>
+<button class="w-full gold-gradient py-4 rounded-lg font-label-sm uppercase text-on-primary tracking-[0.2em] shadow-lg active:scale-95 transition-transform">
+                    Enter Boutique
+                </button>
+</div>
+</div>
+<!-- Signup Form Container (Hidden by default) -->
+<div class="space-y-6 hidden" id="signup-section">
+<div class="space-y-6">
+<div class="relative group">
+<input class="w-full bg-transparent border-0 border-b border-outline py-3 text-on-surface focus:ring-0 focus:border-primary transition-colors peer" placeholder=" " type="text"/>
+<label class="absolute left-0 top-3 text-label-sm uppercase text-on-surface-variant transition-all peer-placeholder-shown:text-body-md peer-placeholder-shown:top-3 peer-focus:top-[-12px] peer-focus:text-label-sm peer-focus:text-primary pointer-events-none">Full Name</label>
+</div>
+<div class="relative group">
+<input class="w-full bg-transparent border-0 border-b border-outline py-3 text-on-surface focus:ring-0 focus:border-primary transition-colors peer" placeholder=" " type="email"/>
+<label class="absolute left-0 top-3 text-label-sm uppercase text-on-surface-variant transition-all peer-placeholder-shown:text-body-md peer-placeholder-shown:top-3 peer-focus:top-[-12px] peer-focus:text-label-sm peer-focus:text-primary pointer-events-none">Email Address</label>
+</div>
+<div class="relative group">
+<input class="w-full bg-transparent border-0 border-b border-outline py-3 text-on-surface focus:ring-0 focus:border-primary transition-colors peer" placeholder=" " type="password"/>
+<label class="absolute left-0 top-3 text-label-sm uppercase text-on-surface-variant transition-all peer-placeholder-shown:text-body-md peer-placeholder-shown:top-3 peer-focus:top-[-12px] peer-focus:text-label-sm peer-focus:text-primary pointer-events-none">Create Password</label>
+</div>
+<button class="w-full gold-gradient py-4 rounded-lg font-label-sm uppercase text-on-primary tracking-[0.2em] shadow-lg active:scale-95 transition-transform">
+                    Create Account
+                </button>
+</div>
+</div>
+<!-- Social Section -->
+<div class="mt-12">
+<div class="flex items-center gap-4 mb-8">
+<div class="h-[1px] flex-grow bg-outline-variant/30"></div>
+<span class="text-label-sm text-on-surface-variant uppercase">Or continue with</span>
+<div class="h-[1px] flex-grow bg-outline-variant/30"></div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<button class="gold-border flex items-center justify-center py-3 gap-2 rounded-lg hover:bg-surface-container-low transition-colors group">
+<svg class="w-5 h-5" viewbox="0 0 24 24">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#f5bd53"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#f5bd53"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#f5bd53"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#f5bd53"></path>
+</svg>
+<span class="font-label-sm text-primary uppercase">Google</span>
+</button>
+<button class="gold-border flex items-center justify-center py-3 gap-2 rounded-lg hover:bg-surface-container-low transition-colors group">
+<svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24">
+<path d="M17.05 20.28c-.96.95-2.45 2.18-4.08 2.18-2.02 0-2.54-1.28-4.46-1.28-1.93 0-2.62 1.25-4.43 1.25-1.57 0-3.04-1.24-4.03-2.21C-.13 18.27-1.44 13.82 1.21 9.4c1.31-2.18 3.55-3.57 5.75-3.57 1.69 0 3.03.96 4.14.96 1.05 0 2.72-1.12 4.67-1.12 1.05 0 3.2.33 4.61 2.39-3.5 2.04-2.94 6.78.47 8.16-.62 1.54-1.63 3.13-2.8 4.06zM11.66 4.77c.84-1.04 1.4-2.48 1.24-3.92-1.24.05-2.73.83-3.62 1.88-.8.93-1.49 2.41-1.31 3.82 1.38.1 2.79-.67 3.69-1.78z"></path>
+</svg>
+<span class="font-label-sm text-primary uppercase">Apple</span>
+</button>
+</div>
+</div>
+<!-- Footer -->
+<div class="mt-12 text-center">
+<p class="text-label-sm text-on-surface-variant mb-4">
+                By joining, you agree to our <a class="text-primary hover:underline" href="#">Terms of Service</a> & <a class="text-primary hover:underline" href="#">Privacy Policy</a>
+</p>
+<div class="flex justify-center gap-6 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px] cursor-pointer hover:text-primary">language</span>
+<span class="material-symbols-outlined text-[20px] cursor-pointer hover:text-primary">help</span>
+</div>
+</div>
+</main>
+<script>
+        function switchTab(tab) {
+            const loginSection = document.getElementById('login-section');
+            const signupSection = document.getElementById('signup-section');
+            const tabLogin = document.getElementById('tab-login');
+            const tabSignup = document.getElementById('tab-signup');
+
+            if (tab === 'login') {
+                loginSection.classList.remove('hidden');
+                signupSection.classList.add('hidden');
+                tabLogin.classList.add('tab-active');
+                tabLogin.classList.remove('text-on-surface-variant');
+                tabSignup.classList.remove('tab-active');
+                tabSignup.classList.add('text-on-surface-variant');
+            } else {
+                loginSection.classList.add('hidden');
+                signupSection.classList.remove('hidden');
+                tabSignup.classList.add('tab-active');
+                tabSignup.classList.remove('text-on-surface-variant');
+                tabLogin.classList.remove('tab-active');
+                tabLogin.classList.add('text-on-surface-variant');
+            }
+        }
+
+        // Add micro-interactions for input focus
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.classList.add('soft-gold-glow');
+            });
+            input.addEventListener('blur', () => {
+                input.parentElement.classList.remove('soft-gold-glow');
+            });
+        });
+    </script>
+</body></html>

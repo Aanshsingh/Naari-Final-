@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Naari | Shopping Bag</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .gold-gradient-bg {
+            background: linear-gradient(135deg, #f5bd53 0%, #c9962f 100%);
+        }
+        .gold-border-gradient {
+            border: 1px solid transparent;
+            background: linear-gradient(#111319, #111319) padding-box,
+                        linear-gradient(135deg, #f5bd53, #564505) border-box;
+        }
+        .soft-gold-glow {
+            box-shadow: 0 0 20px rgba(201, 150, 47, 0.08);
+        }
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #111319;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4f4536;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary": "#c4c6d0",
+                      "outline-variant": "#4f4536",
+                      "error": "#ffb4ab",
+                      "surface-bright": "#373940",
+                      "on-secondary-container": "#cbb36b",
+                      "secondary-fixed-dim": "#dec57a",
+                      "inverse-surface": "#e2e2ea",
+                      "surface-container-highest": "#33353b",
+                      "background": "#111319",
+                      "on-secondary-fixed-variant": "#564505",
+                      "on-secondary": "#3c2f00",
+                      "primary": "#f5bd53",
+                      "surface-container-low": "#191b21",
+                      "surface-container-high": "#282a30",
+                      "outline": "#9c8f7c",
+                      "surface-dim": "#111319",
+                      "surface-tint": "#f5bd53",
+                      "on-primary": "#422d00",
+                      "surface-container": "#1d1f26",
+                      "on-secondary-fixed": "#231b00",
+                      "tertiary-fixed-dim": "#c4c6d0",
+                      "surface": "#111319",
+                      "on-primary-fixed-variant": "#5e4200",
+                      "tertiary-container": "#9c9ea8",
+                      "surface-container-lowest": "#0c0e14",
+                      "on-tertiary-fixed-variant": "#44474f",
+                      "tertiary-fixed": "#e0e2ed",
+                      "on-error": "#690005",
+                      "on-surface-variant": "#d3c4b0",
+                      "on-primary-fixed": "#271900",
+                      "secondary": "#dec57a",
+                      "on-tertiary": "#2d3038",
+                      "primary-fixed-dim": "#f5bd53",
+                      "on-error-container": "#ffdad6",
+                      "secondary-fixed": "#fbe194",
+                      "secondary-container": "#564505",
+                      "on-background": "#e2e2ea",
+                      "primary-container": "#c9962f",
+                      "error-container": "#93000a",
+                      "on-tertiary-fixed": "#181b23",
+                      "inverse-primary": "#7c5800",
+                      "inverse-on-surface": "#2e3037",
+                      "primary-fixed": "#ffdea8",
+                      "on-surface": "#e2e2ea",
+                      "on-primary-container": "#493200",
+                      "on-tertiary-container": "#33363e",
+                      "surface-variant": "#33353b"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "unit": "8px",
+                      "margin-mobile": "20px",
+                      "gutter": "24px",
+                      "container-max": "1280px",
+                      "section-gap": "120px",
+                      "margin-desktop": "64px"
+              },
+              "fontFamily": {
+                      "label-sm": ["Manrope"],
+                      "display-brand": ["Plus Jakarta Sans"],
+                      "headline-lg": ["Manrope"],
+                      "body-lg": ["Manrope"],
+                      "headline-md": ["Manrope"],
+                      "body-md": ["Manrope"],
+                      "headline-lg-mobile": ["Manrope"]
+              },
+              "fontSize": {
+                      "label-sm": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                      "display-brand": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.4", "letterSpacing": "0.15em", "fontWeight": "300"}],
+                      "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "1.4", "letterSpacing": "0.1em", "fontWeight": "400"}],
+                      "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "letterSpacing": "0.1em", "fontWeight": "300"}]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col font-body-md">
+<!-- TopNavBar - Mobile View Primary -->
+<nav class="sticky top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 px-margin-mobile py-4 flex justify-between items-center">
+<div class="flex items-center gap-4">
+<button aria-label="Go back" class="material-symbols-outlined text-primary cursor-pointer active:scale-95 transition-transform">arrow_back</button>
+<h1 class="font-display-brand text-headline-md text-primary uppercase tracking-wider">Naari</h1>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary">search</span>
+<div class="relative">
+<span class="material-symbols-outlined text-primary">shopping_bag</span>
+<span class="absolute -top-1 -right-1 bg-primary text-on-primary text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">2</span>
+</div>
+</div>
+</nav>
+<main class="flex-grow w-full max-w-container-max mx-auto px-margin-mobile py-8 flex flex-col gap-8">
+<!-- Header -->
+<header>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Shopping Bag</h2>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase mt-1">2 Items in your collection</p>
+</header>
+<!-- Cart Items List -->
+<section class="flex flex-col gap-6">
+<!-- Item 1 -->
+<div class="flex gap-4 p-4 gold-border-gradient rounded-lg relative overflow-hidden group">
+<div class="w-24 h-32 flex-shrink-0 bg-surface-container overflow-hidden rounded-sm">
+<img class="w-full h-full object-cover" data-alt="A luxurious close-up of a deep emerald green Banarasi silk saree with intricate gold brocade work, draped elegantly in a high-end boutique setting. The lighting is moody and focused, highlighting the metallic sheen of the zari. The background is a sophisticated dark charcoal, maintaining a premium ethnic luxury aesthetic with warm golden highlights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCA28euS-woy7zP4AYu9BKrMM0Xzly4bRMAzmtdaU6VtX_l8QKIAcVSI7r7mTKOmIR4-Dm0bDtaqDrvlF1N6BWx3aAzmrFZqFA2sjTSVPAy5e3G9R4FXFDLgvzHe3zDtogiMSY_JNJE6qgcy83LsYCL0K69JK8ciMQLSbJTwn8zdvVewsqHaDkcGPCltlK3x1cdN4hshI-IOUOmqD1P88la-EKk1OM8eAraxwHU3D-xmKwhl4VNptIK"/>
+</div>
+<div class="flex flex-col justify-between flex-grow">
+<div>
+<div class="flex justify-between items-start">
+<h3 class="font-headline-md text-body-lg text-on-surface">Emerald Zari Saree</h3>
+<button class="material-symbols-outlined text-on-surface-variant text-sm hover:text-error transition-colors">close</button>
+</div>
+<p class="font-label-sm text-label-sm text-primary uppercase tracking-wider mt-1">Heritage Collection</p>
+<p class="font-body-md text-on-surface-variant text-xs mt-1">Size: One Size | Color: Emerald Gold</p>
+</div>
+<div class="flex justify-between items-center mt-4">
+<div class="flex items-center border border-outline-variant rounded-sm px-2 py-1">
+<button class="material-symbols-outlined text-sm text-primary p-1">remove</button>
+<span class="px-3 font-label-sm text-on-surface">01</span>
+<button class="material-symbols-outlined text-sm text-primary p-1">add</button>
+</div>
+<span class="font-headline-md text-on-surface text-lg">₹24,500</span>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex gap-4 p-4 gold-border-gradient rounded-lg relative overflow-hidden group">
+<div class="w-24 h-32 flex-shrink-0 bg-surface-container overflow-hidden rounded-sm">
+<img class="w-full h-full object-cover" data-alt="A stunning hand-embroidered velvet Kurti in rich burgundy, featuring delicate floral patterns in gold thread along the neckline and cuffs. The fabric texture is tactile and plush, set against a dark, atmospheric studio background. Soft golden light catches the embroidery, creating a sense of exclusive craftsmanship and festive luxury." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjQp0TostzWXUJGjbigzhtDy4ta60RvnHP46A1VvIl7qeiZbdUjZobhTh9fiFgvJBewyQH0M3dl04cauKSBNj3f70NIKKyLDSbR9ZOe309krNrwa0d17AlN2lv8OMzSHtcX0zxKmZnF8R-O_CLZj7VCcDmPsyOmq6nRwq1-ROOZE6uQUB_hdsJdsH7_TLeLj_oOOyev0j7dx8Xc7JFM3wl1dFITTqihHjIyA1QCH7IvTv-_uLXpsVF"/>
+</div>
+<div class="flex flex-col justify-between flex-grow">
+<div>
+<div class="flex justify-between items-start">
+<h3 class="font-headline-md text-body-lg text-on-surface">Burgundy Velvet Kurti</h3>
+<button class="material-symbols-outlined text-on-surface-variant text-sm hover:text-error transition-colors">close</button>
+</div>
+<p class="font-label-sm text-label-sm text-primary uppercase tracking-wider mt-1">Festive Luxe</p>
+<p class="font-body-md text-on-surface-variant text-xs mt-1">Size: M | Color: Wine Red</p>
+</div>
+<div class="flex justify-between items-center mt-4">
+<div class="flex items-center border border-outline-variant rounded-sm px-2 py-1">
+<button class="material-symbols-outlined text-sm text-primary p-1">remove</button>
+<span class="px-3 font-label-sm text-on-surface">01</span>
+<button class="material-symbols-outlined text-sm text-primary p-1">add</button>
+</div>
+<span class="font-headline-md text-on-surface text-lg">₹12,800</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Promo Code -->
+<section class="mt-4">
+<label class="block font-label-sm text-label-sm text-primary uppercase mb-2">Promo Code</label>
+<div class="flex gap-2">
+<input class="flex-grow bg-transparent border-b border-outline-variant focus:border-primary text-on-surface font-label-sm py-2 outline-none transition-all placeholder:text-outline/50 uppercase" placeholder="ENTER CODE" type="text"/>
+<button class="font-label-sm text-label-sm text-primary border border-primary px-6 py-2 active:scale-95 transition-transform">APPLY</button>
+</div>
+</section>
+<!-- Order Summary -->
+<section class="bg-surface-container p-6 rounded-lg flex flex-col gap-4 border border-outline-variant/20">
+<h3 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest border-b border-outline-variant/30 pb-2">Order Summary</h3>
+<div class="flex justify-between font-body-md text-on-surface">
+<span>Subtotal</span>
+<span>₹37,300</span>
+</div>
+<div class="flex justify-between font-body-md text-on-surface-variant">
+<span>Shipping</span>
+<span class="text-primary font-bold">Complimentary</span>
+</div>
+<div class="flex justify-between font-body-md text-on-surface-variant">
+<span>GST (Estimated)</span>
+<span>₹4,476</span>
+</div>
+<div class="flex justify-between items-center mt-2 pt-4 border-t border-outline-variant/30">
+<span class="font-headline-md text-headline-md text-on-surface">Total</span>
+<span class="font-headline-md text-headline-md text-primary">₹41,776</span>
+</div>
+</section>
+<!-- CTA -->
+<button class="w-full gold-gradient-bg py-5 text-on-primary font-label-sm text-label-sm uppercase tracking-widest rounded-sm active:scale-[0.98] transition-all soft-gold-glow">
+            Proceed to Checkout
+        </button>
+<!-- Complete The Look -->
+<section class="mt-8 pb-12">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-6">Complete The Look</h3>
+<div class="flex gap-4 overflow-x-auto no-scrollbar pb-4 -mx-margin-mobile px-margin-mobile">
+<!-- Accessory 1 -->
+<div class="min-w-[160px] flex flex-col gap-3 group">
+<div class="aspect-[3/4] bg-surface-container relative gold-border-gradient overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="An exquisite pair of gold-plated Kundan Jhumkas with intricate floral patterns and tiny pearl droplets. The earrings are displayed on a dark velvet stand in a high-end luxury setting. The lighting is warm and dramatic, emphasizing the brilliance of the stones and the craftsmanship of the gold work against a moody charcoal background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmUBs_WSgt9dQK7F4UqN5yudGK0rpm1vNG1n1J_suU_qJWYmuzzeDUxTGkY4XjbdDMWIltT2rePiINSv8taAqd0bYhlCztTChmpjyHVOWIpUYC3Mu68zwjva4A4wJBxNEQTbEJeK5LMsblkXBjTs2_2RJcxo4-QE4Bb7aKdwbfoCd7C-m27NT6lNyva3hr39t-U8iYOl85vj43LHr2yhJd_IG2XUrp7qaqykgPMwYBqcH4-QZqN7im"/>
+<button class="absolute top-2 right-2 material-symbols-outlined text-primary bg-surface/60 rounded-full p-1 text-sm backdrop-blur-md">favorite</button>
+</div>
+<div>
+<h4 class="font-body-md text-on-surface text-sm">Kundan Jhumkas</h4>
+<p class="font-label-sm text-primary text-xs">₹4,200</p>
+</div>
+<button class="border border-outline-variant py-2 text-[10px] font-label-sm uppercase hover:bg-primary hover:text-on-primary transition-colors">Add to Bag</button>
+</div>
+<!-- Accessory 2 -->
+<div class="min-w-[160px] flex flex-col gap-3 group">
+<div class="aspect-[3/4] bg-surface-container relative gold-border-gradient overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A designer silk potli bag in deep gold with heavy zardosi embroidery and beaded tassel drawstrings. The bag is placed on a reflective dark surface that catches the golden highlights. The scene is elegant and festive, maintaining the brand's luxury aesthetic with soft-focus atmospheric lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkH2IW1dlviE9PLlRRCnYQKdxrRjNzTf31IAjC7aFV3Kk3WoYJUzs4QwRTTvW3cgDNXgcWjatgq2-JAIXNHtxunBOFUOrgy-ksVlR75rmD6dloHrFjERtOTVYKZfAjsvFLqKgnznqZb_piGh7y_nOc3bxr5fsxbZL1tAqH6YZoa69zVKNZFtOa8Kg9n2Fv97_R8AslJrx8mjxOr0K_tayg8EVPFd7ZmW7xgzWRFQqVpYHb_Pf-FtRE"/>
+<button class="absolute top-2 right-2 material-symbols-outlined text-primary bg-surface/60 rounded-full p-1 text-sm backdrop-blur-md">favorite</button>
+</div>
+<div>
+<h4 class="font-body-md text-on-surface text-sm">Zardosi Potli</h4>
+<p class="font-label-sm text-primary text-xs">₹2,800</p>
+</div>
+<button class="border border-outline-variant py-2 text-[10px] font-label-sm uppercase hover:bg-primary hover:text-on-primary transition-colors">Add to Bag</button>
+</div>
+<!-- Accessory 3 -->
+<div class="min-w-[160px] flex flex-col gap-3 group">
+<div class="aspect-[3/4] bg-surface-container relative gold-border-gradient overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="An ornate gold waistband or Kamarbandh with delicate filigree work and semi-precious stone inlays. The piece is laid across a piece of dark silk fabric, with pinpoint lighting highlighting the golden details and creating a sense of heritage luxury and traditional craftsmanship." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBl_6PbhzOGU-YWOChSZx4qikO3RhmUiVanqNhdt5Q1JtZUa1wSRXo6pf0zpNquLZtqQnJ2xtUeHnHiDgJ9Rsp5eEMR4gdRvH2QPnUdTWVJmuXfJOshKfPxObzdqN-Zlpq0KVwX1eRWc5E3Aa5kMxse7lZTdRDsttOzVDqqL-3jbNyv9y-37sGnOeb_BeetT6pqtnmsEm2wthL7Z5f2fdEqGomf7Mrf3bQqZBl2GJa7nFw9OVbSPRXD"/>
+<button class="absolute top-2 right-2 material-symbols-outlined text-primary bg-surface/60 rounded-full p-1 text-sm backdrop-blur-md">favorite</button>
+</div>
+<div>
+<h4 class="font-body-md text-on-surface text-sm">Temple Kamarbandh</h4>
+<p class="font-label-sm text-primary text-xs">₹8,500</p>
+</div>
+<button class="border border-outline-variant py-2 text-[10px] font-label-sm uppercase hover:bg-primary hover:text-on-primary transition-colors">Add to Bag</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant/20 px-margin-mobile py-8 flex flex-col gap-6">
+<div class="flex flex-col gap-4">
+<h1 class="font-display-brand text-headline-lg text-primary uppercase">Naari</h1>
+<p class="font-body-md text-on-surface-variant text-sm">Curating the finest in Indian ethnic luxury since 2024.</p>
+</div>
+<div class="flex flex-wrap gap-x-6 gap-y-2">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors" href="#">Terms of Service</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors" href="#">Shipping &amp; Returns</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors" href="#">Contact Us</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors" href="#">Store Locator</a>
+</div>
+<p class="font-label-sm text-[10px] text-outline pt-4 border-t border-outline-variant/10 text-center uppercase tracking-widest">© 2024 Naari Ethnic Wear. All Rights Reserved.</p>
+</footer>
+<script>
+        // Micro-interactions for quantity controls
+        document.querySelectorAll('.flex.items-center.border.border-outline-variant').forEach(control => {
+            const span = control.querySelector('span');
+            const btns = control.querySelectorAll('button');
+            
+            btns[0].addEventListener('click', () => {
+                let val = parseInt(span.innerText);
+                if(val > 1) {
+                    val--;
+                    span.innerText = val < 10 ? '0' + val : val;
+                }
+            });
+            
+            btns[1].addEventListener('click', () => {
+                let val = parseInt(span.innerText);
+                val++;
+                span.innerText = val < 10 ? '0' + val : val;
+            });
+        });
+
+        // Hover effect for items
+        const cards = document.querySelectorAll('.gold-border-gradient');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.classList.add('soft-gold-glow');
+            });
+            card.addEventListener('mouseleave', () => {
+                card.classList.remove('soft-gold-glow');
+            });
+        });
+    </script>
+</body></html>

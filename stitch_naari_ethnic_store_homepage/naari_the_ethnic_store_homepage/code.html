@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Naari — The Ethnic Store | Festive Luxury</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed": "#e0e2ed",
+                    "on-secondary": "#3c2f00",
+                    "on-error": "#690005",
+                    "outline": "#9c8f7c",
+                    "on-primary": "#422d00",
+                    "error": "#ffb4ab",
+                    "primary-fixed-dim": "#f5bd53",
+                    "on-error-container": "#ffdad6",
+                    "primary": "#f5bd53",
+                    "tertiary-container": "#9c9ea8",
+                    "on-tertiary-container": "#33363e",
+                    "on-primary-container": "#493200",
+                    "surface": "#111319",
+                    "surface-dim": "#111319",
+                    "surface-bright": "#373940",
+                    "on-surface": "#e2e2ea",
+                    "surface-container-low": "#191b21",
+                    "on-surface-variant": "#d3c4b0",
+                    "tertiary": "#c4c6d0",
+                    "inverse-surface": "#e2e2ea",
+                    "on-tertiary-fixed-variant": "#44474f",
+                    "on-secondary-fixed-variant": "#564505",
+                    "secondary": "#dec57a",
+                    "primary-fixed": "#ffdea8",
+                    "tertiary-fixed-dim": "#c4c6d0",
+                    "surface-container-lowest": "#0c0e14",
+                    "on-primary-fixed": "#271900",
+                    "outline-variant": "#4f4536",
+                    "surface-tint": "#f5bd53",
+                    "surface-container-highest": "#33353b",
+                    "error-container": "#93000a",
+                    "secondary-fixed-dim": "#dec57a",
+                    "surface-container": "#1d1f26",
+                    "surface-variant": "#33353b",
+                    "on-primary-fixed-variant": "#5e4200",
+                    "on-secondary-fixed": "#231b00",
+                    "inverse-on-surface": "#2e3037",
+                    "secondary-fixed": "#fbe194",
+                    "on-tertiary-fixed": "#181b23",
+                    "on-secondary-container": "#cbb36b",
+                    "on-tertiary": "#2d3038",
+                    "on-background": "#e2e2ea",
+                    "surface-container-high": "#282a30",
+                    "primary-container": "#c9962f",
+                    "inverse-primary": "#7c5800",
+                    "secondary-container": "#564505",
+                    "background": "#111319"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "container-max": "1280px",
+                    "margin-desktop": "64px",
+                    "gutter": "24px",
+                    "section-gap": "120px",
+                    "margin-mobile": "20px",
+                    "unit": "8px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Manrope"],
+                    "body-md": ["Manrope"],
+                    "label-sm": ["Manrope"],
+                    "headline-lg-mobile": ["Manrope"],
+                    "headline-lg": ["Manrope"],
+                    "body-lg": ["Manrope"],
+                    "display-brand": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", { "lineHeight": "1.4", "letterSpacing": "0.1em", "fontWeight": "400" }],
+                    "body-md": ["16px", { "lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                    "label-sm": ["12px", { "lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                    "headline-lg-mobile": ["24px", { "lineHeight": "1.3", "letterSpacing": "0.1em", "fontWeight": "300" }],
+                    "headline-lg": ["32px", { "lineHeight": "1.4", "letterSpacing": "0.15em", "fontWeight": "300" }],
+                    "body-lg": ["18px", { "lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                    "display-brand": ["48px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #111319;
+            color: #e2e2ea;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #f5bd53 0%, #dec57a 50%, #fbe194 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gold-gradient-bg {
+            background: linear-gradient(135deg, #c9962f 0%, #f5bd53 50%, #dec57a 100%);
+        }
+
+        .gold-border {
+            border: 1px solid rgba(245, 189, 83, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .gold-border:hover {
+            border-color: rgba(245, 189, 83, 0.8);
+            box-shadow: 0 0 15px rgba(245, 189, 83, 0.1);
+        }
+
+        .category-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hero-vignette {
+            background: linear-gradient(to top, rgba(17, 19, 25, 1) 0%, rgba(17, 19, 25, 0.4) 40%, rgba(17, 19, 25, 0) 100%);
+        }
+
+        .card-glow:hover {
+            box-shadow: 0 10px 30px -10px rgba(245, 189, 83, 0.15);
+        }
+
+        .nav-blur {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="font-body-md overflow-x-hidden">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-surface/80 nav-blur border-b border-outline-variant/30 shadow-sm">
+<nav class="flex justify-between items-center w-full px-margin-desktop h-20 max-w-container-max mx-auto">
+<div class="flex items-center gap-12">
+<a class="font-display-brand text-display-brand text-primary text-[32px] tracking-tight" href="#">Naari</a>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-sm text-label-sm" href="#">Home</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-300 font-label-sm text-label-sm" href="#">Sarees</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-300 font-label-sm text-label-sm" href="#">Kurtis</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-300 font-label-sm text-label-sm" href="#">Lehengas</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-300 font-label-sm text-label-sm" href="#">New Arrivals</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-300 font-label-sm text-label-sm" href="#">About</a>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-on-surface hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<button class="text-on-surface hover:text-primary transition-colors relative">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+<span class="absolute -top-1 -right-1 bg-primary text-on-primary text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">2</span>
+</button>
+<button class="text-on-surface hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</button>
+<button class="md:hidden text-on-surface">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+</div>
+</nav>
+</header>
+<main class="pt-20">
+<!-- Hero Section -->
+<section class="relative h-[921px] w-full overflow-hidden flex items-end">
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover object-top scale-105 transform hover:scale-100 transition-transform duration-[10s]" data-alt="A cinematic high-fashion lifestyle photograph of a regal Indian woman wearing a shimmering emerald green silk saree with intricate gold zari borders. She is posed elegantly against a deep charcoal textured wall in a dimly lit, luxurious palace interior. Warm golden spotlights highlight the fine metallic threads of her attire, creating a glowing, festive-luxury atmosphere with deep shadows and soft highlights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDt-Mq8n8rZpRnTEn8-aPbg3ukUf_mYgvdoZVsVD_yOG1Juz68u4PtXNHvtwKuMRDPYGyKKFANVKXhhIgK4KWpggqiFbD4uSUnKDc7rQzxEv-P5_RniwF16FQ5yy9Hl8dy8SA0eBTNZuT4eFVkr7h0vRzOycAXUcFLYJZgQlwgs653bU15ocVgs17f-l9djzYHPvCzxfs0NSwEYesPUMMYBY0pkd1ajd7sjwcwSL-N14sy8m2V97hFd"/>
+<div class="absolute inset-0 hero-vignette"></div>
+</div>
+<div class="relative z-10 w-full max-w-container-max mx-auto px-margin-desktop pb-24 text-center md:text-left">
+<h1 class="font-headline-lg text-headline-lg gold-gradient-text mb-2 animate-fade-in-up">Festive Edit — New In</h1>
+<p class="text-on-surface-variant font-body-lg text-body-lg mb-10 max-w-xl opacity-90">Curated craftsmanship for the modern woman. Discover the harmony of tradition and luxury.</p>
+<a class="gold-gradient-bg inline-block px-12 py-4 text-on-primary font-bold uppercase tracking-[0.1em] text-label-sm rounded-sm hover:opacity-90 active:scale-95 transition-all shadow-xl" href="#">
+                    Shop New Arrivals
+                </a>
+</div>
+</section>
+<!-- Category Strip -->
+<section class="py-20 bg-surface">
+<div class="max-w-container-max mx-auto px-margin-desktop overflow-x-auto category-scroll">
+<div class="flex justify-between min-w-max md:min-w-0 gap-12 md:gap-4">
+<!-- Category Item -->
+<a class="group flex flex-col items-center gap-4" href="#">
+<div class="w-24 h-24 rounded-full gold-border p-1 overflow-hidden transition-transform duration-500 group-hover:scale-105">
+<div class="w-full h-full rounded-full bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="local_florist">local_florist</span>
+</div>
+</div>
+<span class="text-on-surface font-label-sm text-label-sm tracking-widest uppercase">Sarees</span>
+</a>
+<!-- Category Item -->
+<a class="group flex flex-col items-center gap-4" href="#">
+<div class="w-24 h-24 rounded-full gold-border p-1 overflow-hidden transition-transform duration-500 group-hover:scale-105">
+<div class="w-full h-full rounded-full bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="spa">spa</span>
+</div>
+</div>
+<span class="text-on-surface font-label-sm text-label-sm tracking-widest uppercase">Kurtis</span>
+</a>
+<!-- Category Item -->
+<a class="group flex flex-col items-center gap-4" href="#">
+<div class="w-24 h-24 rounded-full gold-border p-1 overflow-hidden transition-transform duration-500 group-hover:scale-105">
+<div class="w-full h-full rounded-full bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="flare">flare</span>
+</div>
+</div>
+<span class="text-on-surface font-label-sm text-label-sm tracking-widest uppercase">Lehengas</span>
+</a>
+<!-- Category Item -->
+<a class="group flex flex-col items-center gap-4" href="#">
+<div class="w-24 h-24 rounded-full gold-border p-1 overflow-hidden transition-transform duration-500 group-hover:scale-105">
+<div class="w-full h-full rounded-full bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="checkroom">checkroom</span>
+</div>
+</div>
+<span class="text-on-surface font-label-sm text-label-sm tracking-widest uppercase">Suits</span>
+</a>
+<!-- Category Item -->
+<a class="group flex flex-col items-center gap-4" href="#">
+<div class="w-24 h-24 rounded-full gold-border p-1 overflow-hidden transition-transform duration-500 group-hover:scale-105">
+<div class="w-full h-full rounded-full bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="diamond">diamond</span>
+</div>
+</div>
+<span class="text-on-surface font-label-sm text-label-sm tracking-widest uppercase">Accessories</span>
+</a>
+</div>
+</div>
+</section>
+<!-- New Arrivals Section -->
+<section class="py-section-gap px-margin-desktop max-w-container-max mx-auto">
+<div class="flex justify-between items-end mb-12">
+<div>
+<h2 class="font-headline-md text-headline-md text-primary mb-2">New Arrivals</h2>
+<p class="text-on-surface-variant">The latest from our artisan workshop</p>
+</div>
+<a class="text-primary font-label-sm text-label-sm uppercase tracking-widest border-b border-primary pb-1 hover:opacity-70 transition-opacity" href="#">View All</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Product Card 1 -->
+<div class="group relative card-glow">
+<div class="relative aspect-[3/4] overflow-hidden gold-border rounded-sm mb-4">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A portrait-style product shot of a blush pink organza saree with gold hand-painted floral motifs. The saree is draped on a minimalist mannequin against a dark charcoal background. Soft, directional warm lighting accentuates the texture of the fabric and the gold details. High-end festive luxury aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfRJ7B11MMsSpd9ei8w_KnCAKGLRsy8Fge39P7IOsNGTltIuKjC3eBRkCLOFm3sYqrNWNNSzHdwlWzLIcrf8cpMCXTTwQ_j8AV7Q1QHmbnrltRv6ckSC7QOerSNAIdB68z5Mi8qE34hEVqzEmcwJZJSs3M0QbQLJz-yyVjZ1edgjzJq8NYWp7IAP5GtS5iqBJkWcqWF-kdchOCHS9EsCVLFgSw2jI6fAaHB7_nd51xSD1DmonPU6Cg"/>
+<span class="absolute top-4 left-4 gold-gradient-bg text-on-primary font-label-sm text-[10px] px-3 py-1 uppercase tracking-widest">New</span>
+<button class="absolute bottom-4 right-4 bg-surface/80 p-2 rounded-full text-primary opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 backdrop-blur-sm">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</button>
+</div>
+<h3 class="text-on-surface font-medium mb-1">Blush Organza Hand-painted Saree</h3>
+<p class="text-primary font-bold">₹12,499</p>
+</div>
+<!-- Product Card 2 -->
+<div class="group relative card-glow">
+<div class="relative aspect-[3/4] overflow-hidden gold-border rounded-sm mb-4">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Close-up of a deep indigo velvet kurti with intricate silver and gold zardosi embroidery on the neckline. The garment is shown on a model in a sophisticated, low-key lighting setting. The background is a dark, moody grey, focusing all attention on the craftsmanship and rich textures." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnGfQtxRRCvamH7bkPiMqGRVW1HcPdeqfOg4yKKwgRwZ0fKDTF1KyBtJ_kmfbYRHJxL-ko18tugSzoolsXxFPsPxgGEMFeIa2NCbs3hdqYNk-jVW-tMY85svq6vdL3dLAa9SH_BRmqnSN-S6jhuefTe2KYl8HeggeZBXYzqHW34REJov-ZwfAd8bU69R4PqzuiBuHoRplEhJ0FcqfnFQs1y3E6I5_lcO5319D7-leu7Ucgqt4ZufnS"/>
+<span class="absolute top-4 left-4 gold-gradient-bg text-on-primary font-label-sm text-[10px] px-3 py-1 uppercase tracking-widest">New</span>
+<button class="absolute bottom-4 right-4 bg-surface/80 p-2 rounded-full text-primary opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 backdrop-blur-sm">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</button>
+</div>
+<h3 class="text-on-surface font-medium mb-1">Indigo Velvet Zardosi Kurti</h3>
+<p class="text-primary font-bold">₹6,299</p>
+</div>
+<!-- Product Card 3 -->
+<div class="group relative card-glow">
+<div class="relative aspect-[3/4] overflow-hidden gold-border rounded-sm mb-4">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A stunning gold-threaded ivory Banarasi silk lehenga set. The heavy skirt features traditional Indian weave patterns. It is presented in a high-fashion editorial style with soft glowing lighting from the side, creating a majestic and premium bridal look against a charcoal background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuABu2_i_HprtT1hEa-l6l3SjW65dzwZusZ6T_sy55KUVfbVRo-wnXi6-jFVfs5EO32Aq9DuqfrPmlSJEu5ehfNozM9LqPcGTxc3Jga8jJBRbD7-mQdC6_EKeWFIW_xR1gOQp9tKGC1FI-PeZRhE02yRb_AwoSQ0g_ts-5jsMpG1hJQc7_83l0BOVwWeYLZyFutLjDxYnTUXenHVLW6AJDaaV-20AiGiXcge6Ph6S5ic_bcVQ-71V7GE"/>
+<span class="absolute top-4 left-4 gold-gradient-bg text-on-primary font-label-sm text-[10px] px-3 py-1 uppercase tracking-widest">New</span>
+<button class="absolute bottom-4 right-4 bg-surface/80 p-2 rounded-full text-primary opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 backdrop-blur-sm">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</button>
+</div>
+<h3 class="text-on-surface font-medium mb-1">Ivory Banarasi Silk Lehenga</h3>
+<p class="text-primary font-bold">₹45,999</p>
+</div>
+<!-- Product Card 4 -->
+<div class="group relative card-glow">
+<div class="relative aspect-[3/4] overflow-hidden gold-border rounded-sm mb-4">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A contemporary mustard yellow Anarkali suit with delicate mirror work. The model is captured in a dynamic pose, showing the fluid movement of the premium georgette fabric. Lighting is warm and atmospheric, reinforcing the festive boutique mood of Naari." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2Ht2NsKyC03iTdZKgvfHI-yvlm4ykpZVilrMBpYsyt3rrb4aVVmHPdj3ijfpDjUYzuhm4t_P889XL1Ekf-qncwgiRE47h0Z-gJ1YpydDUksyRnXQCM7k4-6Dg2b-IZLNFUeOgep4XuRGWGU4Jx9QdR7JQ0HTLc7GWzrH7d2-f90X2mt6GMBxsRWND_kA1Tybuub7VggTqyTJto-EDI_II0pngdCGh8TrLkmPljWtsQRkC6_AIApZZ"/>
+<span class="absolute top-4 left-4 gold-gradient-bg text-on-primary font-label-sm text-[10px] px-3 py-1 uppercase tracking-widest">New</span>
+<button class="absolute bottom-4 right-4 bg-surface/80 p-2 rounded-full text-primary opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 backdrop-blur-sm">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</button>
+</div>
+<h3 class="text-on-surface font-medium mb-1">Mustard Mirror Work Suit</h3>
+<p class="text-primary font-bold">₹8,799</p>
+</div>
+</div>
+</section>
+<!-- Social Proof: Customer Favorites -->
+<section class="py-section-gap bg-surface-container-low">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<h2 class="font-headline-md text-headline-md text-primary text-center mb-16">Customer Favorites</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+<!-- Testimonial 1 -->
+<div class="flex flex-col items-center text-center p-8 bg-surface border border-outline-variant/20 rounded-xl">
+<div class="flex gap-1 mb-6">
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="text-on-surface italic mb-6">"The fabric quality is beyond comparison. I wore my Naari saree to a wedding and received countless compliments."</p>
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-widest">— Ananya M.</span>
+</div>
+<!-- Testimonial 2 -->
+<div class="flex flex-col items-center text-center p-8 bg-surface border border-outline-variant/20 rounded-xl">
+<div class="flex gap-1 mb-6">
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="text-on-surface italic mb-6">"Fast delivery and the fit was perfect. The zardosi work looks even better in person than in the photos!"</p>
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-widest">— Priya S.</span>
+</div>
+<!-- Testimonial 3 -->
+<div class="flex flex-col items-center text-center p-8 bg-surface border border-outline-variant/20 rounded-xl">
+<div class="flex gap-1 mb-6">
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="text-on-surface italic mb-6">"A truly luxury experience. The packaging was beautiful and the attention to detail is evident in every stitch."</p>
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-widest">— Meera K.</span>
+</div>
+</div>
+<div class="mt-24">
+<h3 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-[0.2em] text-center mb-10">As seen on Instagram</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="aspect-square overflow-hidden group">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 cursor-pointer" data-alt="A real customer wearing a Naari silk saree at an outdoor garden wedding. Natural sunlight captures the shimmering gold threads. Lifestyle, high-end social media aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYwLu6RfvbEnqmaNQVYquVRRYaFdt4kocsLtubFm402AS745MfbKTW9c-rBae9PJBMXmZ-lkHSFMSXoDl0J7jI93x8UBeiNmSIS77k0M3RW7S2IIuVdT4KnLT0wGLt7yOMOpCG2kXv_GlYUYLfOOZye-Fe39X_50x-A_2sfvPdn2lcLuQ933nYbk-gjuIbmvgg-ZnIFHF4KUu8m-GHawK9p4etVJroSyGh8R34CmGvgrHbf36-0Vjf"/>
+</div>
+<div class="aspect-square overflow-hidden group">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 cursor-pointer" data-alt="A stylish influencer posing in a Naari Anarkali suit during a Diwali celebration. Decorative diyas and fairy lights in the background create a warm festive bokeh. Casual luxury lifestyle photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoZbnGAYUdV8upr3bY51BIa3KHlUBCggq3jbdmtfFTrWLng3J7bGemAbC5LkJU04fxJ8Bwm4Gcsjct2jYvbBy8O8ev_9N9g_KJVgzpHklKgabzWbOnzq5ONUdfZUbNKfkg_Hy3xIBBUPHdBu2wQnvtLq9BfFP0ahanEZlQSV3h3HyKChWg-jA3901-Bqi_v3HNdEJZD-o4aqQSgzTkXFph90YgcBpgmJtr_kN_wEHSotchgOR7JHw4"/>
+</div>
+<div class="aspect-square overflow-hidden group">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 cursor-pointer" data-alt="A close-up shot of hands adorned with henna and luxury jewelry, holding the hem of a Naari lehenga. The focus is on the intricate embroidery and texture. Premium e-commerce social proof." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNB3KqlHI_NL0DU7glVKI38FsFC0o-XNL-rybyA2ws3vCHg9Wk2Y3-sgQ3dMR0V3sifE_MqJTmyW6jML2KyiGau88y6R7us3KMN_9L9i2AbvTDhh29TTb-eN9UqzAI_PSYQ6mgvTdR0zym9n5JNUX8aVHwW913rcTSgR9NXL1eP3PeWqcI0t4Iiz33XtbD157Lj6b1Drdjw3JWiiXvdP4X0qoZNtmdgrKNMUbhcabkcGnxHUlGinhm"/>
+</div>
+<div class="aspect-square overflow-hidden group">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 cursor-pointer" data-alt="A group of women laughing at a festive gathering, all wearing elegant Naari ethnic wear. The colors are vibrant yet sophisticated. High-end lifestyle brand photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCZaNZe0nN9UroxewOSdivfVfKQ5Y2vsRjfbZMOTU4J5tj9J6nVEmfZQR1dzxUzoqgzMuj1fPdxYQOKCALCRHhmO4m_vNdwl9lCaElq2f9eUe9fWOtRIFke34ApgeiUwXU_Px5aPK4ewuszjD77Pni7D2aQdvDAik3egOarRHmVAGtBqyGHVxWcgHxyJauHnvCab69ZCKSjtL_JJKCVCvraKxHC5S1ZmhzuPUE0WbhY_l27Q4vFbic"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Trust Bar -->
+<section class="py-12 border-y border-outline-variant/10">
+<div class="max-w-container-max mx-auto px-margin-desktop grid grid-cols-2 lg:grid-cols-4 gap-8">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="replay">replay</span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant">Easy Returns</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="payments">payments</span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant">COD Available</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="verified">verified</span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant">Handpicked Fabrics</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="local_shipping">local_shipping</span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant">Pan-India Delivery</span>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant/20">
+<div class="flex flex-col md:flex-row justify-between items-start w-full px-margin-desktop py-section-gap max-w-container-max mx-auto gap-12">
+<div class="max-w-xs">
+<a class="font-display-brand text-headline-lg text-primary mb-6 block" href="#">Naari</a>
+<p class="text-on-surface-variant text-body-md font-body-md">Redefining ethnic luxury through artisanal mastery and modern silhouettes. Celebrating the essence of the contemporary Indian woman.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-12 lg:gap-24">
+<div class="flex flex-col gap-4">
+<h4 class="text-primary font-bold uppercase tracking-widest text-label-sm">Collections</h4>
+<ul class="flex flex-col gap-2">
+<li><a class="text-on-surface-variant hover:text-secondary-fixed transition-colors text-label-sm" href="#">Wedding Store</a></li>
+<li><a class="text-on-surface-variant hover:text-secondary-fixed transition-colors text-label-sm" href="#">Bestsellers</a></li>
+<li><a class="text-on-surface-variant hover:text-secondary-fixed transition-colors text-label-sm" href="#">Gifting</a></li>
+<li><a class="text-on-surface-variant hover:text-secondary-fixed transition-colors text-label-sm" href="#">Luxury Pret</a></li>
+</ul>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="text-primary font-bold uppercase tracking-widest text-label-sm">Service</h4>
+<ul class="flex flex-col gap-2">
+<li><a class="text-on-surface-variant hover:text-secondary-fixed transition-colors text-label-sm" href="#">Returns</a></li>
+<li><a class="text-on-surface-variant hover:text-secondary-fixed transition-colors text-label-sm" href="#">COD Policy</a></li>
+<li><a class="text-on-surface-variant hover:text-secondary-fixed transition-colors text-label-sm" href="#">Fabric Care</a></li>
+<li><a class="text-on-surface-variant hover:text-secondary-fixed transition-colors text-label-sm" href="#">Delivery Info</a></li>
+</ul>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="text-primary font-bold uppercase tracking-widest text-label-sm">Company</h4>
+<ul class="flex flex-col gap-2">
+<li><a class="text-on-surface-variant hover:text-secondary-fixed transition-colors text-label-sm" href="#">About Us</a></li>
+<li><a class="text-on-surface-variant hover:text-secondary-fixed transition-colors text-label-sm" href="#">Contact</a></li>
+<li><a class="text-on-surface-variant hover:text-secondary-fixed transition-colors text-label-sm" href="#">Privacy Policy</a></li>
+<li><a class="text-on-surface-variant hover:text-secondary-fixed transition-colors text-label-sm" href="#">Terms</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="border-t border-outline-variant/10 w-full px-margin-desktop py-8 max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+<span class="text-on-surface-variant font-label-sm text-label-sm opacity-60">© 2024 Naari Ethnic Wear. All Rights Reserved.</span>
+<div class="flex gap-6">
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined text-lg" data-icon="facebook">qr_code_2</span></a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined text-lg" data-icon="photo_camera">photo_camera</span></a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined text-lg" data-icon="alternate_email">alternate_email</span></a>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interaction for the navigation background on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('shadow-xl');
+                header.style.backgroundColor = 'rgba(17, 19, 25, 0.95)';
+            } else {
+                header.classList.remove('shadow-xl');
+                header.style.backgroundColor = 'rgba(17, 19, 25, 0.8)';
+            }
+        });
+
+        // Add a simple fade-in intersection observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100');
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.card-glow').forEach(el => {
+            el.classList.add('opacity-0', 'translate-y-10', 'transition-all', 'duration-1000');
+            observer.observe(el);
+        });
+    </script>
+</body></html>

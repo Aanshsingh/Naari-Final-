@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Order Tracking | NAARI Ethnic Wear</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&amp;family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+
+        /* Gold Gradient and Glow Effects */
+        .gold-gradient {
+            background: linear-gradient(135deg, #c9962f 0%, #f5bd53 50%, #dec57a 100%);
+        }
+        
+        .gold-border {
+            border: 1px solid transparent;
+            background-image: linear-gradient(#1d1f26, #1d1f26), linear-gradient(135deg, #c9962f, #f5bd53, #dec57a);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+        }
+
+        .gold-glow:hover {
+            box-shadow: 0 0 20px rgba(245, 189, 83, 0.15);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #111319;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #4f4536;
+        }
+
+        /* Micro-interactions */
+        .stepper-node::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: #4f4536;
+            left: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: -1;
+        }
+        .stepper-node:last-child::after { display: none; }
+        .stepper-node.active::after {
+            background: linear-gradient(90deg, #f5bd53, #4f4536);
+        }
+        .stepper-node.completed::after {
+            background: #f5bd53;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary": "#422d00",
+                      "surface": "#111319",
+                      "on-error-container": "#ffdad6",
+                      "surface-dim": "#111319",
+                      "surface-tint": "#f5bd53",
+                      "on-secondary-fixed-variant": "#564505",
+                      "on-error": "#690005",
+                      "inverse-primary": "#7c5800",
+                      "tertiary-container": "#9c9ea8",
+                      "error-container": "#93000a",
+                      "surface-variant": "#33353b",
+                      "secondary": "#dec57a",
+                      "primary-container": "#c9962f",
+                      "on-surface-variant": "#d3c4b0",
+                      "primary": "#f5bd53",
+                      "surface-container-lowest": "#0c0e14",
+                      "on-tertiary-fixed": "#181b23",
+                      "on-secondary": "#3c2f00",
+                      "surface-container-low": "#191b21",
+                      "background": "#111319",
+                      "on-background": "#e2e2ea",
+                      "error": "#ffb4ab",
+                      "on-secondary-container": "#cbb36b",
+                      "on-primary-container": "#493200",
+                      "on-tertiary-fixed-variant": "#44474f",
+                      "on-tertiary-container": "#33363e",
+                      "outline": "#9c8f7c",
+                      "tertiary": "#c4c6d0",
+                      "surface-container": "#1d1f26",
+                      "surface-container-highest": "#33353b",
+                      "on-primary-fixed-variant": "#5e4200",
+                      "on-primary-fixed": "#271900",
+                      "on-secondary-fixed": "#231b00",
+                      "secondary-fixed": "#fbe194",
+                      "on-tertiary": "#2d3038",
+                      "on-surface": "#e2e2ea",
+                      "inverse-surface": "#e2e2ea",
+                      "inverse-on-surface": "#2e3037",
+                      "surface-container-high": "#282a30",
+                      "primary-fixed": "#ffdea8",
+                      "outline-variant": "#4f4536",
+                      "tertiary-fixed": "#e0e2ed",
+                      "primary-fixed-dim": "#f5bd53",
+                      "surface-bright": "#373940",
+                      "secondary-container": "#564505",
+                      "tertiary-fixed-dim": "#c4c6d0",
+                      "secondary-fixed-dim": "#dec57a"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "margin-desktop": "64px",
+                      "container-max": "1280px",
+                      "gutter": "24px",
+                      "unit": "8px",
+                      "section-gap": "120px",
+                      "margin-mobile": "20px"
+              },
+              "fontFamily": {
+                      "display-brand": ["Plus Jakarta Sans"],
+                      "headline-lg": ["Manrope"],
+                      "body-md": ["Manrope"],
+                      "headline-md": ["Manrope"],
+                      "headline-lg-mobile": ["Manrope"],
+                      "body-lg": ["Manrope"],
+                      "label-sm": ["Manrope"]
+              },
+              "fontSize": {
+                      "display-brand": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.4", "letterSpacing": "0.15em", "fontWeight": "300"}],
+                      "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "1.4", "letterSpacing": "0.1em", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "letterSpacing": "0.1em", "fontWeight": "300"}],
+                      "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                      "label-sm": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-primary selection:text-on-primary min-h-screen">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 shadow-sm">
+<div class="flex justify-between items-center px-margin-desktop h-20 max-w-container-max mx-auto">
+<div class="flex items-center gap-12">
+<a class="font-display-brand text-display-brand text-primary" href="#">NAARI</a>
+<div class="hidden md:flex gap-8">
+<a class="font-body-md text-label-sm uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Collections</a>
+<a class="font-body-md text-label-sm uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">New Arrivals</a>
+<a class="font-body-md text-label-sm uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Best Sellers</a>
+<a class="font-body-md text-label-sm uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">About Us</a>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="material-symbols-outlined text-primary cursor-pointer active:scale-95 transition-all">search</button>
+<button class="material-symbols-outlined text-primary cursor-pointer active:scale-95 transition-all">favorite</button>
+<button class="material-symbols-outlined text-primary cursor-pointer active:scale-95 transition-all">shopping_bag</button>
+<button class="material-symbols-outlined text-primary cursor-pointer active:scale-95 transition-all">person</button>
+</div>
+</div>
+</nav>
+<main class="pt-32 pb-section-gap px-margin-desktop max-w-container-max mx-auto">
+<!-- Page Header -->
+<div class="mb-12">
+<h1 class="font-headline-lg text-headline-lg uppercase text-primary mb-2">Track Your Masterpiece</h1>
+<p class="text-on-surface-variant font-body-md">Honoring craftsmanship, from our artisans to your doorstep.</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+<!-- Left Column: Order Details -->
+<div class="lg:col-span-7 space-y-10">
+<!-- Order Status Header -->
+<div class="bg-surface-container p-8 rounded shadow-sm border border-outline-variant/20">
+<div class="flex flex-col md:flex-row justify-between gap-6">
+<div>
+<span class="text-label-sm uppercase tracking-widest text-on-surface-variant mb-1 block">Order Reference</span>
+<h2 class="text-headline-md text-primary font-headline-md tracking-wider">#NA-4509</h2>
+</div>
+<div>
+<span class="text-label-sm uppercase tracking-widest text-on-surface-variant mb-1 block">Status</span>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<h2 class="text-headline-md text-on-background font-headline-md">In Transit</h2>
+</div>
+</div>
+<div>
+<span class="text-label-sm uppercase tracking-widest text-on-surface-variant mb-1 block">Estimated Arrival</span>
+<h2 class="text-headline-md text-on-background font-headline-md">Oct 24, 2023</h2>
+</div>
+</div>
+</div>
+<!-- Visual Progress Stepper -->
+<div class="py-4">
+<div class="flex justify-between items-start relative px-4">
+<!-- Step 1 -->
+<div class="flex flex-col items-center gap-4 relative z-10 stepper-node completed w-1/4">
+<div class="w-10 h-10 rounded-full gold-gradient flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div class="text-center">
+<p class="text-label-sm font-bold text-primary uppercase">Ordered</p>
+<p class="text-[10px] text-on-surface-variant">Oct 18</p>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="flex flex-col items-center gap-4 relative z-10 stepper-node completed w-1/4">
+<div class="w-10 h-10 rounded-full gold-gradient flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div class="text-center">
+<p class="text-label-sm font-bold text-primary uppercase">Shipped</p>
+<p class="text-[10px] text-on-surface-variant">Oct 20</p>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="flex flex-col items-center gap-4 relative z-10 stepper-node active w-1/4">
+<div class="w-10 h-10 rounded-full bg-surface-container border-2 border-primary flex items-center justify-center text-primary shadow-[0_0_15px_rgba(245,189,83,0.3)]">
+<span class="material-symbols-outlined text-[20px] animate-bounce">local_shipping</span>
+</div>
+<div class="text-center">
+<p class="text-label-sm font-bold text-primary uppercase">In Transit</p>
+<p class="text-[10px] text-on-surface-variant">Ongoing</p>
+</div>
+</div>
+<!-- Step 4 -->
+<div class="flex flex-col items-center gap-4 relative z-10 stepper-node w-1/4">
+<div class="w-10 h-10 rounded-full bg-surface-container border border-outline-variant flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">inventory_2</span>
+</div>
+<div class="text-center">
+<p class="text-label-sm font-bold text-on-surface-variant uppercase">Delivered</p>
+<p class="text-[10px] text-on-surface-variant">Pending</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Order Items -->
+<div class="space-y-6">
+<h3 class="font-headline-md text-headline-md uppercase tracking-widest text-primary border-b border-outline-variant/30 pb-4">Package Contents</h3>
+<!-- Item 1 -->
+<div class="flex items-center gap-6 p-4 gold-border rounded gold-glow transition-all">
+<div class="w-24 h-32 bg-surface-container-highest overflow-hidden rounded">
+<img class="w-full h-full object-cover" data-alt="A luxurious close-up of a folded Emerald Green Banarasi Silk Saree with intricate gold zari weave. The fabric has a rich, metallic sheen and is set against a dark charcoal boutique background with soft, warm spot lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRtsHn3QRvz5kHbPrDZMkPho-KiBOBZxUFQG2ZrOTGVKKfw35Y08z4rnQQjkgkGYIGVF1tgeBAY-Exyd5JQomk_Q28X_stcHihY-kr5on_iNgtkAf_YINc-dvQ4FdkMGDMfoDL4JzUNpTeWN82PzLvyCmzOYOhfV67W2xAKZ6ng0xpezjiHi2VNkY_Clyphrb3SpzUjxAXyhERj5BQdawXu7S_Bt2G22sJrsOR_qbPJJBOWhbgLkW7"/>
+</div>
+<div class="flex-grow">
+<h4 class="font-headline-md text-lg text-on-background uppercase tracking-wider mb-1">Emerald Banarasi Saree</h4>
+<p class="text-on-surface-variant text-label-sm mb-2 uppercase">Hand-loomed Silk • Pure Zari</p>
+<p class="text-primary font-bold">₹42,500</p>
+</div>
+<div class="hidden md:block">
+<span class="text-on-surface-variant text-label-sm px-3 py-1 border border-outline-variant rounded">Qty: 1</span>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex items-center gap-6 p-4 gold-border rounded gold-glow transition-all">
+<div class="w-24 h-32 bg-surface-container-highest overflow-hidden rounded">
+<img class="w-full h-full object-cover" data-alt="Exquisite Temple Gold Jhumkas with intricate floral patterns and micro-engraving. The earrings are displayed on a premium velvet stand in a high-end jewelry showroom with golden ambient lighting and deep shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAh0mrRToeHgHTs8Tkh2hHJ9NVyxfMW7Sy7AlGKpCckZaSbXdcJVZtF9uhCxVRJqY6HEWt6cEWmG2VSfFGBSNM3s2cFO_c-w7po1dN7kslzFBLQOtW5FIs4cinCrwaAUd97mmQ9PE4lJGBc4-gqYGBR-_lrGr7jx2xTPMk5pEiN7bQ70StN7sSgNYbMzsSPNK-6FoM_jH0Vl5Z_NcSWW0VZIcqDz9cudvHzdTDU_H59CoOiGWqGj9a7"/>
+</div>
+<div class="flex-grow">
+<h4 class="font-headline-md text-lg text-on-background uppercase tracking-wider mb-1">Temple Gold Jhumkas</h4>
+<p class="text-on-surface-variant text-label-sm mb-2 uppercase">22K Gold Finish • Antique Polished</p>
+<p class="text-primary font-bold">₹8,900</p>
+</div>
+<div class="hidden md:block">
+<span class="text-on-surface-variant text-label-sm px-3 py-1 border border-outline-variant rounded">Qty: 1</span>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="flex items-center gap-6 p-4 gold-border rounded gold-glow transition-all">
+<div class="w-24 h-32 bg-surface-container-highest overflow-hidden rounded">
+<img class="w-full h-full object-cover" data-alt="A champagne-colored silk potli bag with delicate pearl embroidery and beaded tassels. The luxury evening bag sits elegantly on a dark marble surface, illuminated by a soft golden glow." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOF2Yu8tqAaCpZb78zA6CEZD-elOdoG7yZOLOnpRiS6ZZcHjhoVAFJh7KwXrdfEJAL15BGl3Cw-iWQyQ9uoA54ApOsDIPiWuKPHKtC9Zw16QyWVAjm32SYoyzDc7FL87bVjaCppyH7Txw_cHtzEV4wHVN-_nUhvbzIVTQ2GNkGv2SicNW13uiPARd6MklqnNN1fB6QFqCmL48vF3pC27La3kXTRRN9S0J_KUR_gib3CcAMhTZiDuj4"/>
+</div>
+<div class="flex-grow">
+<h4 class="font-headline-md text-lg text-on-background uppercase tracking-wider mb-1">Champagne Silk Potli</h4>
+<p class="text-on-surface-variant text-label-sm mb-2 uppercase">Raw Silk • Hand-Embroidered Pearls</p>
+<p class="text-primary font-bold">₹4,200</p>
+</div>
+<div class="hidden md:block">
+<span class="text-on-surface-variant text-label-sm px-3 py-1 border border-outline-variant rounded">Qty: 1</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Sidebar -->
+<aside class="lg:col-span-5 space-y-gutter sticky top-28">
+<!-- Map View -->
+<div class="bg-surface-container rounded overflow-hidden shadow-lg h-[300px] relative gold-border">
+<div class="absolute inset-0 z-0 bg-[#0c0e14]">
+<div class="w-full h-full opacity-40 grayscale contrast-125" data-location="Mumbai" style="">
+<!-- Placeholder for map visualization -->
+<div class="w-full h-full flex items-center justify-center text-primary-container/20">
+<span class="material-symbols-outlined scale-[5]">map</span>
+</div>
+</div>
+</div>
+<!-- Live Overlay -->
+<div class="absolute top-4 left-4 z-10 bg-surface-container-highest/90 backdrop-blur px-3 py-1 rounded-full flex items-center gap-2 border border-primary/30">
+<span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+<span class="text-[10px] text-on-background font-bold uppercase tracking-widest">Live Location</span>
+</div>
+<!-- Map Pin -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex flex-col items-center">
+<div class="relative">
+<div class="absolute inset-0 bg-primary/40 rounded-full animate-ping scale-150"></div>
+<div class="relative bg-primary p-2 rounded-full text-on-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">local_shipping</span>
+</div>
+</div>
+<div class="mt-2 bg-surface text-primary text-[10px] px-2 py-1 rounded-sm border border-primary/20 shadow-xl font-bold">
+                            EN ROUTE TO MUMBAI
+                        </div>
+</div>
+</div>
+<!-- Delivery Info Card -->
+<div class="bg-surface-container p-8 rounded shadow-sm border border-outline-variant/20">
+<div class="mb-8">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary">location_on</span>
+<h3 class="text-label-sm uppercase tracking-widest text-primary">Delivery Address</h3>
+</div>
+<div class="space-y-1">
+<p class="font-headline-md text-on-background text-lg tracking-wide">Ananya Sharma</p>
+<p class="text-on-surface-variant font-body-md leading-relaxed">
+                                402, Samudra Palace, Marine Drive,<br/>
+                                Near Air India Building, Mumbai 400020<br/>
+                                Maharashtra, India
+                            </p>
+<p class="text-on-surface-variant font-body-md mt-2">+91 98XXX X4509</p>
+</div>
+</div>
+<div class="space-y-4">
+<button class="w-full py-4 gold-gradient text-on-primary font-bold uppercase tracking-widest text-label-sm rounded-sm hover:brightness-110 active:scale-95 transition-all shadow-lg flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">map</span>
+                            Track Shipment
+                        </button>
+<button class="w-full py-4 border border-primary/30 text-primary font-bold uppercase tracking-widest text-label-sm rounded-sm hover:bg-primary/5 active:scale-95 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">concierge</span>
+                            Contact Concierge
+                        </button>
+</div>
+<div class="mt-8 pt-8 border-t border-outline-variant/20">
+<div class="flex justify-between items-center text-label-sm uppercase tracking-tighter text-on-surface-variant mb-4">
+<span>Order Summary</span>
+<span class="material-symbols-outlined text-[14px]">receipt_long</span>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between font-body-md text-on-surface-variant">
+<span>Subtotal</span>
+<span>₹55,600</span>
+</div>
+<div class="flex justify-between font-body-md text-on-surface-variant">
+<span>Shipping (Express)</span>
+<span class="text-primary">FREE</span>
+</div>
+<div class="flex justify-between font-headline-md text-on-background border-t border-outline-variant/20 pt-4 mt-2">
+<span class="uppercase tracking-widest">Total</span>
+<span class="text-primary font-bold">₹55,600</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Support Card -->
+<div class="bg-primary/5 p-6 rounded-sm border border-primary/20">
+<p class="text-[12px] text-primary font-bold uppercase mb-2">Need Assistance?</p>
+<p class="text-on-surface-variant text-[13px] leading-relaxed">
+                        Our premium concierge is available 24/7 for order updates or styling advice. 
+                        <a class="text-primary underline underline-offset-4 ml-1" href="#">Live Chat Now</a>
+</p>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 bg-surface-container-lowest dark:bg-surface-container-lowest border-t border-outline-variant/20">
+<div class="flex flex-col items-center gap-unit px-margin-desktop w-full max-w-container-max mx-auto">
+<div class="font-display-brand text-headline-md text-primary mb-6">NAARI</div>
+<div class="flex flex-wrap justify-center gap-8 mb-8">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary-fixed transition-colors underline-offset-4 hover:underline uppercase tracking-widest" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary-fixed transition-colors underline-offset-4 hover:underline uppercase tracking-widest" href="#">Terms of Service</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary-fixed transition-colors underline-offset-4 hover:underline uppercase tracking-widest" href="#">Shipping Info</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary-fixed transition-colors underline-offset-4 hover:underline uppercase tracking-widest" href="#">Contact Us</a>
+</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant/60 uppercase tracking-widest">
+                © 2024 NAARI ETHNIC WEAR. ALL RIGHTS RESERVED.
+            </div>
+<div class="flex gap-6 mt-6">
+<a class="text-on-surface-variant hover:text-primary transition-all" href="#"><span class="material-symbols-outlined">public</span></a>
+<a class="text-on-surface-variant hover:text-primary transition-all" href="#"><span class="material-symbols-outlined">camera</span></a>
+<a class="text-on-surface-variant hover:text-primary transition-all" href="#"><span class="material-symbols-outlined">share</span></a>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interaction for tracking number copy
+        const orderRef = document.querySelector('.text-headline-md.text-primary');
+        if (orderRef) {
+            orderRef.style.cursor = 'pointer';
+            orderRef.addEventListener('click', () => {
+                const text = orderRef.innerText;
+                navigator.clipboard.writeText(text);
+                const originalText = orderRef.innerText;
+                orderRef.innerText = 'COPIED!';
+                setTimeout(() => {
+                    orderRef.innerText = originalText;
+                }, 1000);
+            });
+        }
+
+        // Add subtle parallax to map
+        window.addEventListener('mousemove', (e) => {
+            const map = document.querySelector('[data-location="Mumbai"]');
+            if (map) {
+                const x = (window.innerWidth / 2 - e.pageX) / 50;
+                const y = (window.innerHeight / 2 - e.pageY) / 50;
+                map.style.transform = `translate(${x}px, ${y}px) scale(1.1)`;
+            }
+        });
+    </script>
+</body></html>

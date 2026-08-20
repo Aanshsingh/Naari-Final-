@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Order Tracking | NAARI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&amp;family=Manrope:wght@300;400;600;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface": "#111319",
+                    "on-primary-fixed": "#271900",
+                    "surface-container-lowest": "#0c0e14",
+                    "on-secondary-fixed": "#231b00",
+                    "primary": "#f5bd53",
+                    "on-primary-container": "#493200",
+                    "inverse-on-surface": "#2e3037",
+                    "on-tertiary-fixed": "#181b23",
+                    "secondary-container": "#564505",
+                    "surface-container-high": "#282a30",
+                    "surface-bright": "#373940",
+                    "on-secondary": "#3c2f00",
+                    "on-tertiary-container": "#33363e",
+                    "on-tertiary": "#2d3038",
+                    "on-surface-variant": "#d3c4b0",
+                    "on-error": "#690005",
+                    "error-container": "#93000a",
+                    "tertiary-container": "#9c9ea8",
+                    "secondary-fixed-dim": "#dec57a",
+                    "primary-fixed": "#ffdea8",
+                    "outline": "#9c8f7c",
+                    "primary-fixed-dim": "#f5bd53",
+                    "on-tertiary-fixed-variant": "#44474f",
+                    "surface-variant": "#33353b",
+                    "inverse-primary": "#7c5800",
+                    "on-surface": "#e2e2ea",
+                    "on-primary-fixed-variant": "#5e4200",
+                    "secondary-fixed": "#fbe194",
+                    "tertiary-fixed-dim": "#c4c6d0",
+                    "surface-dim": "#111319",
+                    "surface-container-highest": "#33353b",
+                    "surface-container-low": "#191b21",
+                    "tertiary": "#c4c6d0",
+                    "on-error-container": "#ffdad6",
+                    "inverse-surface": "#e2e2ea",
+                    "primary-container": "#c9962f",
+                    "on-background": "#e2e2ea",
+                    "secondary": "#dec57a",
+                    "surface-container": "#1d1f26",
+                    "outline-variant": "#4f4536",
+                    "on-primary": "#422d00",
+                    "on-secondary-container": "#cbb36b",
+                    "tertiary-fixed": "#e0e2ed",
+                    "error": "#ffb4ab",
+                    "surface-tint": "#f5bd53",
+                    "background": "#111319",
+                    "on-secondary-fixed-variant": "#564505"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "margin-desktop": "64px",
+                    "section-gap": "120px",
+                    "unit": "8px",
+                    "margin-mobile": "20px",
+                    "gutter": "24px",
+                    "container-max": "1280px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Manrope"],
+                    "label-sm": ["Manrope"],
+                    "headline-md": ["Manrope"],
+                    "headline-lg": ["Manrope"],
+                    "body-md": ["Manrope"],
+                    "body-lg": ["Manrope"],
+                    "display-brand": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "letterSpacing": "0.1em", "fontWeight": "300"}],
+                    "label-sm": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "1.4", "letterSpacing": "0.1em", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.4", "letterSpacing": "0.15em", "fontWeight": "300"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                    "display-brand": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { background-color: #111319; color: #e2e2ea; }
+        .gold-gradient { background: linear-gradient(135deg, #f5bd53 0%, #c9962f 100%); }
+        .gold-text-gradient { background: linear-gradient(135deg, #f5bd53 0%, #dec57a 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .gold-border { border: 1px solid rgba(245, 189, 83, 0.3); }
+        .gold-glow { box-shadow: 0 0 15px rgba(201, 150, 47, 0.1); }
+        .step-active { color: #f5bd53; }
+        .step-line { height: 2px; flex-grow: 1; background: #33353b; position: relative; top: 12px; }
+        .step-line-filled { background: #f5bd53; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 shadow-sm flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16">
+<button class="active:scale-95 transition-transform hover:opacity-80">
+<span class="material-symbols-outlined text-primary">menu</span>
+</button>
+<h1 class="font-display-brand text-headline-md tracking-tighter text-primary">NAARI</h1>
+<button class="active:scale-95 transition-transform hover:opacity-80">
+<span class="material-symbols-outlined text-primary">notifications</span>
+</button>
+</header>
+<main class="pt-24 pb-32 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<!-- Order Header -->
+<section class="mb-12">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<span class="font-label-sm text-label-sm uppercase text-outline mb-2 block">Order History</span>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Order Tracking</h2>
+<p class="font-body-md text-on-surface-variant mt-2">Order <span class="text-primary font-bold">#NA-4509</span> • Status: <span class="italic">In Transit</span></p>
+</div>
+<div class="text-left md:text-right">
+<p class="font-label-sm text-label-sm uppercase text-outline">Estimated Arrival</p>
+<p class="font-headline-md text-headline-md text-primary">Oct 24, 2023</p>
+</div>
+</div>
+</section>
+<!-- Tracking Visualizer -->
+<section class="mb-section-gap bg-surface-container p-8 rounded-xl gold-border gold-glow">
+<div class="relative flex justify-between items-start mb-4">
+<!-- Progress Line Background -->
+<div class="absolute left-0 right-0 top-3 h-[2px] bg-surface-variant z-0"></div>
+<!-- Active Progress Line -->
+<div class="absolute left-0 top-3 h-[2px] gold-gradient z-10" style="width: 66%;"></div>
+<!-- Steps -->
+<div class="relative z-20 flex flex-col items-center group">
+<div class="w-6 h-6 rounded-full gold-gradient border-4 border-surface mb-3"></div>
+<span class="font-label-sm text-label-sm uppercase text-primary">Ordered</span>
+<span class="text-[10px] text-outline mt-1">Oct 18</span>
+</div>
+<div class="relative z-20 flex flex-col items-center group">
+<div class="w-6 h-6 rounded-full gold-gradient border-4 border-surface mb-3"></div>
+<span class="font-label-sm text-label-sm uppercase text-primary">Shipped</span>
+<span class="text-[10px] text-outline mt-1">Oct 20</span>
+</div>
+<div class="relative z-20 flex flex-col items-center group">
+<div class="w-6 h-6 rounded-full gold-gradient border-4 border-surface mb-3">
+<div class="w-full h-full animate-ping rounded-full bg-primary/40"></div>
+</div>
+<span class="font-label-sm text-label-sm uppercase text-primary">In Transit</span>
+<span class="text-[10px] text-outline mt-1">Expected Today</span>
+</div>
+<div class="relative z-20 flex flex-col items-center group opacity-40">
+<div class="w-6 h-6 rounded-full bg-surface-variant border-4 border-surface mb-3"></div>
+<span class="font-label-sm text-label-sm uppercase text-on-surface-variant">Delivered</span>
+<span class="text-[10px] text-outline mt-1">—</span>
+</div>
+</div>
+</section>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Items Section -->
+<div class="lg:col-span-7 space-y-6">
+<h3 class="font-label-sm text-label-sm uppercase text-outline border-b border-outline-variant/30 pb-4">Order Items (3)</h3>
+<!-- Item Card 1 -->
+<div class="flex gap-6 group">
+<div class="w-24 h-32 flex-shrink-0 bg-surface-container-highest rounded-lg overflow-hidden gold-border">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A high-end editorial product shot of a deep emerald green Banarasi silk saree with intricate gold zari borders, draped elegantly against a minimalist charcoal gray background. The lighting is soft and cinematic, highlighting the tactile texture of the hand-woven fabric and the metallic sheen of the gold threads. Luxury festive aesthetic for a premium ethnic wear brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2-O3uN-K4TWa6uuyxyTTMLbCKfAx5ss2ZO_05S8QldwIwiDelVXs9KlUD758VIEp_w1rl7nIT2JrR3yRfJI24VIKaDd6aJ5MQkw4dfie1VdDwihhlTtX_iiFLRozYpqbVnjgGDFgILGIJYqL-og5R6kkLmX8axPfxiwaNyhFAJwrITkrxuwNHRzxj4BPwIozHHigCSMLFfPGSCLoLTTst4XSy5fgEIwFE5D4TVwkmQOxZ5mKMec1B"/>
+</div>
+<div class="flex flex-col justify-center">
+<h4 class="font-headline-md text-body-lg text-on-surface">Emerald Banarasi Saree</h4>
+<p class="font-label-sm text-label-sm text-outline mt-1">Hand-woven Pure Silk • Gold Zari</p>
+<p class="font-body-md text-primary mt-3">₹42,500</p>
+</div>
+</div>
+<!-- Item Card 2 -->
+<div class="flex gap-6 group">
+<div class="w-24 h-32 flex-shrink-0 bg-surface-container-highest rounded-lg overflow-hidden gold-border">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A macro studio photograph of handcrafted 22k gold plated Jhumka earrings featuring delicate floral motifs and small pearl droplets. The jewelry is presented on a black velvet pedestal with warm, golden accent lighting that creates a sparkling, luxurious ambiance. Sharp focus on the fine filigree work, reflecting a festive and heritage feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJl7aXVBUmaaCrU3xay5spXAkz-c_sCyncNOCUB4dwO5sv_e7k-_o8tF_kcpbmxLp7QchHWBB3jtL0s6ruTGAKpccNZ1eW5DnDr4t-R0oxQwuUf8c_xyTad3pafsGbvItE06nCzCweDS5GgN9hUEriQaGyoVgodGOfEM_sKbkuUkjmT9osRQQZDxOUGXf_WcaSisQVY4RVpRj7YuXz5sAA6MhctzeaCrXLfZYe53-6FFOxcF7BpP7t"/>
+</div>
+<div class="flex flex-col justify-center">
+<h4 class="font-headline-md text-body-lg text-on-surface">Temple Gold Jhumkas</h4>
+<p class="font-label-sm text-label-sm text-outline mt-1">22K Gold Plated • Antique Finish</p>
+<p class="font-body-md text-primary mt-3">₹8,900</p>
+</div>
+</div>
+<!-- Item Card 3 -->
+<div class="flex gap-6 group">
+<div class="w-24 h-32 flex-shrink-0 bg-surface-container-highest rounded-lg overflow-hidden gold-border">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="An artistic close-up of a luxury silk clutch bag featuring gold dori embroidery and sequence work in a champagne gold palette. The clutch is set against a dark, moody background with subtle bokeh lights. The image conveys high-fashion elegance and celebratory luxury, emphasizing the fine craftsmanship and shimmering details." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0Vix3XlOjhY_MeKpg6SHPqxK4kPTbd6oryvpIMG9t9zCSS0-UJNAjfQAlGWX9ehK6pmFcGsDNkiJ-S7qVqvO99CypfrllEgOgcDU7DChQEswL7SFr2dV6aN87uGA55-60PVw8b6IJB5Wr3cmqlOrkOY2Fb96esZBMsyx6So1_kcvze3xBd2M_2v83FhuzL2XNDDbfWMliu5F-bLJpJaIjqCB51ejGVEuzesJjsQ90rc_68aQbRsBi"/>
+</div>
+<div class="flex flex-col justify-center">
+<h4 class="font-headline-md text-body-lg text-on-surface">Champagne Silk Potli</h4>
+<p class="font-label-sm text-label-sm text-outline mt-1">Dori Embroidery • Silk Lining</p>
+<p class="font-body-md text-primary mt-3">₹4,200</p>
+</div>
+</div>
+</div>
+<!-- Details Sidebar -->
+<aside class="lg:col-span-5 space-y-8">
+<!-- Shipping Address -->
+<div class="bg-surface-container-low p-8 rounded-xl border border-outline-variant/20">
+<h3 class="font-label-sm text-label-sm uppercase text-outline mb-6">Delivery Address</h3>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-primary">location_on</span>
+<div class="font-body-md text-on-surface space-y-1">
+<p class="font-bold">Ananya Sharma</p>
+<p>Skyline Towers, Apt 402</p>
+<p>Bandra West, Mumbai</p>
+<p>Maharashtra - 400050</p>
+<p class="text-on-surface-variant pt-2">+91 98765 43210</p>
+</div>
+</div>
+</div>
+<!-- Actions -->
+<div class="space-y-4">
+<button class="w-full py-4 gold-gradient text-on-primary-fixed font-label-sm text-label-sm uppercase tracking-[0.2em] font-bold rounded-lg hover:opacity-90 transition-all shadow-lg active:scale-[0.98]">
+                        Track Shipment
+                    </button>
+<button class="w-full py-4 bg-transparent border border-outline-variant/50 text-on-surface font-label-sm text-label-sm uppercase tracking-[0.1em] rounded-lg hover:bg-surface-variant transition-all active:scale-[0.98] flex justify-center items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">support_agent</span>
+                        Contact Concierge
+                    </button>
+</div>
+<!-- Map Preview (Aesthetic Placeholder) -->
+<div class="relative h-48 rounded-xl overflow-hidden gold-border">
+<div class="absolute inset-0 bg-surface-container-highest flex items-center justify-center">
+<div class="text-center">
+<span class="material-symbols-outlined text-primary text-4xl mb-2">map</span>
+<p class="font-label-sm text-label-sm text-outline uppercase">Live Map View</p>
+</div>
+</div>
+<img class="w-full h-full object-cover opacity-30 grayscale" data-location="Mumbai, India" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6mua9s9AHoOpOfOn_BpLzxR-tlT27S4arnHPSF0csFY4n8QPJkN5GGhVj95SstzX9XKi2y1SUS9wvYVTJZcf7RTOaF99eV0Pvb6frWMQAdCdvwI_Vj2ooG2WfHU8MzF9RUwDhPBsrE-gLXviKn1SU5_F_S15H4Bn7BAM8a8mc_RSnGxqNOzyEjAhdpPPxjXNvln2MDfn8EAUnn3QtlUfkb5pZjc4jmeEHwzqXK372rNf-BHP6zOcw"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent"></div>
+</div>
+</aside>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 bg-surface/90 backdrop-blur-xl border-t border-outline-variant/20 rounded-t-full shadow-[0_-4px_20px_rgba(201,150,47,0.05)] md:hidden">
+<div class="flex justify-around items-center pt-2 pb-6 px-2 w-full">
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-primary-fixed-dim active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-primary-fixed-dim active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">storefront</span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest mt-1">Shop</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-primary-fixed-dim active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">search</span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest mt-1">Search</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-primary-fixed-dim active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest mt-1">Bag</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary scale-110 transition-transform active:scale-90" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest mt-1">Profile</span>
+</a>
+</div>
+</nav>
+<script>
+        // Micro-interaction: Smooth appearance of content
+        document.addEventListener('DOMContentLoaded', () => {
+            const items = document.querySelectorAll('.group');
+            items.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(20px)';
+                item.style.transition = `all 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.1}s`;
+                setTimeout(() => {
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }, 100);
+            });
+        });
+    </script>
+</body></html>

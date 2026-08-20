@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #C9962F;
+  --color-primary-dark: #B28228;
+  --color-primary-light: #F0D68A;
+
+  --color-background: #1A1C22;
+  --color-surface: #242730;
+  --color-card: #2B2E36;
+
+  --color-border: #3B3E47;
+
+  --color-text: #F8F8F8;
+  --color-text-secondary: #C9C9C9;
+  --color-muted: #8E9199;
+
+  --font-heading: "Plus Jakarta Sans", sans-serif;
+  --font-body: "Manrope", sans-serif;
+  --font-logo: "Cormorant Garamond", serif;
+
+  --radius-card: 22px;
+
+  --shadow-card: 0 8px 30px rgba(0, 0, 0, 0.35);
+  --shadow-gold: 0 8px 25px rgba(201, 150, 47, 0.25);
+}
+
+body {
+ 
+  background: var(--color-background);
+  
+}

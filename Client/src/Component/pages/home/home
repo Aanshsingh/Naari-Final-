@@ -1,0 +1,97 @@
+  <section className="hidden lg:block bg-[#111217] py-16 px-16">
+        <h2 className="text-center text-2xl text-[#D4A34E] tracking-wide mb-10">Customer Favorites</h2>
+        <div className="grid grid-cols-3 gap-6">
+          {[
+            { quote: "The fabric quality is beyond comparison. I wore my Naari saree to a wedding and received countless compliments.", name: "Ananya M." },
+            { quote: "Fast delivery and the fit was perfect. The zardosi work looks even better in person than in the photos!", name: "Priya S." },
+            { quote: "A truly luxury experience. The packaging was beautiful and the attention to detail is evident in every stitch.", name: "Meera K." },
+          ].map((t) => (
+            <div key={t.name} className="bg-[#0d0e12] p-6 rounded-lg text-center">
+              <p className="text-[#D4A34E] text-sm mb-3">★★★★★</p>
+              <p className="text-gray-300 text-sm italic">"{t.quote}"</p>
+              <p className="text-gray-500 text-xs mt-4 tracking-widest">— {t.name.toUpperCase()}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+
+       <section className="px-6 lg:px-16 py-10">
+        <div className="flex items-end justify-between mb-6">
+          <div>
+            <h2 className="text-xl lg:text-2xl text-[#D4A34E] tracking-wide">New Arrivals</h2>
+            <p className="hidden lg:block text-sm text-gray-500 mt-1">
+              The latest from our artisan workshop
+            </p>
+          </div>
+          <Link to="/shop" className="hidden lg:block text-xs tracking-widest text-[#D4A34E] underline">
+            VIEW ALL
+          </Link>
+        </div>
+
+        {productsLoading && <p className="text-gray-500 text-sm">Loading products...</p>}
+
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+          {productsData?.products?.map((product) => (
+            <Link
+              key={product._id}
+              to={`/product/${product.slug}`}
+              className="group block bg-[#14151a] rounded-lg overflow-hidden relative"
+            >
+              <span className="absolute top-2 left-2 z-10 bg-[#D4A34E] text-black text-[10px] px-2 py-0.5 rounded tracking-widest">
+                NEW
+              </span>
+              <button
+                type="button"
+                onClick={(e) => e.preventDefault()} // wishlist not built yet — placeholder tap target
+                className="absolute top-2 right-2 z-10 w-7 h-7 rounded-full bg-black/40 flex items-center justify-center"
+              >
+                <Heart size={14} className="text-white" />
+              </button>
+
+              <img
+                src={product.images?.[0]?.url}
+                alt={product.name}
+                className="w-full aspect-[3/4] object-cover group-hover:scale-105 transition-transform"
+              />
+              <div className="p-3">
+                <h3 className="text-white text-xs lg:text-sm truncate">{product.name}</h3>
+                <p className="text-[#D4A34E] text-sm mt-1">
+                  ₹{(product.discountPrice || product.price).toLocaleString("en-IN")}
+                </p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="lg:hidden px-6 py-10 text-center">
+        <h2 className="text-[#D4A34E] tracking-widest text-sm">
+          @NAARIOFFICIAL
+        </h2>
+        <p className="text-gray-400 text-xs mt-1">Join our elegant community</p>
+        <div className="grid grid-cols-2 gap-2 mt-5">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="aspect-square bg-[#1a1b21] rounded" />
+          ))}
+        </div>
+      </section>
+
+      {/* Mobile: Newsletter — UI only, no backend endpoint yet */}
+      <section className="lg:hidden px-6 py-10 text-center border-t border-white/10">
+        <h2 className="text-[#D4A34E] tracking-widest text-sm">
+          INSIDER ACCESS
+        </h2>
+        <p className="text-gray-400 text-xs mt-2">
+          Subscribe to receive exclusive festive styling guides and early access
+          to new collections.
+        </p>
+        <input
+          type="email"
+          placeholder="YOUR EMAIL ADDRESS"
+          className="w-full mt-5 bg-transparent border-b border-white/20 text-white text-sm py-2 text-center outline-none focus:border-[#D4A34E]"
+        />
+        <button className="w-full mt-4 py-3 bg-gradient-to-r from-[#C9962F] to-[#F0D68A] text-black text-xs tracking-widest rounded">
+          SUBSCRIBE
+        </button>
+      </section>

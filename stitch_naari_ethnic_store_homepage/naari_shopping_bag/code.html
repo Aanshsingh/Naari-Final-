@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Your Shopping Bag | Naari Ethnic Wear</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@100..900&family=Plus+Jakarta+Sans:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-variant": "#33353b",
+                    "on-secondary-fixed": "#231b00",
+                    "on-secondary-container": "#cbb36b",
+                    "tertiary": "#c4c6d0",
+                    "on-tertiary-container": "#33363e",
+                    "on-primary-fixed": "#271900",
+                    "on-background": "#e2e2ea",
+                    "surface-container-low": "#191b21",
+                    "tertiary-fixed": "#e0e2ed",
+                    "surface-container-lowest": "#0c0e14",
+                    "inverse-on-surface": "#2e3037",
+                    "on-primary-fixed-variant": "#5e4200",
+                    "secondary-fixed": "#fbe194",
+                    "surface-container-highest": "#33353b",
+                    "secondary-container": "#564505",
+                    "tertiary-container": "#9c9ea8",
+                    "on-surface-variant": "#d3c4b0",
+                    "surface-container-high": "#282a30",
+                    "inverse-surface": "#e2e2ea",
+                    "error-container": "#93000a",
+                    "surface-dim": "#111319",
+                    "on-tertiary-fixed": "#181b23",
+                    "on-primary-container": "#493200",
+                    "surface-bright": "#373940",
+                    "tertiary-fixed-dim": "#c4c6d0",
+                    "primary-fixed-dim": "#f5bd53",
+                    "primary": "#f5bd53",
+                    "on-secondary-fixed-variant": "#564505",
+                    "surface-container": "#1d1f26",
+                    "outline-variant": "#4f4536",
+                    "on-secondary": "#3c2f00",
+                    "surface": "#111319",
+                    "secondary": "#dec57a",
+                    "on-error": "#690005",
+                    "secondary-fixed-dim": "#dec57a",
+                    "error": "#ffb4ab",
+                    "inverse-primary": "#7c5800",
+                    "on-tertiary-fixed-variant": "#44474f",
+                    "on-tertiary": "#2d3038",
+                    "on-surface": "#e2e2ea",
+                    "primary-fixed": "#ffdea8",
+                    "surface-tint": "#f5bd53",
+                    "background": "#111319",
+                    "outline": "#9c8f7c",
+                    "on-primary": "#422d00",
+                    "primary-container": "#c9962f",
+                    "on-error-container": "#ffdad6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "unit": "8px",
+                    "section-gap": "120px",
+                    "margin-mobile": "20px",
+                    "container-max": "1280px",
+                    "margin-desktop": "64px"
+            },
+            "fontFamily": {
+                    "label-sm": ["Manrope"],
+                    "headline-lg-mobile": ["Manrope"],
+                    "headline-lg": ["Manrope"],
+                    "headline-md": ["Manrope"],
+                    "display-brand": ["Plus Jakarta Sans"],
+                    "body-md": ["Manrope"],
+                    "body-lg": ["Manrope"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "letterSpacing": "0.1em", "fontWeight": "300"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.4", "letterSpacing": "0.15em", "fontWeight": "300"}],
+                    "headline-md": ["24px", {"lineHeight": "1.4", "letterSpacing": "0.1em", "fontWeight": "400"}],
+                    "display-brand": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .gold-gradient {
+            background: linear-gradient(135deg, #f5bd53 0%, #c9962f 50%, #f5bd53 100%);
+            background-size: 200% auto;
+            transition: 0.5s;
+        }
+        .gold-gradient:hover {
+            background-position: right center;
+        }
+        .gold-border {
+            border: 1px solid rgba(245, 189, 83, 0.2);
+        }
+        .gold-border-focus:focus-within {
+            border-color: #f5bd53;
+        }
+        .premium-glow {
+            box-shadow: 0 0 20px rgba(201, 150, 47, 0.05);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #111319;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c9962f;
+            border-radius: 2px;
+        }
+        .vignette-overlay {
+            background: radial-gradient(circle, transparent 0%, rgba(12, 14, 20, 0.8) 100%);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-primary selection:text-on-primary min-h-screen flex flex-col overflow-x-hidden">
+<!-- TopNavBar -->
+<header class="sticky top-0 w-full z-50 bg-surface/80 backdrop-blur-md dark:bg-surface/80 border-b border-outline-variant/30 shadow-sm">
+<nav class="flex justify-between items-center w-full px-margin-desktop py-4 max-w-container-max mx-auto">
+<div class="flex items-center gap-8">
+<a class="font-display-brand text-headline-lg text-primary uppercase tracking-wider" href="#">Naari</a>
+<div class="hidden md:flex gap-6">
+<a class="text-on-surface-variant font-medium font-label-sm text-label-sm hover:text-primary transition-colors duration-300" href="#">Home</a>
+<a class="text-on-surface-variant font-medium font-label-sm text-label-sm hover:text-primary transition-colors duration-300" href="#">Sarees</a>
+<a class="text-on-surface-variant font-medium font-label-sm text-label-sm hover:text-primary transition-colors duration-300" href="#">Kurtis</a>
+<a class="text-on-surface-variant font-medium font-label-sm text-label-sm hover:text-primary transition-colors duration-300" href="#">Lehengas</a>
+<a class="text-on-surface-variant font-medium font-label-sm text-label-sm hover:text-primary transition-colors duration-300" href="#">New Arrivals</a>
+<a class="text-on-surface-variant font-medium font-label-sm text-label-sm hover:text-primary transition-colors duration-300" href="#">About</a>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer active:scale-95 transition-transform" data-icon="search">search</button>
+<div class="relative">
+<button class="material-symbols-outlined text-primary font-bold border-b-2 border-primary pb-1 cursor-pointer active:scale-95 transition-transform" data-icon="shopping_bag">shopping_bag</button>
+<span class="absolute -top-1 -right-1 bg-primary text-on-primary text-[10px] w-4 h-4 flex items-center justify-center rounded-full font-bold">2</span>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer active:scale-95 transition-transform" data-icon="person">person</button>
+</div>
+</nav>
+</header>
+<main class="flex-grow w-full max-w-container-max mx-auto px-margin-desktop py-12">
+<!-- Header Section -->
+<div class="mb-12">
+<h1 class="font-headline-lg text-headline-lg text-on-background">Your Shopping Bag</h1>
+<p class="text-on-surface-variant font-body-md mt-2">2 Items in your curated collection</p>
+</div>
+<div class="flex flex-col lg:flex-row gap-gutter">
+<!-- Items List -->
+<div class="flex-grow space-y-gutter">
+<!-- Product Row 1 -->
+<div class="flex flex-col sm:flex-row gap-6 p-6 border border-outline-variant/20 bg-surface-container-low premium-glow transition-all duration-500 hover:border-primary/40 group">
+<div class="w-full sm:w-32 h-40 overflow-hidden relative border border-outline-variant/30">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="A close-up shot of a luxurious emerald green silk saree with intricate gold Zari embroidery draped elegantly over a dark wooden pedestal. The lighting is soft and moody, emphasizing the texture of the fabric and the shimmer of the gold thread. The background is a deep charcoal, creating a high-contrast, premium boutique atmosphere consistent with festive Indian luxury." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPIuS31U1pVngrz7-axXhYRHbkqz6or4hDGgo373B3shM0vB5lL6IR3msi9rqcCVoqwrE8e58aSFyBqvwdfxoAkE4HnmqEcaw-kRgtZ5yGHmou_9pQ13YVbiFDWR8AKaxWEg0ENE-QHMFMG9xTwaXQM9F58SOHtg_9dRgkJIzwayotrsGmVMzmxoyt6rrr7U_uTwcxgHj-r2wj_i6X582uBmIiXVeuAzZUKHLJZ63AGwK30Q9ODZiP"/>
+</div>
+<div class="flex flex-col justify-between flex-grow">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-background mb-1">Emerald Royale Zari Saree</h3>
+<p class="text-on-surface-variant font-label-sm text-label-sm uppercase tracking-widest">Hand-woven Banarasi</p>
+<div class="mt-4 space-y-1">
+<p class="text-on-surface-variant font-body-md"><span class="text-outline uppercase text-[10px] mr-2">Size:</span> One Size (Free)</p>
+<p class="text-on-surface-variant font-body-md"><span class="text-outline uppercase text-[10px] mr-2">Color:</span> Deep Emerald</p>
+</div>
+</div>
+<p class="font-headline-md text-headline-md text-primary">₹24,500</p>
+</div>
+<div class="flex justify-between items-center mt-6">
+<div class="flex items-center gold-border rounded-lg bg-surface-container-high overflow-hidden">
+<button class="px-3 py-1 text-primary hover:bg-primary/10 transition-colors material-symbols-outlined" onclick="this.nextElementSibling.innerText = Math.max(1, parseInt(this.nextElementSibling.innerText) - 1)">remove</button>
+<span class="px-4 py-1 font-medium text-on-background">1</span>
+<button class="px-3 py-1 text-primary hover:bg-primary/10 transition-colors material-symbols-outlined" onclick="this.previousElementSibling.innerText = parseInt(this.previousElementSibling.innerText) + 1">add</button>
+</div>
+<button class="text-on-surface-variant hover:text-error transition-colors flex items-center gap-2 font-label-sm text-label-sm uppercase">
+<span class="material-symbols-outlined text-[18px]" data-icon="delete">delete</span>
+                                Remove
+                            </button>
+</div>
+</div>
+</div>
+<!-- Product Row 2 -->
+<div class="flex flex-col sm:flex-row gap-6 p-6 border border-outline-variant/20 bg-surface-container-low premium-glow transition-all duration-500 hover:border-primary/40 group">
+<div class="w-full sm:w-32 h-40 overflow-hidden relative border border-outline-variant/30">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="A detailed shot of a champagne gold embroidered Kurti featuring delicate hand-crafted mirror work and floral motifs on fine georgette fabric. The garment is presented in a high-end fashion editorial style with dramatic shadows and warm golden lighting. The environment is a sophisticated dark-mode space with metallic accents, reflecting a sense of exclusive ethnic luxury." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaG1gHFt5j_YOHw28r6_KU_MRinrliPwwkS56C6CkwJBLRdSxM_91TA9CjrmE_sPE-pE0KFpNV_LZPs0v0BFh0r21vNZCUF0Pt7HAAhQLQ19lKHCU3BaCFVpWaIgPWc7X2iww7_kf5IR67IcqNzuaPeuCS3axKnF43AbMp1njcUz96B05OP0dfx8omYTE0fPRKHEGubDke_KQSq6ZFTaFgALpiEVAf7lPP7dxcNxLJ5E4ZW7LCaAkL"/>
+</div>
+<div class="flex flex-col justify-between flex-grow">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-background mb-1">Noor Mirror-Work Kurti</h3>
+<p class="text-on-surface-variant font-label-sm text-label-sm uppercase tracking-widest">Designer Collection</p>
+<div class="mt-4 space-y-1">
+<p class="text-on-surface-variant font-body-md"><span class="text-outline uppercase text-[10px] mr-2">Size:</span> M (US 8)</p>
+<p class="text-on-surface-variant font-body-md"><span class="text-outline uppercase text-[10px] mr-2">Color:</span> Champagne Gold</p>
+</div>
+</div>
+<p class="font-headline-md text-headline-md text-primary">₹8,900</p>
+</div>
+<div class="flex justify-between items-center mt-6">
+<div class="flex items-center gold-border rounded-lg bg-surface-container-high overflow-hidden">
+<button class="px-3 py-1 text-primary hover:bg-primary/10 transition-colors material-symbols-outlined" onclick="this.nextElementSibling.innerText = Math.max(1, parseInt(this.nextElementSibling.innerText) - 1)">remove</button>
+<span class="px-4 py-1 font-medium text-on-background">1</span>
+<button class="px-3 py-1 text-primary hover:bg-primary/10 transition-colors material-symbols-outlined" onclick="this.previousElementSibling.innerText = parseInt(this.previousElementSibling.innerText) + 1">add</button>
+</div>
+<button class="text-on-surface-variant hover:text-error transition-colors flex items-center gap-2 font-label-sm text-label-sm uppercase">
+<span class="material-symbols-outlined text-[18px]" data-icon="delete">delete</span>
+                                Remove
+                            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Order Summary Sidebar -->
+<aside class="w-full lg:w-[400px]">
+<div class="sticky top-28 p-8 border border-outline-variant/30 bg-surface-container-lowest premium-glow">
+<h2 class="font-headline-md text-headline-md mb-8 pb-4 border-b border-outline-variant/20 uppercase tracking-widest">Order Summary</h2>
+<div class="space-y-4 mb-8">
+<div class="flex justify-between font-body-md">
+<span class="text-on-surface-variant">Subtotal</span>
+<span class="text-on-background">₹33,400</span>
+</div>
+<div class="flex justify-between font-body-md">
+<span class="text-on-surface-variant">Shipping</span>
+<span class="text-secondary">Complimentary</span>
+</div>
+<div class="flex justify-between font-body-md">
+<span class="text-on-surface-variant">Taxes (GST 5%)</span>
+<span class="text-on-background">₹1,670</span>
+</div>
+</div>
+<div class="pt-6 border-t border-outline-variant/20 mb-10">
+<div class="flex justify-between items-end">
+<span class="font-headline-md text-headline-md uppercase tracking-wider">Total</span>
+<span class="font-headline-lg text-headline-lg text-primary">₹35,070</span>
+</div>
+</div>
+<div class="mb-8">
+<label class="block font-label-sm text-label-sm uppercase text-outline mb-2">Promo Code</label>
+<div class="flex gap-2">
+<input class="bg-transparent border-b border-outline-variant focus:border-primary outline-none py-2 flex-grow text-on-background font-body-md uppercase tracking-widest transition-colors" placeholder="ENTER CODE" type="text"/>
+<button class="font-label-sm text-label-sm text-primary uppercase hover:opacity-80 transition-opacity">Apply</button>
+</div>
+</div>
+<button class="w-full py-5 gold-gradient text-on-primary font-bold uppercase tracking-[0.2em] transition-all transform active:scale-95 shadow-lg shadow-primary/10">
+                        Proceed to Checkout
+                    </button>
+<div class="mt-8 flex flex-col gap-4 text-[10px] text-on-surface-variant uppercase tracking-widest">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[16px] text-primary" data-icon="verified">verified</span>
+                            Authenticity Guaranteed
+                        </div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[16px] text-primary" data-icon="local_shipping">local_shipping</span>
+                            Secure Express Global Delivery
+                        </div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[16px] text-primary" data-icon="lock">lock</span>
+                            256-bit Encrypted Checkout
+                        </div>
+</div>
+</div>
+</aside>
+</div>
+<!-- You Might Also Like Section -->
+<section class="mt-section-gap">
+<div class="flex justify-between items-end mb-12">
+<div>
+<h2 class="font-headline-lg text-headline-lg">Complete The Look</h2>
+<p class="text-on-surface-variant font-body-md mt-2">Curated accessories for your selected styles</p>
+</div>
+<button class="hidden md:flex items-center gap-2 text-primary font-label-sm text-label-sm uppercase tracking-widest hover:gap-4 transition-all group">
+                    View Collection <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Suggested Product 1 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[3/4] overflow-hidden border border-outline-variant/20 mb-6">
+<img class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" data-alt="A stunning pair of heavy Indian Jhumka earrings crafted in 22k gold with intricate filigree work and dangling pearls. The jewelry is captured in a macro shot against a rich, dark velvet background with a soft gold glow reflecting off the polished surfaces. The lighting is cinematic and warm, highlighting the exquisite craftsmanship and premium festive aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtnKinxJcZmyVsfBEr3-nr6IhYUzyajuigaZP6UuDKcmJBKJomeq59HmzoA0xwTU_lBA9PVx4Bk0jS8ZtzTvUAQClxkU0LAEIQBASsM37l3CSk19LTo2GrmKCa3eYd-WK4T9AN-3fMFsF4WDQBNJ-I6WM3hXStrJrE_w8Lo4fJlIZbUoWZE9T-cqlqISHEs0qo29DHUyaiRPH_m-6ERP9BoAd7Wh4b4zcqZNsYqnknkDLJLtK0eLc3"/>
+<div class="absolute inset-0 bg-surface/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+<button class="bg-surface text-on-surface px-6 py-3 font-label-sm text-label-sm uppercase tracking-widest gold-border hover:bg-primary hover:text-on-primary transition-all">Quick Add</button>
+</div>
+</div>
+<h4 class="font-body-lg text-body-lg text-on-background">Antique Gold Jhumkas</h4>
+<p class="text-on-surface-variant font-label-sm text-label-sm uppercase mt-1">Heritage Collection</p>
+<p class="text-primary font-headline-md text-headline-md mt-2">₹12,400</p>
+</div>
+<!-- Suggested Product 2 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[3/4] overflow-hidden border border-outline-variant/20 mb-6">
+<img class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" data-alt="A designer silk potli bag in deep crimson red with elaborate gold zardozi embroidery and pearl-encrusted drawstrings. The accessory is showcased on a dark marble surface with subtle reflections and soft, directional light catching the metallic threads. The image evokes a sense of high-end Indian wedding luxury and refined elegance, consistent with the dark-mode boutique theme." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4xOmV3w9ORXvw7woDqJ4GTAKt2_P-7OmVmoyCBnaPiaAT2gd0MCoJV4fJKGQ73LTHV3Meh1RFj-uGsmNm1g4PWWk3M-aJs-m1FOeXO_T4wnW_CtP7A8k4fJYifSYGmhKs1ghP_fqYYyTAx7yNe_RAIp3BB8hMJ4mTJwTabvhccIdtHzZ67G7N9nPFa78aJKLk5m2m3CF4HmrYy9V3VnnGLz6c5CeEkTi5TbaTHId2dgylU6EH0czb"/>
+<div class="absolute inset-0 bg-surface/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+<button class="bg-surface text-on-surface px-6 py-3 font-label-sm text-label-sm uppercase tracking-widest gold-border hover:bg-primary hover:text-on-primary transition-all">Quick Add</button>
+</div>
+</div>
+<h4 class="font-body-lg text-body-lg text-on-background">Velvet Zardozi Potli</h4>
+<p class="text-on-surface-variant font-label-sm text-label-sm uppercase mt-1">Bridal Accessories</p>
+<p class="text-primary font-headline-md text-headline-md mt-2">₹4,200</p>
+</div>
+<!-- Suggested Product 3 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[3/4] overflow-hidden border border-outline-variant/20 mb-6">
+<img class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" data-alt="A pair of elegant champagne gold handcrafted Punjabi Juttis featuring intricate sequin and beadwork in floral patterns. The shoes are placed on a dark, textured surface with a warm golden highlight hitting the embroidery. The mood is sophisticated and exclusive, perfect for a high-end ethnic fashion store's curated accessory section." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDS6TJnmWHApN2Vlw7pw1oKz7Toa6Cdbnj6MAC_yPkXubRTEWuUKcx0ZR2yqMrLXDopLYXvfPlbwbeu_0Vwwo_gJ4qRNUkc9bu7uz5jZwRwoag3n_DNGxhD_4NKrOd1_x-npBpmbSndULWeHKV-dxpOR_qtY-20ZBxTcilBbAiznE3mpmM8XcpWnVHKQ-euffk2YfLeVaRFKXrIgQmDep7aCoJEpYOcX3AqL7yrsZD0b8sUHmLsCcUO"/>
+<div class="absolute inset-0 bg-surface/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+<button class="bg-surface text-on-surface px-6 py-3 font-label-sm text-label-sm uppercase tracking-widest gold-border hover:bg-primary hover:text-on-primary transition-all">Quick Add</button>
+</div>
+</div>
+<h4 class="font-body-lg text-body-lg text-on-background">Sequin Starlight Juttis</h4>
+<p class="text-on-surface-variant font-label-sm text-label-sm uppercase mt-1">Footwear Luxury</p>
+<p class="text-primary font-headline-md text-headline-md mt-2">₹3,800</p>
+</div>
+<!-- Suggested Product 4 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[3/4] overflow-hidden border border-outline-variant/20 mb-6">
+<img class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" data-alt="A magnificent kundan choker necklace with teardrop emerald drops and intricate gold settings, presented on a minimalist dark bust. The lighting is focused and dramatic, making the gemstones glow and the gold shimmer. The composition is clean and editorial, reflecting the ultimate festive luxury and premium branding of an elite ethnic wear boutique." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6BAcdJPnpB67VjLo40U7NJiVLuXlW2IaGW0HwQgxyOx5EH_KU0eDPmSOy5FISqKZH9BjL-bKYrVqA66vIVNsiItCz2WwQg2UNC6OVXv7_KDAydOhmtwxDCNhvjRVau6ef7G-CoZEHiNbnvz5E5sg-IGNYnHcbhdDb11GADP1gKPwkNX3S6mzcri8XlT-4B7ubzMa_umYebzHm-eODPE5k9qSbOx_YHgMSw8R6C-fYFdVj9EiNGGfo"/>
+<div class="absolute inset-0 bg-surface/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+<button class="bg-surface text-on-surface px-6 py-3 font-label-sm text-label-sm uppercase tracking-widest gold-border hover:bg-primary hover:text-on-primary transition-all">Quick Add</button>
+</div>
+</div>
+<h4 class="font-body-lg text-body-lg text-on-background">Royal Kundan Choker</h4>
+<p class="text-on-surface-variant font-label-sm text-label-sm uppercase mt-1">Fine Jewelry</p>
+<p class="text-primary font-headline-md text-headline-md mt-2">₹48,900</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full border-t border-outline-variant/20 bg-surface-container-lowest dark:bg-surface-container-lowest">
+<div class="flex flex-col md:flex-row justify-between items-start w-full px-margin-desktop py-section-gap gap-gutter max-w-container-max mx-auto">
+<div class="flex flex-col gap-6 md:w-1/3">
+<span class="font-display-brand text-headline-lg text-primary uppercase">Naari</span>
+<p class="text-on-surface-variant font-body-md max-w-sm">Celebrating the timeless grace of Indian craftsmanship through curated luxury ethnic wear for the modern woman.</p>
+<div class="flex gap-4">
+<a class="text-primary hover:text-secondary transition-colors" href="#"><span class="material-symbols-outlined">brand_awareness</span></a>
+<a class="text-primary hover:text-secondary transition-colors" href="#"><span class="material-symbols-outlined">public</span></a>
+<a class="text-primary hover:text-secondary transition-colors" href="#"><span class="material-symbols-outlined">mail</span></a>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-12 md:gap-24">
+<div class="flex flex-col gap-4">
+<h5 class="text-on-background font-label-sm text-label-sm uppercase tracking-widest border-b border-primary/20 pb-2 w-fit">Information</h5>
+<ul class="flex flex-col gap-2">
+<li><a class="text-on-surface-variant font-body-md hover:text-secondary transition-colors" href="#">Privacy Policy</a></li>
+<li><a class="text-on-surface-variant font-body-md hover:text-secondary transition-colors" href="#">Terms of Service</a></li>
+<li><a class="text-on-surface-variant font-body-md hover:text-secondary transition-colors" href="#">Shipping & Returns</a></li>
+</ul>
+</div>
+<div class="flex flex-col gap-4">
+<h5 class="text-on-background font-label-sm text-label-sm uppercase tracking-widest border-b border-primary/20 pb-2 w-fit">Support</h5>
+<ul class="flex flex-col gap-2">
+<li><a class="text-on-surface-variant font-body-md hover:text-secondary transition-colors" href="#">Contact Us</a></li>
+<li><a class="text-on-surface-variant font-body-md hover:text-secondary transition-colors" href="#">Store Locator</a></li>
+<li><a class="text-on-surface-variant font-body-md hover:text-secondary transition-colors" href="#">FAQ</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="w-full px-margin-desktop py-8 border-t border-outline-variant/10 max-w-container-max mx-auto flex justify-between items-center text-[10px] text-outline uppercase tracking-widest">
+<p>© 2024 Naari Ethnic Wear. All Rights Reserved.</p>
+<div class="flex gap-4">
+<span>Visa</span>
+<span>Mastercard</span>
+<span>Amex</span>
+<span>UPI</span>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interaction: Subtle hover glow for product cards
+        document.querySelectorAll('.premium-glow').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--x', `${x}px`);
+                card.style.setProperty('--y', `${y}px`);
+                card.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(245, 189, 83, 0.05) 0%, transparent 80%), #191b21`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.background = '#191b21';
+            });
+        });
+    </script>
+</body></html>

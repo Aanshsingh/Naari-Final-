@@ -1,0 +1,10 @@
+mongo password-voLavl2CFPwcowkw
+mongo link- mongodb+srv://naari_admin:<db_password>@cluster0.272owug.mongodb.net/?appName=Cluster0
+
+mongodb+srv://naari_admin:voLavl2CFPwcowkw@cluster0.272owug.mongodb.net/?appName=Cluster0
+
+mongodb://naari_admin:voLavl2CFPwcowkw@ac-bzxd38g-shard-00-00.272owug.mongodb.net:27017,ac-bzxd38g-shard-00-01.272owug.mongodb.net:27017,ac-bzxd38g-shard-00-02.272owug.mongodb.net:27017/?ssl=true&replicaSet=atlas-g92h84-shard-0&authSource=admin&appName=Cluster0
+
+test- Razorpay API - rzp_test_TNHs27wIgaqNdE
+
+test - Key Secret -  0xbrfT2VB7u6aAVtaOzFrIPb
