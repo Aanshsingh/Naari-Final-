@@ -2,7 +2,7 @@
 import { Router } from "express";
 import {
   createReview, getProductReviews, getAllReviewsAdmin, approveReview, rejectReview,
-} from "../controllers/review.controller.js";
+} from "../Controllers/review.controller.js";
 import { verifyJWT, verifyAdmin } from "../middleware/auth.middleware.js";
 
 const router = Router();
