@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { Heart, MessageSquarePlus } from "lucide-react";
 import { getProductsApi } from "../../../api/productApi";
 import { getCategoriesApi } from "../../../api/catogries";
-import { getApprovedTestimonialsApi } from "../../../api/testimonialApi";
+import { getApprovedTestimonialsApi } from "../../../api/TestimonialApi.js";
 import { useLikedProducts } from "../../../hook/useLikedProducts";
 import TestimonialModal from "../../common/TestimonialModal.jsx";
 import { FaInstagram } from "react-icons/fa";
