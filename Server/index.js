@@ -6,7 +6,7 @@ import cors from 'cors';
 
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://naari-final-git-main-artansscript.vercel.app/'
+  'naari-final.vercel.app'
 ];
 
 app.use(cors({
