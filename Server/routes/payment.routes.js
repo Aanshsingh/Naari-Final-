@@ -1,6 +1,6 @@
 // routes/payment.routes.js
 import { Router } from "express";
-import { createRazorpayOrder, VerifyPayment } from "../controllers/payment.controller.js";
+import { createRazorpayOrder, VerifyPayment } from "../Controllers/payment.controller.js";
 import { verifyJWT } from "../middleware/auth.middleware.js";
 
 const router = Router();
