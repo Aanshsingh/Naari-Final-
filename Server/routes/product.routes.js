@@ -6,7 +6,7 @@ import {
   getProductBySlug,
   updateProduct,
   deleteProduct,
-} from "../controllers/product.controller.js";
+} from "../controllers/product.Controller.js";
 import { verifyJWT, verifyAdmin } from "../middleware/auth.middleware.js";
 
 const router = Router();
