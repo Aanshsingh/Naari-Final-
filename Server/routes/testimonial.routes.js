@@ -6,7 +6,7 @@ import {
   getAllTestimonialsAdmin,
   approveTestimonial,
   rejectTestimonial,
-} from "../controllers/testimonial.controller.js";
+} from "../Controllers/testimonial.controller.js";
 import { verifyJWT, verifyAdmin } from "../middleware/auth.middleware.js";
 
 const router = Router();
