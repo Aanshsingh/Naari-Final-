@@ -2,7 +2,7 @@
 import { Router } from "express";
 import {
   createBanner, getActiveBanners, getAllBannersAdmin, updateBanner, deleteBanner,
-} from "../controllers/banner.controller.js";
+} from "../Controllers/banner.controller.js";
 import { verifyJWT, verifyAdmin } from "../middleware/auth.middleware.js";
 
 const router = Router();
