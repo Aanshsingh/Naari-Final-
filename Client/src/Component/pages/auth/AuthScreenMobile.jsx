@@ -8,7 +8,7 @@ export default function AuthScreenMobile() {
   return (
     <div className="min-h-screen bg-[#0d0e12] flex flex-col">
       <div className="relative h-[45vh] min-h-[320px]">
-        <img src="public\homemobile.png" alt="" className="absolute inset-0 w-full h-full object-cover" />
+        <img src="/homemobile.png" alt="" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-[#0d0e12]" />
         <div className="absolute bottom-6 left-0 right-0 text-center px-6">
           <h1 className="text-4xl tracking-[0.3em] font-light bg-gradient-to-b from-[#F0D68A] to-[#C9962F] bg-clip-text text-transparent">
