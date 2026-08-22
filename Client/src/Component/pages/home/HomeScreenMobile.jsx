@@ -37,7 +37,7 @@ export default function HomeMobile() {
       <section className="relative h-[52vh] min-h-[380px] overflow-hidden">
         <Link to="/" className="block w-full h-full">
           <img
-            src="public\homemobile.png"
+            src="/homemobile.png"
             alt="Naari"
             className="w-full h-full object-cover object-[70%_center]"
           />
