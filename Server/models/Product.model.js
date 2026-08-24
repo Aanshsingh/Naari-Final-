@@ -10,7 +10,9 @@ discountPrice:	{	type:	Number	},
 images: [{	url:	String,	publicId:	String	}],
 category:{	type:	Schema.Types.ObjectId,	ref:	'Category',	required:	true	},				
 stock: {	type:	Number,	default:	0	},								
-sizes: [{	label:	String,	stock:	Number	}],								
+sizes: [{	label:	String,	stock:	Number	}],	
+fabricCare: { type: String },
+craftsmanship: { type: String },							
 isActive:						
 {	type:	Boolean,	default:	true	}
 },	{	timestamps:	true	});

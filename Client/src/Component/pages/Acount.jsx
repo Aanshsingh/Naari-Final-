@@ -195,7 +195,7 @@ export default function Account() {
       </section>
 
       {/* Settings */}
-      <section className="mt-8">
+      {/* <section className="mt-8">
         <h2 className="text-sm tracking-widest text-[#D4A34E] mb-3 flex items-center gap-2">
           <Settings size={14} /> SETTINGS
         </h2>
@@ -213,7 +213,7 @@ export default function Account() {
             <ChevronRight size={14} className="text-gray-600" />
           </button>
         </div>
-      </section>
+      </section> */}
 
       {/* Logout */}
       <button

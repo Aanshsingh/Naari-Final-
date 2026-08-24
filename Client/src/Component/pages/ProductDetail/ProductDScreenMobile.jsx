@@ -270,8 +270,8 @@ export default function ProductDetailMobile() {
         ====================================================== */}
 
         <div className="mt-6">
-          <AccordionSection title="FABRIC & CRAFTSMANSHIP">
-            Pure mulberry silk with hand-woven zari border. Dry clean only.
+          <AccordionSection title="FABRIC & CARE">
+            {product.fabricCare || "Details coming soon for this piece."}
           </AccordionSection>
 
           <AccordionSection title="SHIPPING & RETURNS">
@@ -323,7 +323,7 @@ export default function ProductDetailMobile() {
 
         <button
           type="button"
-            onClick={(e) => {
+          onClick={(e) => {
             e.preventDefault();
             toggleLike(product._id);
             setWishlist((prev) => !prev);

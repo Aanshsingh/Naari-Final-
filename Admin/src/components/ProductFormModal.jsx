@@ -4,18 +4,12 @@ import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { X, Upload, ImagePlus } from "lucide-react";
 
-import {
-  createProductApi,
-  updateProductApi,
-} from "../api/adminProductApi";
+import { createProductApi, updateProductApi } from "../api/adminProductApi";
 
 import { getCategoriesApi } from "../api/adminCategoryApi";
 import { uploadImageToCloudinary } from "../utils/uploadImage";
 
-export default function ProductFormModal({
-  product,
-  onClose,
-}) {
+export default function ProductFormModal({ product, onClose }) {
   const isEditing = !!product;
 
   const queryClient = useQueryClient();
@@ -25,16 +19,11 @@ export default function ProductFormModal({
   const [error, setError] = useState("");
 
   // Existing Cloudinary images when editing
-  const [images, setImages] = useState(
-    product?.images || []
-  );
+  const [images, setImages] = useState(product?.images || []);
 
   const { data: categories } = useQuery({
     queryKey: ["categories"],
-    queryFn: () =>
-      getCategoriesApi().then(
-        (res) => res.data.data
-      ),
+    queryFn: () => getCategoriesApi().then((res) => res.data.data),
   });
 
   // ==========================================
@@ -54,7 +43,7 @@ export default function ProductFormModal({
     // Maximum 6 images
     if (images.length + files.length > 6) {
       setError(
-        `You can upload maximum 6 images. You currently have ${images.length}.`
+        `You can upload maximum 6 images. You currently have ${images.length}.`,
       );
       return;
     }
@@ -64,24 +53,14 @@ export default function ProductFormModal({
     try {
       // Upload all images simultaneously
       const uploadedImages = await Promise.all(
-        files.map((file) =>
-          uploadImageToCloudinary(file)
-        )
+        files.map((file) => uploadImageToCloudinary(file)),
       );
 
-      setImages((prev) => [
-        ...prev,
-        ...uploadedImages,
-      ]);
+      setImages((prev) => [...prev, ...uploadedImages]);
     } catch (err) {
-      console.error(
-        "Multiple image upload error:",
-        err
-      );
+      console.error("Multiple image upload error:", err);
 
-      setError(
-        "One or more images failed to upload. Please try again."
-      );
+      setError("One or more images failed to upload. Please try again.");
     } finally {
       setUploading(false);
     }
@@ -92,9 +71,7 @@ export default function ProductFormModal({
   // ==========================================
 
   const removeImage = (index) => {
-    setImages((prev) =>
-      prev.filter((_, i) => i !== index)
-    );
+    setImages((prev) => prev.filter((_, i) => i !== index));
   };
 
   // ==========================================
@@ -123,29 +100,22 @@ export default function ProductFormModal({
 
       slug,
 
-      description:
-        e.target.description.value,
+      description: e.target.description.value,
 
-      price: Number(
-        e.target.price.value
-      ),
+      price: Number(e.target.price.value),
 
-      discountPrice:
-        e.target.discountPrice.value
-          ? Number(
-              e.target.discountPrice.value
-            )
-          : undefined,
+      discountPrice: e.target.discountPrice.value
+        ? Number(e.target.discountPrice.value)
+        : undefined,
 
-      category:
-        e.target.category.value,
+      category: e.target.category.value,
 
-      stock: Number(
-        e.target.stock.value
-      ),
+      stock: Number(e.target.stock.value),
 
       // All product images
       images,
+
+      fabricCare: e.target.fabricCare.value,  
 
       sizes: e.target.sizes.value
         .split(",")
@@ -153,9 +123,7 @@ export default function ProductFormModal({
         .filter(Boolean)
         .map((label) => ({
           label,
-          stock: Number(
-            e.target.stock.value
-          ),
+          stock: Number(e.target.stock.value),
         })),
     };
 
@@ -163,10 +131,7 @@ export default function ProductFormModal({
 
     try {
       if (isEditing) {
-        await updateProductApi(
-          product._id,
-          payload
-        );
+        await updateProductApi(product._id, payload);
       } else {
         await createProductApi(payload);
       }
@@ -177,15 +142,9 @@ export default function ProductFormModal({
 
       onClose();
     } catch (err) {
-      console.error(
-        "Save product error:",
-        err
-      );
+      console.error("Save product error:", err);
 
-      setError(
-        err.response?.data?.message ||
-          "Could not save product"
-      );
+      setError(err.response?.data?.message || "Could not save product");
     } finally {
       setSaving(false);
     }
@@ -194,14 +153,11 @@ export default function ProductFormModal({
   return (
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
       <div className="bg-[#0d0e12] border border-white/10 rounded-lg w-full max-w-lg max-h-[90vh] overflow-y-auto p-6">
-
         {/* HEADER */}
 
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-white text-lg">
-            {isEditing
-              ? "Edit Product"
-              : "Add Product"}
+            {isEditing ? "Edit Product" : "Add Product"}
           </h2>
 
           <button
@@ -213,11 +169,7 @@ export default function ProductFormModal({
           </button>
         </div>
 
-        <form
-          onSubmit={handleSubmit}
-          className="space-y-4"
-        >
-
+        <form onSubmit={handleSubmit} className="space-y-4">
           {/* ================================= */}
           {/* MULTIPLE IMAGE UPLOAD */}
           {/* ================================= */}
@@ -234,7 +186,6 @@ export default function ProductFormModal({
             </div>
 
             <div className="grid grid-cols-3 gap-3 mt-3">
-
               {/* EXISTING / UPLOADED IMAGES */}
 
               {images.map((img, i) => (
@@ -258,15 +209,10 @@ export default function ProductFormModal({
 
                   <button
                     type="button"
-                    onClick={() =>
-                      removeImage(i)
-                    }
+                    onClick={() => removeImage(i)}
                     className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 hover:bg-red-600 rounded-full flex items-center justify-center"
                   >
-                    <X
-                      size={11}
-                      className="text-white"
-                    />
+                    <X size={11} className="text-white" />
                   </button>
                 </div>
               ))}
@@ -275,7 +221,6 @@ export default function ProductFormModal({
 
               {images.length < 6 && (
                 <label className="aspect-square border border-dashed border-white/20 hover:border-[#D4A34E]/60 rounded-lg flex flex-col items-center justify-center cursor-pointer transition">
-
                   {uploading ? (
                     <>
                       <div className="w-5 h-5 border-2 border-[#D4A34E] border-t-transparent rounded-full animate-spin" />
@@ -286,10 +231,7 @@ export default function ProductFormModal({
                     </>
                   ) : (
                     <>
-                      <ImagePlus
-                        size={20}
-                        className="text-gray-500"
-                      />
+                      <ImagePlus size={20} className="text-gray-500" />
 
                       <span className="text-[9px] text-gray-500 mt-2">
                         ADD IMAGES
@@ -301,9 +243,7 @@ export default function ProductFormModal({
                     type="file"
                     accept="image/*"
                     multiple
-                    onChange={
-                      handleImageUpload
-                    }
+                    onChange={handleImageUpload}
                     className="hidden"
                     disabled={uploading}
                   />
@@ -340,9 +280,7 @@ export default function ProductFormModal({
 
             <textarea
               name="description"
-              defaultValue={
-                product?.description
-              }
+              defaultValue={product?.description}
               rows={3}
               className="w-full mt-1 bg-transparent border border-white/20 rounded px-3 py-2 text-white text-sm outline-none focus:border-[#D4A34E]"
             />
@@ -351,7 +289,6 @@ export default function ProductFormModal({
           {/* PRICE */}
 
           <div className="grid grid-cols-2 gap-3">
-
             <div>
               <label className="text-xs tracking-widest text-gray-400">
                 PRICE
@@ -360,9 +297,7 @@ export default function ProductFormModal({
               <input
                 name="price"
                 type="number"
-                defaultValue={
-                  product?.price
-                }
+                defaultValue={product?.price}
                 required
                 className="w-full mt-1 bg-transparent border border-white/20 rounded px-3 py-2 text-white text-sm outline-none focus:border-[#D4A34E]"
               />
@@ -376,13 +311,10 @@ export default function ProductFormModal({
               <input
                 name="discountPrice"
                 type="number"
-                defaultValue={
-                  product?.discountPrice
-                }
+                defaultValue={product?.discountPrice}
                 className="w-full mt-1 bg-transparent border border-white/20 rounded px-3 py-2 text-white text-sm outline-none focus:border-[#D4A34E]"
               />
             </div>
-
           </div>
 
           {/* CATEGORY */}
@@ -394,26 +326,17 @@ export default function ProductFormModal({
 
             <select
               name="category"
-              defaultValue={
-                product?.category?._id
-              }
+              defaultValue={product?.category?._id}
               required
               className="w-full mt-1 bg-[#0d0e12] border border-white/20 rounded px-3 py-2 text-white text-sm outline-none focus:border-[#D4A34E]"
             >
-              <option value="">
-                Select category
-              </option>
+              <option value="">Select category</option>
 
-              {categories?.map(
-                (cat) => (
-                  <option
-                    key={cat._id}
-                    value={cat._id}
-                  >
-                    {cat.name}
-                  </option>
-                )
-              )}
+              {categories?.map((cat) => (
+                <option key={cat._id} value={cat._id}>
+                  {cat.name}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -427,9 +350,7 @@ export default function ProductFormModal({
             <input
               name="stock"
               type="number"
-              defaultValue={
-                product?.stock
-              }
+              defaultValue={product?.stock}
               required
               className="w-full mt-1 bg-transparent border border-white/20 rounded px-3 py-2 text-white text-sm outline-none focus:border-[#D4A34E]"
             />
@@ -444,37 +365,43 @@ export default function ProductFormModal({
 
             <input
               name="sizes"
-              defaultValue={product?.sizes
-                ?.map((s) => s.label)
-                .join(", ")}
+              defaultValue={product?.sizes?.map((s) => s.label).join(", ")}
+              className="w-full mt-1 bg-transparent border border-white/20 rounded px-3 py-2 text-white text-sm outline-none focus:border-[#D4A34E]"
+            />
+          </div>
+
+          {/* FABRIC CARE  */}
+
+          <div>
+            <label className="text-xs tracking-widest text-gray-400">
+              FABRIC &amp; CRAFTSMANSHIP
+            </label>
+            <textarea
+              name="fabricCare"
+              defaultValue={product?.fabricCare}
+              rows={3}
+              placeholder="e.g. Pure mulberry silk with hand-woven zari border. Dry clean only."
               className="w-full mt-1 bg-transparent border border-white/20 rounded px-3 py-2 text-white text-sm outline-none focus:border-[#D4A34E]"
             />
           </div>
 
           {/* ERROR */}
 
-          {error && (
-            <p className="text-red-400 text-sm">
-              {error}
-            </p>
-          )}
+          {error && <p className="text-red-400 text-sm">{error}</p>}
 
           {/* SUBMIT */}
 
           <button
             type="submit"
-            disabled={
-              saving || uploading
-            }
+            disabled={saving || uploading}
             className="w-full py-3 rounded bg-gradient-to-r from-[#C9962F] to-[#F0D68A] text-black text-sm tracking-widest disabled:opacity-60"
           >
             {saving
               ? "SAVING..."
               : isEditing
-              ? "UPDATE PRODUCT"
-              : "CREATE PRODUCT"}
+                ? "UPDATE PRODUCT"
+                : "CREATE PRODUCT"}
           </button>
-
         </form>
       </div>
     </div>
