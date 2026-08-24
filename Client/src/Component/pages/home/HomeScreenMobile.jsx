@@ -13,7 +13,7 @@ import { FaInstagram } from "react-icons/fa";
 export default function HomeMobile() {
   const [showTestimonialModal, setShowTestimonialModal] = useState(false);
 
-  const { likedIds, toggleLike, data: likedProductsData } = useLikedProducts();
+  const { likedIds, toggleLike } = useLikedProducts();
 
   const { data: newArrivals, isLoading: newLoading } = useQuery({
     queryKey: ["products", { sort: "newest", limit: 4 }],
@@ -129,30 +129,6 @@ export default function HomeMobile() {
           ))}
         </div>
       </section>
-
-      {/* Liked Products — only shows once the user has liked something
-      {likedIds.length > 0 && (
-        <section className="px-5 mt-8">
-          <div className="flex items-center gap-2 mb-3">
-            <Heart size={14} className="text-[#D4A34E] fill-[#D4A34E]" />
-            <h2 className="text-sm text-[#D4A34E] tracking-wide">Your Liked Pieces</h2>
-          </div>
-
-          <div className="flex gap-3 overflow-x-auto pb-2">
-            {likedProductsData?.map((product) => (
-              <Link key={product._id} to={`/product/${product.slug}`} className="shrink-0 w-32 bg-[#14151a] rounded-lg overflow-hidden">
-                <img src={product.images?.[0]?.url} alt={product.name} className="w-full aspect-[3/4] object-cover" />
-                <div className="p-2">
-                  <h3 className="text-white text-[10px] truncate">{product.name}</h3>
-                  <p className="text-[#D4A34E] text-[10px] mt-0.5">
-                    ₹{(product.discountPrice || product.price).toLocaleString("en-IN")}
-                  </p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
-      )} */}
 
       {/* Testimonials */}
       <section className="px-5 mt-8 text-center">
