@@ -16,6 +16,8 @@ import Wishlist from "../Component/pages/Wishlist.jsx";
 import Contact from "../Component/pages/Contact.jsx";
 import About from "../Component/pages/About.jsx";
 import VerifyEmail from "../Component/pages/VerifyEmail.jsx";
+import TermsOfService from "../Component/pages/TermsOfService.jsx";
+import PrivacyPolicy from "../Component/pages/PrivacyPolicy.jsx";
 
 const Router = createBrowserRouter([
   {
@@ -77,8 +79,13 @@ const Router = createBrowserRouter([
       {path: "Contact", element: <Contact/> },
       {path:"About", element: <about/>},
       { path: "verify-email/:token", element: <VerifyEmail /> },
+      { path: "terms", element: <TermsOfService /> },
+      { path: "privacy", element: <PrivacyPolicy /> },
+
+
     ],
   },
 ]);
 
 export default Router;
+

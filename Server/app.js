@@ -11,6 +11,7 @@ import bannerRouter from "./routes/banner.routes.js";
 import reviewRouter from "./routes/review.routes.js";
 import contactRouter from "./routes/contact.routes.js";
 import testimonialRouter from "./routes/testimonial.routes.js";
+import instagramPostRouter from "./routes/instagramPost.routes.js"
 
 const app = express();
 
@@ -52,6 +53,7 @@ app.use("/api/v1/banners", bannerRouter);
 app.use("/api/v1/reviews", reviewRouter);
 app.use("/api/v1/contact", contactRouter);
 app.use("/api/v1/testimonials", testimonialRouter);
+app.use("/api/v1/instagram-posts", instagramPostRouter);
 
 app.use(errorHandler);
 

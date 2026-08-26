@@ -34,6 +34,7 @@ const router = createBrowserRouter([
           { path: "reviews", element: <AdminReviews /> },
           { path: "sales", element: <AdminSales /> },
           { path: "categories", element: <AdminCategories /> },
+          { path: "instagram", element: <AdminInstagram /> },
         ],
       },
     ],

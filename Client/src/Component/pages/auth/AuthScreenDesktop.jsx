@@ -1,6 +1,7 @@
 // src/pages/auth/AuthScreenDesktop.jsx
 import { Eye, EyeOff, ArrowRight } from "lucide-react";
 import { useAuthForm } from "../../../hook/useAuthForm";
+import { Link } from "react-router-dom";
 
 export default function AuthScreenDesktop() {
   const {
@@ -69,64 +70,75 @@ export default function AuthScreenDesktop() {
 
           <form onSubmit={handleSubmit} className="mt-8 space-y-6">
             {activeTab === "signup" && (
-  <div>
-    <label className="text-xs tracking-widest text-[#D4A34E]">
-      FULL NAME
-    </label>
-    <input
-      name="name"
-      type="text"
-      required
-      className="w-full mt-2 bg-transparent border border-white/20 rounded px-4 py-3 text-white outline-none focus:border-[#D4A34E]"
-    />
-  </div>
-)}
+              <div>
+                <label className="text-xs tracking-widest text-[#D4A34E]">
+                  FULL NAME
+                </label>
+                <input
+                  name="name"
+                  type="text"
+                  required
+                  className="w-full mt-2 bg-transparent border border-white/20 rounded px-4 py-3 text-white outline-none focus:border-[#D4A34E]"
+                />
+              </div>
+            )}
 
+            {activeTab === "signup" && (
+              <>
+                <div>
+                  <label className="text-xs tracking-widest text-[#D4A34E]">
+                    PHONE NUMBER
+                  </label>
+                  <input
+                    name="phone"
+                    type="tel"
+                    required
+                    placeholder="10-digit mobile number"
+                    className="w-full mt-2 bg-transparent border border-white/20 rounded px-4 py-3 text-white placeholder:text-gray-600 outline-none focus:border-[#D4A34E]"
+                  />
+                </div>
 
-{activeTab === "signup" && (
-  <>
-    <div>
-      <label className="text-xs tracking-widest text-[#D4A34E]">
-        PHONE NUMBER
-      </label>
-      <input
-        name="phone"
-        type="tel"
-        required
-        placeholder="10-digit mobile number"
-        className="w-full mt-2 bg-transparent border border-white/20 rounded px-4 py-3 text-white placeholder:text-gray-600 outline-none focus:border-[#D4A34E]"
-      />
-    </div>
-
-    <div className="flex flex-col gap-2">
-      <label className="text-xs tracking-widest text-[#D4A34E]">
-        ADDRESS
-      </label>
-      <input
-        name="line1"
-        type="text"
-        placeholder="Address line 1"
-        required
-        className="w-full bg-transparent border border-white/20 rounded px-4 py-3 pr-10 text-white outline-none focus:border-[#D4A34E]"
-      />
-      <input
-        name="line2"
-        type="text"
-        placeholder="Address line 2 (optional)"
-        className="w-full bg-transparent border border-white/20 rounded px-4 py-3 pr-10 text-white outline-none focus:border-[#D4A34E]"
-      />
-      <input name="city" type="text" placeholder="City" required className="w-full bg-transparent border border-white/20 rounded px-4 py-3 pr-10 text-white outline-none focus:border-[#D4A34E]"/>
-      <input name="state" type="text" placeholder="State" required className="w-full bg-transparent border border-white/20 rounded px-4 py-3 pr-10 text-white outline-none focus:border-[#D4A34E]"/>
-      <input
-        name="pincode"
-        type="text"
-        placeholder="Pincode"
-        required
-        className="w-full bg-transparent border border-white/20 rounded px-4 py-3 pr-10 text-white outline-none focus:border-[#D4A34E]"
-      />
-    </div>
-  </>
-)}
+                <div className="flex flex-col gap-2">
+                  <label className="text-xs tracking-widest text-[#D4A34E]">
+                    ADDRESS
+                  </label>
+                  <input
+                    name="line1"
+                    type="text"
+                    placeholder="Address line 1"
+                    required
+                    className="w-full bg-transparent border border-white/20 rounded px-4 py-3 pr-10 text-white outline-none focus:border-[#D4A34E]"
+                  />
+                  <input
+                    name="line2"
+                    type="text"
+                    placeholder="Address line 2 (optional)"
+                    className="w-full bg-transparent border border-white/20 rounded px-4 py-3 pr-10 text-white outline-none focus:border-[#D4A34E]"
+                  />
+                  <input
+                    name="city"
+                    type="text"
+                    placeholder="City"
+                    required
+                    className="w-full bg-transparent border border-white/20 rounded px-4 py-3 pr-10 text-white outline-none focus:border-[#D4A34E]"
+                  />
+                  <input
+                    name="state"
+                    type="text"
+                    placeholder="State"
+                    required
+                    className="w-full bg-transparent border border-white/20 rounded px-4 py-3 pr-10 text-white outline-none focus:border-[#D4A34E]"
+                  />
+                  <input
+                    name="pincode"
+                    type="text"
+                    placeholder="Pincode"
+                    required
+                    className="w-full bg-transparent border border-white/20 rounded px-4 py-3 pr-10 text-white outline-none focus:border-[#D4A34E]"
+                  />
+                </div>
+              </>
+            )}
 
             <div>
               <label className="text-xs tracking-widest text-[#D4A34E]">
@@ -140,8 +152,6 @@ export default function AuthScreenDesktop() {
                 className="w-full mt-2 bg-transparent border border-white/20 rounded px-4 py-3 text-white placeholder:text-gray-600 outline-none focus:border-[#D4A34E]"
               />
             </div>
-
-            
 
             <div>
               <label className="text-xs tracking-widest text-[#D4A34E]">
@@ -214,8 +224,19 @@ export default function AuthScreenDesktop() {
 
           <p className="text-center text-xs text-gray-500 mt-8">
             By continuing, you agree to Naari's{" "}
-            <span className="text-[#D4A34E] underline">Terms of Service</span>{" "}
-            and <span className="text-[#D4A34E] underline">Privacy Policy</span>
+            <Link
+              to="/terms"
+              className="text-[#D4A34E] underline hover:opacity-80"
+            >
+              Terms of Service
+            </Link>{" "}
+            and{" "}
+            <Link
+              to="/privacy"
+              className="text-[#D4A34E] underline hover:opacity-80"
+            >
+              Privacy Policy
+            </Link>
             .
           </p>
         </div>
