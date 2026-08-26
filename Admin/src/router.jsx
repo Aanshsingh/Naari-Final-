@@ -11,6 +11,7 @@ import AdminBanners from "./pages/AdminBanners";
 import AdminReviews from "./pages/AdminReviews";
 import AdminSales from "./pages/AdminSales";
 import AdminCategories from "./pages/AdminCategories";
+import AdminInstagram from "./pages/AdminInstagram.jsx";
 
 const router = createBrowserRouter([
   {
