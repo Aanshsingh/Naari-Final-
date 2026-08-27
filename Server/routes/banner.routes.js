@@ -1,6 +1,6 @@
 // routes/banner.routes.js
 import { Router } from "express";
-import { createBanner, getActiveBanners, getAllBannersAdmin, updateBanner, deleteBanner } from "../controllers/banner.controller.js";
+import { createBanner, getActiveBanners, getAllBannersAdmin, updateBanner, deleteBanner } from "../Controllers/banner.controller.js";
 import { verifyJWT, verifyAdmin } from "../middleware/auth.middleware.js";
 
 const router = Router();
