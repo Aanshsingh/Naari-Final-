@@ -9,6 +9,8 @@ import { getApprovedTestimonialsApi } from "../../../api/TestimonialApi.js";
 import { useLikedProducts } from "../../../hook/useLikedProducts";
 import TestimonialModal from "../../common/TestimonialModal.jsx";
 import { FaInstagram } from "react-icons/fa";
+import InstagramSection from "../../common/InstagramSection.jsx";
+import HeroBanner from "../../common/HeroBanner.jsx"; 
 
 export default function HomeMobile() {
   const [showTestimonialModal, setShowTestimonialModal] = useState(false);
@@ -34,15 +36,9 @@ export default function HomeMobile() {
   return (
     <div className="bg-[#0d0e12] pb-6">
       {/* Hero — shorter than desktop, no long paragraph */}
-      <section className="relative h-[52vh] min-h-[380px] overflow-hidden">
-        <Link to="/" className="block w-full h-full">
-          <img
-            src="/homemobile.png"
-            alt="Naari"
-            className="w-full h-full object-cover object-[70%_center]"
-          />
-        </Link>
-      </section>
+       <section className="relative mt-5 border-t-2 border-t-surface">
+              <HeroBanner heightClass="h-[100vh]" />
+            </section>
 
       {/* Category strip — horizontal scroll, no wrap */}
       <section className="px-5 py-6">
@@ -180,7 +176,7 @@ export default function HomeMobile() {
       </section>
 
       {/* Trust badges — compact single row */}
-      <section className="px-5 mt-8 flex justify-between text-[9px] text-gray-500 tracking-widest border-t border-white/10 pt-5">
+      <section className="px-5 mt-8 flex justify-between text-[9px] text-[#D4A34E] tracking-widest border-t border-white/10 pt-5">
         <span>AUTHENTIC SILK</span>
         <span>EASY RETURNS</span>
         <span>PAN-INDIA SHIPPING</span>
@@ -189,6 +185,8 @@ export default function HomeMobile() {
       {showTestimonialModal && (
         <TestimonialModal onClose={() => setShowTestimonialModal(false)} />
       )}
+
+      <InstagramSection />
     </div>
   );
 }

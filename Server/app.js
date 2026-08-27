@@ -17,7 +17,9 @@ const app = express();
 
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://naari-final.vercel.app'
+  'https://naari-final.vercel.app',
+  'http://localhost:5174',
+
 ];
 
 app.use(cors({

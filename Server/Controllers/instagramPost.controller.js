@@ -5,11 +5,14 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
 const createPost = asyncHandler(async (req, res) => {
-  const { image, reelUrl, order } = req.body;
-  if (!image || !reelUrl) throw new ApiError(400, "Image and Reel link are required");
+  const { mediaType, video, image, productLink, order } = req.body;
 
-  const post = await InstagramPost.create({ image, reelUrl, order });
-  return res.status(201).json(new ApiResponse(201, post, "Post added"));
+  if (!productLink) throw new ApiError(400, "This reel must link to a product");
+  if (mediaType === "video" && !video) throw new ApiError(400, "Video is required");
+  if (mediaType === "image" && !image) throw new ApiError(400, "Image is required");
+
+  const post = await InstagramPost.create({ mediaType, video, image, productLink, order });
+  return res.status(201).json(new ApiResponse(201, post, "Reel added"));
 });
 
 const getActivePosts = asyncHandler(async (req, res) => {

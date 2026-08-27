@@ -1,17 +1,63 @@
+// models/Banner.model.js
+import mongoose, { Schema } from "mongoose";
 
-import mongoose from "mongoose";
-import { Schema } from "mongoose";
-import { Product } from "./Product.model.js";
-import { Order } from "./Order.model.js";
+const bannerSchema = new Schema(
+  {
+    title: {
+      type: String,
+      default: "",
+    },
 
-const bannerSchema = new Schema({
-    title:{type: String, required: true} ,
-    Image: {type: String, required: true},
-    link:{type:String},
-    position:{	type:	String,	enum:	['hero','mid-page','footer'],	default:	'hero'	},
-    Order: {type:Number, default:0},
-    isActive:{type:Boolean, default:true}
-})
+    subtitle: {
+      type: String,
+      default: "",
+    },
 
-export const Banner = mongoose.model("Banner", bannerSchema)
+    buttonText: {
+      type: String,
+      default: "",
+    },
 
+    mediaType: {
+      type: String,
+      enum: ["image", "video"],
+      default: "image",
+    },
+
+    image: {
+      type: String,
+      default: "",
+    },
+
+    video: {
+      type: String,
+      default: "",
+    },
+
+    link: {
+      type: String,
+      default: "/shop",
+    },
+
+    position: {
+      type: String,
+      enum: ["hero", "mid-page", "footer"],
+      default: "hero",
+    },
+
+    order: {
+      type: Number,
+      default: 0,
+    },
+
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+export const Banner = mongoose.model("Banner", bannerSchema);

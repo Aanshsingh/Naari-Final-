@@ -28,11 +28,8 @@ export default function AdminBanners() {
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-white text-xl font-light">Banners</h1>
-        <button
-          onClick={() => setShowModal(true)}
-          className="flex items-center gap-2 px-4 py-2 rounded bg-gradient-to-r from-[#C9962F] to-[#F0D68A] text-black text-sm"
-        >
+        <h1 className="text-white text-xl font-light">Homepage Banner</h1>
+        <button onClick={() => setShowModal(true)} className="flex items-center gap-2 px-4 py-2 rounded bg-gradient-to-r from-[#C9962F] to-[#F0D68A] text-black text-sm">
           <Plus size={16} /> Add Banner
         </button>
       </div>
@@ -42,18 +39,20 @@ export default function AdminBanners() {
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
         {banners?.map((banner) => (
           <div key={banner._id} className="bg-[#14151a] rounded-lg overflow-hidden">
-            <img src={banner.image} alt={banner.title} className="w-full h-32 object-cover" />
+            {banner.mediaType === "video" ? (
+              <video src={banner.video} className="w-full h-32 object-cover" muted loop autoPlay playsInline />
+            ) : (
+              <img src={banner.image} alt={banner.title} className="w-full h-32 object-cover" />
+            )}
             <div className="p-3">
               <p className="text-white text-sm truncate">{banner.title || "Untitled"}</p>
               <p className="text-gray-500 text-xs mt-1">Position: {banner.position}</p>
               <div className="flex justify-between items-center mt-3">
                 <button
                   onClick={() => toggleActive(banner)}
-                  className={`text-[10px] px-2 py-1 rounded border ${
-                    banner.isActive ? "text-green-400 border-green-400/40" : "text-gray-500 border-gray-500/40"
-                  }`}
+                  className={`text-[10px] px-2 py-1 rounded border ${banner.isActive ? "text-green-400 border-green-400/40" : "text-gray-500 border-gray-500/40"}`}
                 >
-                  {banner.isActive ? "ACTIVE" : "INACTIVE"}
+                  {banner.isActive ? "LIVE ON SITE" : "INACTIVE"}
                 </button>
                 <button onClick={() => handleDelete(banner._id)} className="text-gray-400 hover:text-red-400">
                   <Trash2 size={14} />

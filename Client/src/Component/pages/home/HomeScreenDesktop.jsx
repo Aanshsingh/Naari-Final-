@@ -28,7 +28,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-coverflow";
 
-import heroimage from "../../../photos/home1.png";
+import HeroBanner from "../../common/HeroBanner.jsx"; // match wherever you actually place this file
 
 const categoryIcons = {
   sarees: Sparkles,
@@ -60,29 +60,8 @@ export default function HomeScreenDesktop() {
   return (
     <div className="bg-[#0d0e12]">
       {/* Hero */}
-      <section className="relative h-[100vh]  mt-5  border-t-2 border-t-surface">
-        <img
-          src={heroimage}
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover "
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0d0e12] via-black/30 to-black/10" />
-
-        <div className="absolute bottom-25 left-6 lg:left-16 right-6 lg:right-auto lg:max-w-md">
-          <h1 className="text-3xl lg:text-4xl tracking-wide text-[#F0D68A] font-light">
-            Festive Edit — New In
-          </h1>
-          <p className="hidden lg:block mt-3 text-gray-300 text-sm">
-            Curated craftsmanship for the modern woman. Discover the harmony of
-            tradition and luxury.
-          </p>
-          <Link
-            to="/shop"
-            className="inline-block mt-5 px-8 py-3 bg-gradient-to-r from-[#C9962F] to-[#F0D68A] text-black text-sm tracking-widest rounded"
-          >
-            SHOP NEW ARRIVALS
-          </Link>
-        </div>
+      <section className="relative mt-5 border-t-2 border-t-surface">
+        <HeroBanner heightClass="h-[100vh]" />
       </section>
       {/* Category strip */}
       <section className="px-6 lg:px-16 py-10">

@@ -1,6 +1,6 @@
 // src/admin/components/AdminSidebar.jsx
 import { Link, useLocation } from "react-router-dom";
-import { LayoutDashboard, Package, Image, Star, ShoppingBag, TrendingUp } from "lucide-react";
+import { LayoutDashboard, Package, Image, Star, ShoppingBag, TrendingUp,  Film  } from "lucide-react";
 import { ListSortAscending } from "lucide-react";
 const navItems = [
   { label: "Dashboard", to: "/", icon: LayoutDashboard },
@@ -10,6 +10,7 @@ const navItems = [
   { label: "Orders", to: "/orders", icon: ShoppingBag },
   { label: "Sales", to: "/sales", icon: TrendingUp },
   {label:  "Categories", to: "/categories", icon: ListSortAscending},
+  {label:  "InstaReel", to: "/instagram", icon:  Film  },
 ];
 
 export default function AdminSidebar() {
