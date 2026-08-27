@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Heart, ChevronDown, ImageOff } from "lucide-react";
 import { useProductDetail } from "../../../hook/useProductDetail";
 import { useLikedProducts } from "../../../hook/useLikedProducts";
+import { Link } from "react-router-dom";
 
 function AccordionSection({ title, children }) {
   const [open, setOpen] = useState(false);
@@ -292,7 +293,7 @@ export default function ProductDetailMobile() {
 
             <div className="grid grid-cols-2 gap-3">
               {related.slice(0, 2).map((p) => (
-                <a key={p._id} href={`/product/${p.slug}`} className="block">
+                <Link key={p._id} to={`/product/${p.slug}`} className="block">
                   <div className="aspect-[3/4] rounded overflow-hidden bg-[#14151a]">
                     <img
                       src={p.images?.[0]?.url}
@@ -306,7 +307,7 @@ export default function ProductDetailMobile() {
                   <p className="text-[#D4A34E] text-xs">
                     ₹{(p.discountPrice || p.price).toLocaleString("en-IN")}
                   </p>
-                </a>
+                </Link>
               ))}
             </div>
           </div>
