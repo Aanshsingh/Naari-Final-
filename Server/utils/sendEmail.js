@@ -1,24 +1,14 @@
 // utils/sendEmail.js
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
-  family: 4,
-
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function sendEmail({ to, subject, html, replyTo }) {
-  await transporter.sendMail({
-    from: `"Naari Contact Form" <${process.env.EMAIL_USER}>`,
+  await resend.emails.send({
+    from: "Naari <onboarding@resend.dev>", // or your verified domain once you have one
     to,
     subject,
     html,
-    replyTo, 
+    reply_to: replyTo,
   });
 }
