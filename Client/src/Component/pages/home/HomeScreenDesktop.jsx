@@ -6,6 +6,7 @@ import { Heart, Gem, Crown, Sparkles, Shirt, Watch } from "lucide-react";
 import { HiOutlineCheckBadge } from "react-icons/hi2";
 import { ShieldCheck, Truck } from "lucide-react";
 
+import { useLikedProducts } from "../../../hook/useLikedProducts";
 import InstagramSection from "../../common/InstagramSection.jsx";
 import { getProductsApi } from "../../../api/productApi";
 import { getCategoriesApi } from "../../../api/catogries";
@@ -56,6 +57,9 @@ export default function HomeScreenDesktop() {
     queryKey: ["testimonials"],
     queryFn: () => getApprovedTestimonialsApi().then((res) => res.data.data),
   });
+
+  
+    const { likedIds, toggleLike } = useLikedProducts();
 
   return (
     <div className="bg-[#0d0e12]">
@@ -142,12 +146,23 @@ export default function HomeScreenDesktop() {
                     NEW
                   </span>
 
-                  <button
-                    onClick={(e) => e.preventDefault()}
-                    className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-black/40 flex items-center justify-center"
-                  >
-                    <Heart size={16} className="text-white" />
-                  </button>
+                 <button
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  toggleLike(product._id);
+                }}
+                className="absolute top-2 right-2 z-10 w-8 h-8 rounded-full bg-black/40 flex items-center justify-center"
+              >
+                <Heart
+                  size={18}
+                  className={
+                    likedIds.includes(product._id)
+                      ? "text-[#D4A34E] fill-[#D4A34E]"
+                      : "text-white"
+                  }
+                />
+              </button>
 
                   <img
                     src={
