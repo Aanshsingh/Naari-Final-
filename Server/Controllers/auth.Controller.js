@@ -5,7 +5,7 @@ import {ApiError} from "../utils/ApiError.js";
 import {ApiResponse} from "../utils/ApiResponse.js";
 import {asyncHandler} from "../utils/asyncHandler.js";
 import { generateVerificationToken } from "../utils/sendVerificationEmail.js";
-
+import { generateVerificationToken, sendVerificationEmail } from "../utils/sendVerificationEmail.js"; 
 
 const generateAccessAndRefreshTokens = async (userId) => {
   try {
@@ -54,7 +54,6 @@ const registerUser = asyncHandler(async (req, res) => {
 
   const { token, expiry } = generateVerificationToken();
 
-  // build the addresses array from the single address the user gave at signup
   const addresses = address
     ? [{
         label: address.label || "Home",
@@ -63,14 +62,23 @@ const registerUser = asyncHandler(async (req, res) => {
         city: address.city,
         state: address.state,
         pincode: address.pincode,
-        isDefault: true, // first address is always their default
+        isDefault: true,
       }]
     : [];
 
-  const user = await User.create({ name, email, password, phone, addresses,
+  const user = await User.create({
+    name, email, password, phone, addresses,
     emailVerificationToken: token,
     emailVerificationExpiry: expiry,
   });
+
+  // THIS WAS MISSING — actually send the email
+  try {
+    await sendVerificationEmail(user, token);
+  } catch (err) {
+    console.error("Failed to send verification email:", err);
+    // don't fail registration just because the email didn't send — user account still exists
+  }
 
   const createdUser = await User.findById(user._id).select("-password -refreshToken -emailVerificationToken");
   if (!createdUser) {
