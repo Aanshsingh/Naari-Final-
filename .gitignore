@@ -485,5 +485,17 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+
+# Build
+dist/
+
 
 # End of https://mrkandreev.name/snippets/gitignore-generator/#vs,Git,Node,env
+Server/.env
