@@ -4,7 +4,7 @@ import { User } from "../models/User.model.js"
 import {ApiError} from "../utils/ApiError.js";
 import {ApiResponse} from "../utils/ApiResponse.js";
 import {asyncHandler} from "../utils/asyncHandler.js";
-import { generateVerificationToken } from "../utils/sendVerificationEmail.js";
+
 import { generateVerificationToken, sendVerificationEmail } from "../utils/sendVerificationEmail.js"; 
 
 const generateAccessAndRefreshTokens = async (userId) => {
