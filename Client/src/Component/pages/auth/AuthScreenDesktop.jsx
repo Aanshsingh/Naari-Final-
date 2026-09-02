@@ -6,7 +6,6 @@ import { GoogleLogin } from "@react-oauth/google";
 import { useAuth } from "../../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-
 export default function AuthScreenDesktop() {
   const {
     activeTab,
@@ -19,15 +18,19 @@ export default function AuthScreenDesktop() {
   } = useAuthForm();
 
   const { loginWithGoogle } = useAuth();
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
-const handleGoogleSuccess = async (credentialResponse) => {
-  try {
-    await loginWithGoogle(credentialResponse.credential);
-    navigate("/");
-  } catch (err) {
-    setError("Google sign-in failed — try again");
-  }
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      await loginWithGoogle(credentialResponse.credential);
+      navigate("/");
+    } catch (err) {
+      setError("Google sign-in failed — try again");
+    }
+  };
+
+  const handleGoogleError = () => {
+  setError("Google sign-in failed");
 };
 
   return (
@@ -229,17 +232,17 @@ const handleGoogleSuccess = async (credentialResponse) => {
             <div className="flex-1 h-px bg-white/10" />
           </div>
 
-         <div className="flex gap-4">
-  <div className="flex-1 [&>div]:!w-full">
-    <GoogleLogin
-      onSuccess={handleGoogleSuccess}
-      onError={handleGoogleError}
-      theme="filled_black"
-      size="large"
-      width="100%"
-    />
-  </div>
-</div>
+          <div className="flex gap-4">
+            <div className="flex-1 [&>div]:!w-full">
+              <GoogleLogin
+                onSuccess={handleGoogleSuccess}
+                onError={handleGoogleError}
+                theme="filled_black"
+                size="large"
+                width="100%"
+              />
+            </div>
+          </div>
 
           <p className="text-center text-xs text-gray-500 mt-8">
             By continuing, you agree to Naari's{" "}

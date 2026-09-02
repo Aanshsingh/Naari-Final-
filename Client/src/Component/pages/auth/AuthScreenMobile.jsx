@@ -2,8 +2,28 @@
 import { Eye, EyeOff } from "lucide-react";
 import { useAuthForm } from "../../../hook/useAuthForm";
 import { Link } from "react-router-dom";
+import { GoogleLogin } from "@react-oauth/google";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../context/AuthContext";
 
 export default function AuthScreenMobile() {
+
+const { loginWithGoogle } = useAuth();
+const navigate = useNavigate();
+
+const handleGoogleSuccess = async (credentialResponse) => {
+  try {
+    await loginWithGoogle(credentialResponse.credential);
+    navigate("/");
+  } catch (err) {
+    setError("Google sign-in failed — try again"); // reuses your existing error state
+  }
+};
+
+const handleGoogleError = () => {
+  setError("Google sign-in failed");
+};
+
   const {
     activeTab,
     setActiveTab,
@@ -180,12 +200,17 @@ export default function AuthScreenMobile() {
           </span>
           <div className="flex-1 h-px bg-white/10" />
         </div>
-        <div className="flex gap-3">
-          <button className="flex-1 border border-white/20 rounded py-3 text-sm text-white">
-            Google
-          </button>
-          
-        </div>
+     <div className="flex gap-4">
+  <div className="flex-1 [&>div]:!w-full">
+    <GoogleLogin
+      onSuccess={handleGoogleSuccess}
+      onError={handleGoogleError}
+      theme="filled_black"
+      size="large"
+      width="100%"
+    />
+  </div>
+</div>
         <p className="text-center text-xs text-gray-500 mt-8 pb-6">
           By continuing, you agree to Naari's{" "}
           <Link
