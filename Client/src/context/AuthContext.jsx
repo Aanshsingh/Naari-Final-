@@ -37,8 +37,13 @@ const register = async (name, email, password, phone, address) => {
     setUser(null);
   };
 
+  const loginWithGoogle = async (credential) => {
+  const res = await api.post("/auth/google", { credential });
+  setUser(res.data.data.user);
+};
+
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, register, logout, loginWithGoogle }}>
       {children}
     </AuthContext.Provider>
   );

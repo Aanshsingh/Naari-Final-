@@ -2,6 +2,10 @@
 import { Eye, EyeOff, ArrowRight } from "lucide-react";
 import { useAuthForm } from "../../../hook/useAuthForm";
 import { Link } from "react-router-dom";
+import { GoogleLogin } from "@react-oauth/google";
+import { useAuth } from "../../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+
 
 export default function AuthScreenDesktop() {
   const {
@@ -13,6 +17,18 @@ export default function AuthScreenDesktop() {
     loading,
     handleSubmit,
   } = useAuthForm();
+
+  const { loginWithGoogle } = useAuth();
+const navigate = useNavigate();
+
+const handleGoogleSuccess = async (credentialResponse) => {
+  try {
+    await loginWithGoogle(credentialResponse.credential);
+    navigate("/");
+  } catch (err) {
+    setError("Google sign-in failed — try again");
+  }
+};
 
   return (
     <div className="min-h-screen flex bg-[#0d0e12]">
@@ -213,14 +229,17 @@ export default function AuthScreenDesktop() {
             <div className="flex-1 h-px bg-white/10" />
           </div>
 
-          <div className="flex gap-4">
-            <button className="flex-1 border border-white/20 rounded py-3 flex items-center justify-center gap-2 text-sm text-white">
-              GOOGLE
-            </button>
-            <button className="flex-1 border border-white/20 rounded py-3 flex items-center justify-center gap-2 text-sm text-white">
-              APPLE
-            </button>
-          </div>
+         <div className="flex gap-4">
+  <div className="flex-1 [&>div]:!w-full">
+    <GoogleLogin
+      onSuccess={handleGoogleSuccess}
+      onError={handleGoogleError}
+      theme="filled_black"
+      size="large"
+      width="100%"
+    />
+  </div>
+</div>
 
           <p className="text-center text-xs text-gray-500 mt-8">
             By continuing, you agree to Naari's{" "}

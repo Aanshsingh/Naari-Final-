@@ -3,7 +3,7 @@ import RootLayout from "./layout/RootLayout";
 import AdminLayout from "./layout/AdminLayout";
 import ProtectedAdminRoute from "./components/ProtectedAdminRoute";
 import AdminLogin from "./pages/AdminLogin";
-import AdminDashboard from "./pages/Dashboard.jsx";
+import AdminDashboard from "./pages/AdminDashboard.jsx";
 import AdminOrders from "./pages/AdminOrders";
 import AdminOrderDetail from "./pages/OrderDetail";
 import AdminProducts from "./pages/AdminProducts";

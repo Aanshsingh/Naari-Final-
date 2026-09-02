@@ -8,6 +8,7 @@ import {
   getCurrentUser,
   updateAccountDetails,resendVerificationEmail,
   verifyEmail,
+  googleLogin,
 } from "../Controllers/auth.Controller.js";
 import {verifyJWT} from "../middleware/auth.middleware.js";
 
@@ -17,6 +18,7 @@ const router = Router();
 router.route("/register").post(registerUser);
 router.route("/login").post(login);
 router.route("/refresh-token").post(refreshAccessToken);
+router.route("/google").post(googleLogin);
 
 // secured routes — verifyJWT runs first
 router.route("/logout").post(verifyJWT, logoutUser);

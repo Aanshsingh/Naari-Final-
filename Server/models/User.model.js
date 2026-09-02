@@ -22,6 +22,12 @@ const userSchema = new Schema(
       required: true,
     },
 
+    googleId: {
+      type: String,
+      unique: true,
+      sparse: true, // allows many documents with no googleId, while still enforcing uniqueness when it IS set
+    },
+
     refreshToken: {
       type: String,
     },
@@ -60,12 +66,13 @@ const userSchema = new Schema(
 
 userSchema.pre("save", async function () {
   if (!this.isModified("password")) return;
-
+  if (!this.password) return; // Google-only account — nothing to hash
   this.password = await bcrypt.hash(this.password, 10);
 });
 
 userSchema.methods.isPasswordCorrect = async function (password) {
-  return await bcrypt.compare(password, this.password);
+  if (!this.password) return false; // no password set — can't log in this way
+  return bcrypt.compare(password, this.password);
 };
 
 userSchema.methods.generateAccessToken = function () {

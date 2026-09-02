@@ -1,4 +1,4 @@
-// src/admin/pages/AdminOrders.jsx
+// admin/src/pages/AdminOrders.jsx
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
@@ -22,7 +22,7 @@ export default function AdminOrders() {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-center mb-6 flex-wrap gap-3">
         <h1 className="text-white text-xl font-light">Orders</h1>
         <select
           value={statusFilter}
@@ -39,8 +39,10 @@ export default function AdminOrders() {
       </div>
 
       {isLoading && <p className="text-gray-500 text-sm">Loading orders...</p>}
+      {!isLoading && orders?.length === 0 && <p className="text-gray-500 text-sm">No orders found.</p>}
 
-      <div className="bg-[#14151a] rounded-lg overflow-hidden">
+      {/* Desktop: table */}
+      <div className="hidden lg:block bg-[#14151a] rounded-lg overflow-hidden">
         <table className="w-full text-sm">
           <thead>
             <tr className="text-left text-gray-500 text-xs border-b border-white/5">
@@ -65,14 +67,37 @@ export default function AdminOrders() {
                   </span>
                 </td>
                 <td className="px-4 py-3">
-                  <Link to={`/admin/orders/${order._id}`} className="text-[#D4A34E] text-xs underline">
-                    Manage
-                  </Link>
+                  <Link to={`/orders/${order._id}`} className="text-[#D4A34E] text-xs underline">Manage</Link>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* Mobile: cards */}
+      <div className="lg:hidden space-y-3">
+        {orders?.map((order) => (
+          <Link
+            key={order._id}
+            to={`/orders/${order._id}`}
+            className="block bg-[#14151a] p-4 rounded-lg"
+          >
+            <div className="flex justify-between items-start mb-2">
+              <div>
+                <p className="text-gray-300 text-sm">#{order._id.slice(-8).toUpperCase()}</p>
+                <p className="text-gray-500 text-xs mt-0.5">{order.user?.name}</p>
+              </div>
+              <span className={`text-[10px] px-2 py-1 rounded border ${statusColors[order.orderStatus]}`}>
+                {order.orderStatus.toUpperCase()}
+              </span>
+            </div>
+            <div className="flex justify-between items-center text-xs text-gray-400 mt-3 pt-3 border-t border-white/5">
+              <span>{order.items.length} item{order.items.length > 1 ? "s" : ""}</span>
+              <span className="text-[#D4A34E] text-sm">₹{order.totalPrice.toLocaleString("en-IN")}</span>
+            </div>
+          </Link>
+        ))}
       </div>
     </div>
   );

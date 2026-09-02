@@ -184,9 +184,7 @@ export default function AuthScreenMobile() {
           <button className="flex-1 border border-white/20 rounded py-3 text-sm text-white">
             Google
           </button>
-          <button className="flex-1 border border-white/20 rounded py-3 text-sm text-white">
-            Apple
-          </button>
+          
         </div>
         <p className="text-center text-xs text-gray-500 mt-8 pb-6">
           By continuing, you agree to Naari's{" "}

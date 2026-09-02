@@ -4,6 +4,9 @@ import { User } from "../models/User.model.js"
 import {ApiError} from "../utils/ApiError.js";
 import {ApiResponse} from "../utils/ApiResponse.js";
 import {asyncHandler} from "../utils/asyncHandler.js";
+import { OAuth2Client } from "google-auth-library";
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
 
 import { generateVerificationToken, sendVerificationEmail } from "../utils/sendVerificationEmail.js"; 
 
@@ -239,6 +242,52 @@ const resendVerificationEmail = asyncHandler(async (req, res) => {
   return res.status(200).json(new ApiResponse(200, {}, "Verification email sent"));
 });
 
+const googleLogin = asyncHandler(async (req, res) => {
+  const { credential } = req.body;
+  if (!credential) throw new ApiError(400, "Google credential is required");
+
+  let payload;
+  try {
+    const ticket = await googleClient.verifyIdToken({
+      idToken: credential,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+    payload = ticket.getPayload();
+  } catch (err) {
+    throw new ApiError(401, "Invalid Google token");
+  }
+
+  const { sub: googleId, email, name } = payload;
+
+  let user = await User.findOne({ email });
+
+  if (user) {
+    // account already exists (maybe signed up with email/password) — link Google to it
+    if (!user.googleId) {
+      user.googleId = googleId;
+      await user.save({ validateBeforeSave: false });
+    }
+  } else {
+    // brand new user, signing up via Google for the first time
+    user = await User.create({
+      name,
+      email,
+      googleId,
+      isVerified: true, // Google has already verified this email address for us
+    });
+  }
+
+  const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(user._id);
+  const loggedInUser = await User.findById(user._id).select("-password -refreshToken");
+
+  return res
+    .status(200)
+    .cookie("accessToken", accessToken, cookieOptions)
+    .cookie("refreshToken", refreshToken, cookieOptions)
+    .json(new ApiResponse(200, { user: loggedInUser, accessToken }, "Logged in with Google"));
+});
+
+
 
 
 export {
@@ -251,4 +300,5 @@ export {
   updateAccountDetails,
   verifyEmail,
   resendVerificationEmail,
+  googleLogin,
 };
