@@ -4,6 +4,7 @@ import { Trash2, Plus, Minus } from "lucide-react";
 import { useCartStore } from "../../STORE/CartStore";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { BsBagXFill } from "react-icons/bs";
 
 export default function Cart() {
   const { items, updateQty, removeItem, subtotal } = useCartStore();
@@ -13,7 +14,7 @@ export default function Cart() {
   const { user } = useAuth();
 
   const handleCheckout = () => {
-    if (!user) {
+    if (!user) { 
       navigate("/auth?redirect=checkout"); // send them to login, remember where they wanted to go
       return;
     }
@@ -24,12 +25,12 @@ export default function Cart() {
     return (
       <div className="min-h-screen bg-[#0d0e12] flex flex-col items-center justify-center px-6">
         <p className="text-gray-400 text-sm">Your bag is empty</p>
-        <Link to="/shop" className="mt-4 text-[#D4A34E] text-sm underline">
-          Continue shopping
+        <Link to="/shop" className="mt-4 text-[#D4A34E] text-5xl underline">
+          <BsBagXFill />
         </Link>
       </div>
     );
-  }
+  } 
 
   return (
     <div className="min-h-screen bg-[#0d0e12] px-6 lg:px-16 py-10">

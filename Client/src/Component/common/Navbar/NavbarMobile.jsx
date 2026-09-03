@@ -72,11 +72,11 @@ export default function NavbarMobile() {
             to="/"
             className="absolute left-1/2 -translate-x-1/2"
           >
-            <h1 className="text-[#D4A34E] text-3xl font-light tracking-wide">
+            <h1 className="text-[#D4A34E] text-3xl font-light tracking-wide font-logo">
               Naari
             </h1>
           </Link>
-
+  
           {/* WISHLIST */}
 
           <Link

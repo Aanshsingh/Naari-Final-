@@ -49,7 +49,7 @@ export default function HomeMobile() {
               to={`/shop?category=${cat.slug}`}
               className="flex flex-col items-center gap-2 shrink-0"
             >
-              <div className="w-12 h-12 rounded-full border border-[#D4A34E]/40 flex items-center justify-center bg-[#14151a]">
+              <div className="w-20 h-20 rounded-full border border-[#D4A34E]/80 flex items-center justify-center bg-[#14151a]">
                 {cat.image ? (
                   <img
                     src={cat.image}
@@ -73,9 +73,9 @@ export default function HomeMobile() {
       {/* New Arrivals — 2-column grid, compact */}
       <section className="px-5">
         <div className="flex justify-between items-center mb-3">
-          <h2 className="text-sm text-[#D4A34E] tracking-wide">New Arrivals</h2>
-          <Link to="/shop" className="text-[10px] text-gray-400 underline">
-            View All
+          <h2 className="font-heading font-semibold text-m text-[#D4A34E] tracking-wide">New Arrivals</h2>
+          <Link to="/shop" className="text-[12px] font-bold text-[#D4A34E] transition-all hover:underline">
+            View All :-
           </Link>
         </div>
 

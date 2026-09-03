@@ -35,7 +35,7 @@ export default function NavbarDesktop() {
         <div className="flex items-center gap-10">
 
           <Link to="/">
-            <h1 className="text-primary text-3xl font-light tracking-wide cursor-pointer">
+            <h1 className="text-primary text-3xl font-logo font-light tracking-wide cursor-pointer">
               Naari
             </h1>
           </Link>
