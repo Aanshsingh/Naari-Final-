@@ -1,32 +1,169 @@
-// utils/productDisplay.js
+// Server/utils/productDisplay.js
+
 const NEW_THRESHOLD_DAYS = 14;
 
-export function getEffectiveBadge(product) {
-  if (product.badge === "none") return null;
-  if (product.badge && product.badge !== "auto") return product.badge; // manual override wins
-
-  // auto logic, in priority order
-  const totalStock = product.sizes?.length
-    ? product.sizes.reduce((sum, s) => sum + s.stock, 0)
-    : product.stock;
-  if (totalStock === 0) return "sold-out";
-
-  if (isSaleActive(product)) return "sale";
-
-  const daysSinceCreated = (Date.now() - new Date(product.createdAt)) / (1000 * 60 * 60 * 24);
-  if (daysSinceCreated <= NEW_THRESHOLD_DAYS) return "new";
-
-  return null;
-}
+// ============================================================
+// SALE STATUS
+// ============================================================
 
 export function isSaleActive(product) {
-  if (!product.discountPrice) return false;
+  if (!product) return false;
+
+  const price = Number(product.price);
+  const discountPrice = Number(product.discountPrice);
+
+  // No valid discount
+  if (
+    product.discountPrice === undefined ||
+    product.discountPrice === null ||
+    product.discountPrice === "" ||
+    !Number.isFinite(discountPrice)
+  ) {
+    return false;
+  }
+
+  // Discount must actually be cheaper
+  if (
+    !Number.isFinite(price) ||
+    discountPrice <= 0 ||
+    discountPrice >= price
+  ) {
+    return false;
+  }
+
   const now = new Date();
-  if (product.saleStartDate && now < new Date(product.saleStartDate)) return false;
-  if (product.saleEndDate && now > new Date(product.saleEndDate)) return false;
+
+  // Sale has not started yet
+  if (
+    product.saleStartDate &&
+    now < new Date(product.saleStartDate)
+  ) {
+    return false;
+  }
+
+  // Sale has ended
+  if (
+    product.saleEndDate &&
+    now > new Date(product.saleEndDate)
+  ) {
+    return false;
+  }
+
   return true;
 }
 
+
+// ============================================================
+// EFFECTIVE PRICE
+// ============================================================
+
 export function getEffectivePrice(product) {
-  return isSaleActive(product) ? product.discountPrice : product.price;
+  if (!product) return 0;
+
+  const price = Number(product.price) || 0;
+
+  if (isSaleActive(product)) {
+    return Number(product.discountPrice);
+  }
+
+  return price;
+}
+
+
+// ============================================================
+// TOTAL STOCK
+// ============================================================
+
+function getTotalStock(product) {
+  if (!product) return 0;
+
+  // If sizes exist, use size-level inventory
+  if (
+    Array.isArray(product.sizes) &&
+    product.sizes.length > 0
+  ) {
+    return product.sizes.reduce(
+      (sum, size) =>
+        sum + (Number(size.stock) || 0),
+      0
+    );
+  }
+
+  return Number(product.stock) || 0;
+}
+
+
+// ============================================================
+// EFFECTIVE BADGE
+// ============================================================
+
+export function getEffectiveBadge(product) {
+  if (!product) return null;
+
+
+  // ----------------------------------------------------------
+  // Manual "NO BADGE"
+  // ----------------------------------------------------------
+
+  if (product.badge === "none") {
+    return null;
+  }
+
+
+  // ----------------------------------------------------------
+  // Manual badge override
+  // ----------------------------------------------------------
+
+  if (
+    product.badge &&
+    product.badge !== "auto"
+  ) {
+    return product.badge;
+  }
+
+
+  // ----------------------------------------------------------
+  // AUTO BADGE
+  // ----------------------------------------------------------
+
+  const totalStock =
+    getTotalStock(product);
+
+
+  // SOLD OUT has highest priority
+  if (totalStock <= 0) {
+    return "sold-out";
+  }
+
+
+  // SALE comes next
+  if (isSaleActive(product)) {
+    return "sale";
+  }
+
+
+  // NEW product
+  if (product.createdAt) {
+
+    const createdAt =
+      new Date(product.createdAt);
+
+    if (!Number.isNaN(createdAt.getTime())) {
+
+      const daysSinceCreated =
+        (Date.now() - createdAt.getTime()) /
+        (1000 * 60 * 60 * 24);
+
+      if (
+        daysSinceCreated >= 0 &&
+        daysSinceCreated <= NEW_THRESHOLD_DAYS
+      ) {
+        return "new";
+      }
+    }
+  }
+
+
+  // No badge
+  return null;
 }

@@ -1,16 +1,39 @@
-// admin/src/components/ProductFormModal.jsx
+// Admin/src/components/ProductFormModal.jsx
 
 import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { X, Upload, ImagePlus } from "lucide-react";
+import { X, ImagePlus } from "lucide-react";
 
-import { createProductApi, updateProductApi } from "../api/adminProductApi";
+import {
+  createProductApi,
+  updateProductApi,
+} from "../api/adminProductApi";
 
 import { getCategoriesApi } from "../api/adminCategoryApi";
 import { uploadImageToCloudinary } from "../utils/uploadImage";
 
+const MAX_IMAGES = 6;
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB
+
+const ALLOWED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/avif",
+];
+
+const generateSlug = (text) => {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+};
+
 export default function ProductFormModal({ product, onClose }) {
-  const isEditing = !!product;
+  const isEditing = Boolean(product);
 
   const queryClient = useQueryClient();
 
@@ -18,32 +41,58 @@ export default function ProductFormModal({ product, onClose }) {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
-  // Existing Cloudinary images when editing
-  const [images, setImages] = useState(product?.images || []);
+  // Existing / uploaded images
+  const [images, setImages] = useState(
+    Array.isArray(product?.images) ? product.images : [],
+  );
 
-  const { data: categories } = useQuery({
+  const {
+    data: categories = [],
+    isLoading: categoriesLoading,
+    isError: categoriesError,
+  } = useQuery({
     queryKey: ["categories"],
-    queryFn: () => getCategoriesApi().then((res) => res.data.data),
+    queryFn: async () => {
+      const res = await getCategoriesApi();
+
+      return Array.isArray(res?.data?.data)
+        ? res.data.data
+        : [];
+    },
   });
 
   // ==========================================
-  // MULTIPLE IMAGE UPLOAD
+  // IMAGE UPLOAD
   // ==========================================
 
   const handleImageUpload = async (e) => {
     const files = Array.from(e.target.files || []);
 
-    // Reset input so same file can be selected again
+    // Allow selecting same file again
     e.target.value = "";
 
     if (!files.length) return;
 
     setError("");
 
-    // Maximum 6 images
-    if (images.length + files.length > 6) {
+    // Check image count
+    if (images.length + files.length > MAX_IMAGES) {
       setError(
-        `You can upload maximum 6 images. You currently have ${images.length}.`,
+        `You can upload maximum ${MAX_IMAGES} images. You currently have ${images.length}.`,
+      );
+      return;
+    }
+
+    // Validate all files BEFORE uploading anything
+    const invalidFile = files.find(
+      (file) =>
+        !ALLOWED_IMAGE_TYPES.includes(file.type) ||
+        file.size > MAX_IMAGE_SIZE,
+    );
+
+    if (invalidFile) {
+      setError(
+        `"${invalidFile.name}" is invalid. Only JPG, PNG, WEBP and AVIF images up to 5MB are allowed.`,
       );
       return;
     }
@@ -51,16 +100,60 @@ export default function ProductFormModal({ product, onClose }) {
     setUploading(true);
 
     try {
-      // Upload all images simultaneously
-      const uploadedImages = await Promise.all(
-        files.map((file) => uploadImageToCloudinary(file)),
-      );
+      const uploadedImages = [];
+      const failedImages = [];
 
-      setImages((prev) => [...prev, ...uploadedImages]);
+      for (const file of files) {
+        try {
+          const uploaded = await uploadImageToCloudinary(file);
+
+          if (!uploaded?.url) {
+            throw new Error(
+              "Cloudinary did not return an image URL.",
+            );
+          }
+
+          uploadedImages.push({
+            url: uploaded.url,
+            publicId:
+              uploaded.publicId ||
+              uploaded.public_id ||
+              "",
+          });
+        } catch (uploadError) {
+          console.error(
+            `Failed to upload ${file.name}:`,
+            uploadError,
+          );
+
+          failedImages.push(file.name);
+        }
+      }
+
+      if (uploadedImages.length === 0) {
+        setError(
+          "Images failed to upload. Please check Cloudinary configuration and try again.",
+        );
+        return;
+      }
+
+      setImages((prev) => [
+        ...prev,
+        ...uploadedImages,
+      ]);
+
+      if (failedImages.length > 0) {
+        setError(
+          `Some images failed to upload: ${failedImages.join(", ")}`,
+        );
+      }
     } catch (err) {
-      console.error("Multiple image upload error:", err);
+      console.error("Image upload error:", err);
 
-      setError("One or more images failed to upload. Please try again.");
+      setError(
+        err?.message ||
+          "Image upload failed. Please try again.",
+      );
     } finally {
       setUploading(false);
     }
@@ -71,211 +164,537 @@ export default function ProductFormModal({ product, onClose }) {
   // ==========================================
 
   const removeImage = (index) => {
-    setImages((prev) => prev.filter((_, i) => i !== index));
+    setImages((prev) =>
+      prev.filter((_, i) => i !== index),
+    );
   };
 
   // ==========================================
-  // SUBMIT PRODUCT
+  // SUBMIT
   // ==========================================
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (saving || uploading) return;
+
     setError("");
 
-    if (images.length === 0) {
-      setError("Add at least one image");
+    const form = e.target;
+
+    // ==========================================
+    // READ FORM VALUES
+    // ==========================================
+
+    const name = form.name.value.trim();
+
+    const description =
+      form.description.value.trim();
+
+    const price = Number(form.price.value);
+
+    const discountPrice =
+      form.discountPrice.value.trim() !== ""
+        ? Number(form.discountPrice.value)
+        : undefined;
+
+    const stock = Number(form.stock.value);
+
+    const category = form.category.value;
+
+    const badge = form.badge.value;
+
+    const saleStartDate =
+      form.saleStartDate.value || undefined;
+
+    const saleEndDate =
+      form.saleEndDate.value || undefined;
+
+    const fabricCare =
+      form.fabricCare.value.trim();
+
+    const sizesText =
+      form.sizes.value.trim();
+
+    // ==========================================
+    // BASIC VALIDATION
+    // ==========================================
+
+    if (!name) {
+      setError("Product name is required.");
       return;
     }
 
-    const name = e.target.name.value;
+    if (name.length < 2) {
+      setError(
+        "Product name must contain at least 2 characters.",
+      );
+      return;
+    }
 
-    const slug = name
-      .toLowerCase()
-      .replace(/\s+/g, "-")
-      .replace(/[^a-z0-9-]/g, "");
+    if (name.length > 120) {
+      setError(
+        "Product name cannot exceed 120 characters.",
+      );
+      return;
+    }
+
+    // ==========================================
+    // PRICE VALIDATION
+    // ==========================================
+
+    if (!Number.isFinite(price) || price <= 0) {
+      setError(
+        "Price must be a valid number greater than 0.",
+      );
+      return;
+    }
+
+    if (
+      discountPrice !== undefined &&
+      (!Number.isFinite(discountPrice) ||
+        discountPrice <= 0)
+    ) {
+      setError(
+        "Sale price must be greater than 0.",
+      );
+      return;
+    }
+
+    if (
+      discountPrice !== undefined &&
+      discountPrice >= price
+    ) {
+      setError(
+        "Sale price must be lower than the original price.",
+      );
+      return;
+    }
+
+    // ==========================================
+    // STOCK VALIDATION
+    // ==========================================
+
+    if (
+      !Number.isFinite(stock) ||
+      !Number.isInteger(stock) ||
+      stock < 0
+    ) {
+      setError(
+        "Total stock must be a valid non-negative whole number.",
+      );
+      return;
+    }
+
+    // ==========================================
+    // CATEGORY VALIDATION
+    // ==========================================
+
+    if (!category) {
+      setError("Please select a category.");
+      return;
+    }
+
+    if (categoriesError) {
+      setError(
+        "Categories could not be loaded. Please refresh and try again.",
+      );
+      return;
+    }
+
+    // ==========================================
+    // IMAGE VALIDATION
+    // ==========================================
+
+    if (images.length === 0) {
+      setError(
+        "Add at least one product image.",
+      );
+      return;
+    }
+
+    if (images.length > MAX_IMAGES) {
+      setError(
+        `Maximum ${MAX_IMAGES} images are allowed.`,
+      );
+      return;
+    }
+
+    // ==========================================
+    // SALE DATE VALIDATION
+    // ==========================================
+
+    if (saleStartDate && saleEndDate) {
+      const start = new Date(
+        `${saleStartDate}T00:00:00`,
+      );
+
+      const end = new Date(
+        `${saleEndDate}T23:59:59`,
+      );
+
+      if (
+        Number.isNaN(start.getTime()) ||
+        Number.isNaN(end.getTime())
+      ) {
+        setError(
+          "Please enter valid sale dates.",
+        );
+        return;
+      }
+
+      if (end < start) {
+        setError(
+          "Sale end date cannot be before sale start date.",
+        );
+        return;
+      }
+    }
+
+    // ==========================================
+    // SALE DATE WITHOUT SALE PRICE
+    // ==========================================
+
+    if (
+      (saleStartDate || saleEndDate) &&
+      discountPrice === undefined
+    ) {
+      setError(
+        "Add a sale price when using sale dates.",
+      );
+      return;
+    }
+
+    // ==========================================
+    // SIZES
+    // ==========================================
+
+    const sizeLabels = sizesText
+      ? sizesText
+          .split(",")
+          .map((size) => size.trim())
+          .filter(Boolean)
+          .filter(
+            (size, index, array) =>
+              array.indexOf(size) === index,
+          )
+      : [];
+
+    /*
+      IMPORTANT:
+
+      We keep TOTAL STOCK separate from size stock.
+
+      Example:
+
+      Total stock = 10
+      Sizes = S, M, L
+
+      We DO NOT create:
+
+      S = 10
+      M = 10
+      L = 10
+
+      because that would actually represent 30 pieces.
+
+      Instead, size stock starts at 0 and can be
+      managed separately later.
+
+      If you want size-level inventory now,
+      the form should have separate stock inputs
+      for every size.
+    */
+
+    const sizes = sizeLabels.map((label) => ({
+      label,
+      stock: 0,
+    }));
+
+    // ==========================================
+    // SLUG
+    // ==========================================
+
+    /*
+      IMPORTANT:
+
+      Existing product keeps its old slug.
+
+      This prevents existing product URLs from
+      breaking when the product name is edited.
+    */
+
+    const slug =
+      isEditing && product?.slug
+        ? product.slug
+        : generateSlug(name);
+
+    if (!slug) {
+      setError(
+        "Could not generate a valid product URL slug.",
+      );
+      return;
+    }
+
+    // ==========================================
+    // PAYLOAD
+    // ==========================================
 
     const payload = {
       name,
-
       slug,
+      description,
 
-      description: e.target.description.value,
+      price,
 
-      price: Number(e.target.price.value),
+      ...(discountPrice !== undefined
+        ? { discountPrice }
+        : { discountPrice: undefined }),
 
-      discountPrice: e.target.discountPrice.value
-        ? Number(e.target.discountPrice.value)
-        : undefined,
+      category,
 
-      category: e.target.category.value,
+      stock,
 
-      stock: Number(e.target.stock.value),
+      sizes,
 
-      badge: e.target.badge.value,
-      saleStartDate: e.target.saleStartDate.value || undefined,
-      saleEndDate: e.target.saleEndDate.value || undefined,
+      badge: badge || "auto",
 
-      // All product images
+      saleStartDate,
+
+      saleEndDate,
+
       images,
 
-      fabricCare: e.target.fabricCare.value,
-
-      sizes: e.target.sizes.value
-        .split(",")
-        .map((s) => s.trim())
-        .filter(Boolean)
-        .map((label) => ({
-          label,
-          stock: Number(e.target.stock.value),
-        })),
+      fabricCare,
     };
+
+    // ==========================================
+    // SAVE
+    // ==========================================
 
     setSaving(true);
 
     try {
       if (isEditing) {
-        await updateProductApi(product._id, payload);
+        await updateProductApi(
+          product._id,
+          payload,
+        );
       } else {
         await createProductApi(payload);
       }
 
+      // Refresh admin product list
       await queryClient.invalidateQueries({
         queryKey: ["admin-products"],
       });
 
+      // Also refresh any product queries
+      await queryClient.invalidateQueries({
+        queryKey: ["products"],
+      });
+
       onClose();
     } catch (err) {
-      console.error("Save product error:", err);
+      console.error(
+        "Save product error:",
+        err,
+      );
 
-      setError(err.response?.data?.message || "Could not save product");
+      const message =
+        err?.response?.data?.message ||
+        err?.response?.data?.error ||
+        err?.message ||
+        "Could not save product.";
+
+      setError(message);
     } finally {
       setSaving(false);
     }
   };
 
-  return (
-    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
-      <div className="bg-[#0d0e12] border border-white/10 rounded-lg w-full max-w-lg max-h-[90vh] overflow-y-auto p-6">
-        {/* HEADER */}
+  // ==========================================
+  // UI
+  // ==========================================
 
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-white text-lg">
-            {isEditing ? "Edit Product" : "Add Product"}
-          </h2>
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
+      <div className="w-full max-w-2xl max-h-[92vh] overflow-y-auto rounded-xl border border-white/10 bg-[#0d0e12] p-6">
+
+        {/* ==========================================
+            HEADER
+        ========================================== */}
+
+        <div className="mb-6 flex items-center justify-between">
+          <div>
+            <h2 className="text-lg text-white">
+              {isEditing
+                ? "Edit Product"
+                : "Add Product"}
+            </h2>
+
+            <p className="mt-1 text-[10px] text-gray-500">
+              {isEditing
+                ? "Update product information"
+                : "Add a new product to your store"}
+            </p>
+          </div>
 
           <button
             type="button"
             onClick={onClose}
-            className="text-gray-400 hover:text-white"
+            disabled={saving || uploading}
+            className="text-gray-400 transition hover:text-white disabled:opacity-50"
           >
             <X size={20} />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {/* ================================= */}
-          {/* MULTIPLE IMAGE UPLOAD */}
-          {/* ================================= */}
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-5"
+        >
+
+          {/* ==========================================
+              IMAGES
+          ========================================== */}
 
           <div>
-            <div className="flex justify-between items-center">
+            <div className="flex items-center justify-between">
               <label className="text-xs tracking-widest text-gray-400">
                 PRODUCT IMAGES
               </label>
 
               <span className="text-[10px] text-gray-500">
-                {images.length}/6
+                {images.length}/{MAX_IMAGES}
               </span>
             </div>
 
-            <div className="grid grid-cols-3 gap-3 mt-3">
-              {/* EXISTING / UPLOADED IMAGES */}
+            <p className="mt-1 text-[10px] text-gray-600">
+              First image will be used as the primary
+              product image.
+            </p>
 
-              {images.map((img, i) => (
+            <div className="mt-3 grid grid-cols-3 gap-3 sm:grid-cols-4">
+
+              {images.map((img, index) => (
                 <div
-                  key={`${img.publicId || img.url}-${i}`}
-                  className="relative aspect-square"
+                  key={`${img.publicId || img.url}-${index}`}
+                  className="group relative aspect-square"
                 >
+
                   <img
                     src={img.url}
-                    alt={`Product ${i + 1}`}
-                    className="w-full h-full object-cover rounded-lg border border-white/10"
+                    alt={`Product image ${index + 1}`}
+                    className="h-full w-full rounded-lg border border-white/10 object-cover"
                   />
 
                   {/* IMAGE NUMBER */}
 
-                  <span className="absolute bottom-1 left-1 bg-black/70 text-white text-[9px] px-1.5 py-0.5 rounded">
-                    {i + 1}
+                  <span className="absolute bottom-1 left-1 rounded bg-black/70 px-1.5 py-0.5 text-[9px] text-white">
+                    {index === 0
+                      ? "PRIMARY"
+                      : index + 1}
                   </span>
 
                   {/* REMOVE */}
 
                   <button
                     type="button"
-                    onClick={() => removeImage(i)}
-                    className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 hover:bg-red-600 rounded-full flex items-center justify-center"
+                    onClick={() =>
+                      removeImage(index)
+                    }
+                    disabled={saving || uploading}
+                    className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-white transition hover:bg-red-600 disabled:opacity-50"
                   >
-                    <X size={11} className="text-white" />
+                    <X size={12} />
                   </button>
+
                 </div>
               ))}
 
-              {/* ADD IMAGE BUTTON */}
+              {/* ADD IMAGE */}
 
-              {images.length < 6 && (
-                <label className="aspect-square border border-dashed border-white/20 hover:border-[#D4A34E]/60 rounded-lg flex flex-col items-center justify-center cursor-pointer transition">
-                  {uploading ? (
-                    <>
-                      <div className="w-5 h-5 border-2 border-[#D4A34E] border-t-transparent rounded-full animate-spin" />
+              {images.length < MAX_IMAGES && (
+                <label
+                  className={`aspect-square cursor-pointer rounded-lg border border-dashed border-white/20 transition hover:border-[#D4A34E]/70 ${
+                    uploading
+                      ? "pointer-events-none opacity-50"
+                      : ""
+                  }`}
+                >
 
-                      <span className="text-[9px] text-gray-500 mt-2">
-                        UPLOADING
-                      </span>
-                    </>
-                  ) : (
-                    <>
-                      <ImagePlus size={20} className="text-gray-500" />
+                  <div className="flex h-full flex-col items-center justify-center">
 
-                      <span className="text-[9px] text-gray-500 mt-2">
-                        ADD IMAGES
-                      </span>
-                    </>
-                  )}
+                    {uploading ? (
+                      <>
+                        <div className="h-6 w-6 animate-spin rounded-full border-2 border-[#D4A34E] border-t-transparent" />
+
+                        <span className="mt-2 text-[9px] text-gray-500">
+                          UPLOADING
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        <ImagePlus
+                          size={22}
+                          className="text-gray-500"
+                        />
+
+                        <span className="mt-2 text-[9px] text-gray-500">
+                          ADD IMAGES
+                        </span>
+                      </>
+                    )}
+
+                  </div>
 
                   <input
                     type="file"
-                    accept="image/*"
+                    accept="image/jpeg,image/png,image/webp,image/avif"
                     multiple
                     onChange={handleImageUpload}
+                    disabled={
+                      uploading || saving
+                    }
                     className="hidden"
-                    disabled={uploading}
                   />
+
                 </label>
               )}
+
             </div>
 
-            <p className="text-[10px] text-gray-600 mt-2">
-              Select up to 6 images at once.
+            <p className="mt-2 text-[10px] text-gray-600">
+              JPG, PNG, WEBP or AVIF · Maximum 5MB
+              each · Maximum 6 images
             </p>
           </div>
 
-          {/* NAME */}
+          {/* ==========================================
+              NAME
+          ========================================== */}
 
           <div>
             <label className="text-xs tracking-widest text-gray-400">
-              NAME
+              PRODUCT NAME
             </label>
 
             <input
               name="name"
-              defaultValue={product?.name}
+              defaultValue={
+                product?.name || ""
+              }
               required
-              className="w-full mt-1 bg-transparent border border-white/20 rounded px-3 py-2 text-white text-sm outline-none focus:border-[#D4A34E]"
+              maxLength={120}
+              placeholder="e.g. Handwoven Banarasi Silk Saree"
+              className="mt-1 w-full rounded border border-white/20 bg-transparent px-3 py-2.5 text-sm text-white outline-none transition focus:border-[#D4A34E]"
             />
           </div>
 
-          {/* DESCRIPTION */}
+          {/* ==========================================
+              DESCRIPTION
+          ========================================== */}
 
           <div>
             <label className="text-xs tracking-widest text-gray-400">
@@ -284,15 +703,22 @@ export default function ProductFormModal({ product, onClose }) {
 
             <textarea
               name="description"
-              defaultValue={product?.description}
-              rows={3}
-              className="w-full mt-1 bg-transparent border border-white/20 rounded px-3 py-2 text-white text-sm outline-none focus:border-[#D4A34E]"
+              defaultValue={
+                product?.description || ""
+              }
+              rows={4}
+              maxLength={2000}
+              placeholder="Describe the product..."
+              className="mt-1 w-full resize-none rounded border border-white/20 bg-transparent px-3 py-2.5 text-sm text-white outline-none transition focus:border-[#D4A34E]"
             />
           </div>
 
-          {/* PRICE */}
+          {/* ==========================================
+              PRICE + DISCOUNT
+          ========================================== */}
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+
             <div>
               <label className="text-xs tracking-widest text-gray-400">
                 PRICE
@@ -301,63 +727,156 @@ export default function ProductFormModal({ product, onClose }) {
               <input
                 name="price"
                 type="number"
-                defaultValue={product?.price}
+                min="0.01"
+                step="0.01"
+                defaultValue={
+                  product?.price ?? ""
+                }
                 required
-                className="w-full mt-1 bg-transparent border border-white/20 rounded px-3 py-2 text-white text-sm outline-none focus:border-[#D4A34E]"
+                placeholder="0.00"
+                className="mt-1 w-full rounded border border-white/20 bg-transparent px-3 py-2.5 text-sm text-white outline-none transition focus:border-[#D4A34E]"
               />
             </div>
 
             <div>
               <label className="text-xs tracking-widest text-gray-400">
-                BADGE
+                SALE PRICE
               </label>
-              <select
-                name="badge"
-                defaultValue={product?.badge || "auto"}
-                className="w-full mt-1 bg-[#0d0e12] border border-white/20 rounded px-3 py-2 text-white text-sm outline-none focus:border-[#D4A34E]"
-              >
-                <option value="auto">
-                  Auto (new / sale / sold-out based on data)
-                </option>
-                <option value="bestseller">Bestseller</option>
-                <option value="limited">Limited Edition</option>
-                <option value="new">New (force show)</option>
-                <option value="sale">Sale (force show)</option>
-                <option value="none">No badge</option>
-              </select>
+
+              <input
+                name="discountPrice"
+                type="number"
+                min="0.01"
+                step="0.01"
+                defaultValue={
+                  product?.discountPrice ?? ""
+                }
+                placeholder="Optional"
+                className="mt-1 w-full rounded border border-white/20 bg-transparent px-3 py-2.5 text-sm text-white outline-none transition focus:border-[#D4A34E]"
+              />
+
+              <p className="mt-1 text-[10px] text-gray-600">
+                Must be lower than the original price.
+              </p>
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="text-xs tracking-widest text-gray-400">
-                  SALE STARTS (optional)
-                </label>
-                <input
-                  name="saleStartDate"
-                  type="date"
-                  defaultValue={product?.saleStartDate?.slice(0, 10)}
-                  className="w-full mt-1 bg-transparent border border-white/20 rounded px-3 py-2 text-white text-sm outline-none focus:border-[#D4A34E]"
-                />
-              </div>
-              <div>
-                <label className="text-xs tracking-widest text-gray-400">
-                  SALE ENDS (optional)
-                </label>
-                <input
-                  name="saleEndDate"
-                  type="date"
-                  defaultValue={product?.saleEndDate?.slice(0, 10)}
-                  className="w-full mt-1 bg-transparent border border-white/20 rounded px-3 py-2 text-white text-sm outline-none focus:border-[#D4A34E]"
-                />
-              </div>
-            </div>
-            <p className="text-gray-600 text-[10px]">
-              Leave both blank for the discount to apply immediately with no end
-              date.
+          </div>
+
+          {/* ==========================================
+              BADGE
+          ========================================== */}
+
+          <div>
+            <label className="text-xs tracking-widest text-gray-400">
+              PRODUCT BADGE
+            </label>
+
+            <select
+              name="badge"
+              defaultValue={
+                product?.badge || "auto"
+              }
+              className="mt-1 w-full rounded border border-white/20 bg-[#0d0e12] px-3 py-2.5 text-sm text-white outline-none transition focus:border-[#D4A34E]"
+            >
+
+              <option value="auto">
+                Auto — based on product data
+              </option>
+
+              <option value="bestseller">
+                Bestseller
+              </option>
+
+              <option value="limited">
+                Limited Edition
+              </option>
+
+              <option value="new">
+                New
+              </option>
+
+              <option value="sale">
+                Sale
+              </option>
+
+              <option value="none">
+                No Badge
+              </option>
+
+            </select>
+
+            <p className="mt-1 text-[10px] text-gray-600">
+              Auto shows Sold Out, Sale or New based
+              on the product state.
             </p>
           </div>
 
-          {/* CATEGORY */}
+          {/* ==========================================
+              SALE DATES
+          ========================================== */}
+
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+
+            {/* SALE START */}
+
+            <div>
+              <label className="text-xs tracking-widest text-gray-400">
+                SALE STARTS
+              </label>
+
+              <input
+                name="saleStartDate"
+                type="date"
+                defaultValue={
+                  product?.saleStartDate
+                    ? product.saleStartDate.slice(
+                        0,
+                        10,
+                      )
+                    : ""
+                }
+                onClick={(e) => {
+                  e.currentTarget.showPicker?.();
+                }}
+                className="mt-1 w-full cursor-pointer rounded border border-white/20 bg-transparent px-3 py-2.5 text-sm text-white outline-none transition focus:border-[#D4A34E]"
+              />
+            </div>
+
+            {/* SALE END */}
+
+            <div>
+              <label className="text-xs tracking-widest text-gray-400">
+                SALE ENDS
+              </label>
+
+              <input
+                name="saleEndDate"
+                type="date"
+                defaultValue={
+                  product?.saleEndDate
+                    ? product.saleEndDate.slice(
+                        0,
+                        10,
+                      )
+                    : ""
+                }
+                onClick={(e) => {
+                  e.currentTarget.showPicker?.();
+                }}
+                className="mt-1 w-full cursor-pointer rounded border border-white/20 bg-transparent px-3 py-2.5 text-sm text-white outline-none transition focus:border-[#D4A34E]"
+              />
+            </div>
+
+          </div>
+
+          <p className="text-[10px] text-gray-600">
+            Leave both blank if you don't want a
+            scheduled sale.
+          </p>
+
+          {/* ==========================================
+              CATEGORY
+          ========================================== */}
 
           <div>
             <label className="text-xs tracking-widest text-gray-400">
@@ -366,82 +885,149 @@ export default function ProductFormModal({ product, onClose }) {
 
             <select
               name="category"
-              defaultValue={product?.category?._id}
+              defaultValue={
+                product?.category?._id || ""
+              }
               required
-              className="w-full mt-1 bg-[#0d0e12] border border-white/20 rounded px-3 py-2 text-white text-sm outline-none focus:border-[#D4A34E]"
+              disabled={categoriesLoading}
+              className="mt-1 w-full rounded border border-white/20 bg-[#0d0e12] px-3 py-2.5 text-sm text-white outline-none transition focus:border-[#D4A34E]"
             >
-              <option value="">Select category</option>
 
-              {categories?.map((cat) => (
-                <option key={cat._id} value={cat._id}>
+              <option value="">
+                {categoriesLoading
+                  ? "Loading categories..."
+                  : "Select category"}
+              </option>
+
+              {categories.map((cat) => (
+                <option
+                  key={cat._id}
+                  value={cat._id}
+                >
                   {cat.name}
                 </option>
               ))}
+
             </select>
+
+            {categoriesError && (
+              <p className="mt-1 text-[10px] text-red-400">
+                Failed to load categories.
+              </p>
+            )}
           </div>
 
-          {/* STOCK */}
+          {/* ==========================================
+              STOCK
+          ========================================== */}
 
           <div>
             <label className="text-xs tracking-widest text-gray-400">
-              STOCK
+              TOTAL STOCK
             </label>
 
             <input
               name="stock"
               type="number"
-              defaultValue={product?.stock}
+              min="0"
+              step="1"
+              defaultValue={
+                product?.stock ?? 0
+              }
               required
-              className="w-full mt-1 bg-transparent border border-white/20 rounded px-3 py-2 text-white text-sm outline-none focus:border-[#D4A34E]"
+              className="mt-1 w-full rounded border border-white/20 bg-transparent px-3 py-2.5 text-sm text-white outline-none transition focus:border-[#D4A34E]"
             />
+
+            <p className="mt-1 text-[10px] text-gray-600">
+              Total quantity available for this product.
+            </p>
           </div>
 
-          {/* SIZES */}
+          {/* ==========================================
+              SIZES
+          ========================================== */}
 
           <div>
             <label className="text-xs tracking-widest text-gray-400">
-              SIZES (comma-separated, e.g. S, M, L)
+              SIZES
             </label>
 
             <input
               name="sizes"
-              defaultValue={product?.sizes?.map((s) => s.label).join(", ")}
-              className="w-full mt-1 bg-transparent border border-white/20 rounded px-3 py-2 text-white text-sm outline-none focus:border-[#D4A34E]"
+              defaultValue={
+                product?.sizes
+                  ?.map((s) => s.label)
+                  .join(", ") || ""
+              }
+              placeholder="S, M, L, XL"
+              className="mt-1 w-full rounded border border-white/20 bg-transparent px-3 py-2.5 text-sm text-white outline-none transition focus:border-[#D4A34E]"
             />
+
+            <p className="mt-1 text-[10px] text-gray-600">
+              Separate sizes using commas. Size-level
+              stock is currently kept separate from
+              total stock.
+            </p>
           </div>
 
-          {/* FABRIC CARE  */}
+          {/* ==========================================
+              FABRIC & CARE
+          ========================================== */}
 
           <div>
             <label className="text-xs tracking-widest text-gray-400">
-              FABRIC &amp; CRAFTSMANSHIP
+              FABRIC & CRAFTSMANSHIP
             </label>
+
             <textarea
               name="fabricCare"
-              defaultValue={product?.fabricCare}
-              rows={3}
+              defaultValue={
+                product?.fabricCare || ""
+              }
+              rows={4}
+              maxLength={1000}
               placeholder="e.g. Pure mulberry silk with hand-woven zari border. Dry clean only."
-              className="w-full mt-1 bg-transparent border border-white/20 rounded px-3 py-2 text-white text-sm outline-none focus:border-[#D4A34E]"
+              className="mt-1 w-full resize-none rounded border border-white/20 bg-transparent px-3 py-2.5 text-sm text-white outline-none transition focus:border-[#D4A34E]"
             />
           </div>
 
-          {/* ERROR */}
+          {/* ==========================================
+              ERROR
+          ========================================== */}
 
-          {error && <p className="text-red-400 text-sm">{error}</p>}
+          {error && (
+            <div className="rounded-lg border border-red-500/20 bg-red-500/10 px-3 py-2.5">
+              <p className="text-sm text-red-400">
+                {error}
+              </p>
+            </div>
+          )}
 
-          {/* SUBMIT */}
+          {/* ==========================================
+              SUBMIT
+          ========================================== */}
 
           <button
             type="submit"
-            disabled={saving || uploading}
-            className="w-full py-3 rounded bg-gradient-to-r from-[#C9962F] to-[#F0D68A] text-black text-sm tracking-widest disabled:opacity-60"
+            disabled={
+              saving ||
+              uploading ||
+              categoriesLoading ||
+              categoriesError
+            }
+            className="w-full rounded bg-gradient-to-r from-[#C9962F] to-[#F0D68A] py-3 text-sm tracking-widest text-black transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {saving
-              ? "SAVING..."
-              : isEditing
-                ? "UPDATE PRODUCT"
-                : "CREATE PRODUCT"}
+              ? isEditing
+                ? "UPDATING..."
+                : "CREATING..."
+              : uploading
+                ? "UPLOADING IMAGES..."
+                : isEditing
+                  ? "UPDATE PRODUCT"
+                  : "CREATE PRODUCT"}
           </button>
+
         </form>
       </div>
     </div>
