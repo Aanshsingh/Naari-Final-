@@ -112,10 +112,14 @@ export default function ProductFormModal({ product, onClose }) {
 
       stock: Number(e.target.stock.value),
 
+      badge: e.target.badge.value,
+      saleStartDate: e.target.saleStartDate.value || undefined,
+      saleEndDate: e.target.saleEndDate.value || undefined,
+
       // All product images
       images,
 
-      fabricCare: e.target.fabricCare.value,  
+      fabricCare: e.target.fabricCare.value,
 
       sizes: e.target.sizes.value
         .split(",")
@@ -305,16 +309,52 @@ export default function ProductFormModal({ product, onClose }) {
 
             <div>
               <label className="text-xs tracking-widest text-gray-400">
-                DISCOUNT PRICE
+                BADGE
               </label>
-
-              <input
-                name="discountPrice"
-                type="number"
-                defaultValue={product?.discountPrice}
-                className="w-full mt-1 bg-transparent border border-white/20 rounded px-3 py-2 text-white text-sm outline-none focus:border-[#D4A34E]"
-              />
+              <select
+                name="badge"
+                defaultValue={product?.badge || "auto"}
+                className="w-full mt-1 bg-[#0d0e12] border border-white/20 rounded px-3 py-2 text-white text-sm outline-none focus:border-[#D4A34E]"
+              >
+                <option value="auto">
+                  Auto (new / sale / sold-out based on data)
+                </option>
+                <option value="bestseller">Bestseller</option>
+                <option value="limited">Limited Edition</option>
+                <option value="new">New (force show)</option>
+                <option value="sale">Sale (force show)</option>
+                <option value="none">No badge</option>
+              </select>
             </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="text-xs tracking-widest text-gray-400">
+                  SALE STARTS (optional)
+                </label>
+                <input
+                  name="saleStartDate"
+                  type="date"
+                  defaultValue={product?.saleStartDate?.slice(0, 10)}
+                  className="w-full mt-1 bg-transparent border border-white/20 rounded px-3 py-2 text-white text-sm outline-none focus:border-[#D4A34E]"
+                />
+              </div>
+              <div>
+                <label className="text-xs tracking-widest text-gray-400">
+                  SALE ENDS (optional)
+                </label>
+                <input
+                  name="saleEndDate"
+                  type="date"
+                  defaultValue={product?.saleEndDate?.slice(0, 10)}
+                  className="w-full mt-1 bg-transparent border border-white/20 rounded px-3 py-2 text-white text-sm outline-none focus:border-[#D4A34E]"
+                />
+              </div>
+            </div>
+            <p className="text-gray-600 text-[10px]">
+              Leave both blank for the discount to apply immediately with no end
+              date.
+            </p>
           </div>
 
           {/* CATEGORY */}

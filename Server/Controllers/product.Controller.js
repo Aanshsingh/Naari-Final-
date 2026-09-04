@@ -2,6 +2,17 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { Product } from "../models/Product.model.js";
+import { getEffectiveBadge, getEffectivePrice, isSaleActive } from "../utils/productDisplay.js";
+
+function enrichProduct(product) {
+  const obj = product.toObject ? product.toObject() : product;
+  return {
+    ...obj,
+    effectiveBadge: getEffectiveBadge(obj),
+    effectivePrice: getEffectivePrice(obj),
+    isOnSale: isSaleActive(obj),
+  };
+}
 
 const createProduct = asyncHandler(async (req, res) => {
   const {
@@ -74,11 +85,13 @@ const getAllProducts = asyncHandler(async (req, res) => {
     Product.countDocuments(filter),
   ]);
 
+  const enrichedProducts = products.map(enrichProduct);
+
   return res.status(200).json(
     new ApiResponse(
       200,
       {
-        products,
+        products: enrichedProducts,
         total,
         page: Number(page),
         totalPages: Math.ceil(total / Number(limit)),

@@ -29,25 +29,27 @@ export function useProductDetail() {
     enabled: !!product?.category?._id, // only fetch once we know the category
   });
 
-  
+  const addItem = useCartStore((state) => state.addItem);
 
+  const handleAddToBag = () => {
+    if (product?.effectiveBadge === "sold-out") {
+      alert("This item is currently out of stock");
+      return;
+    }
 
-    const addItem = useCartStore((state) => state.addItem);
-
-const handleAddToBag = () => {
-  if (product?.sizes?.length && !selectedSize) {
-    alert("Please select a size");
-    return;
-  }
-  addItem({
-    productId: product._id,
-    name: product.name,
-    image: product.images?.[0]?.url,
-    price: product.discountPrice || product.price,
-    qty: 1,
-    size: selectedSize,
-  });
-};
+    if (product?.sizes?.length && !selectedSize) {
+      alert("Please select a size");
+      return;
+    }
+    addItem({
+      productId: product._id,
+      name: product.name,
+      image: product.images?.[0]?.url,
+      price: product.discountPrice || product.price,
+      qty: 1,
+      size: selectedSize,
+    });
+  };
 
   return {
     product,

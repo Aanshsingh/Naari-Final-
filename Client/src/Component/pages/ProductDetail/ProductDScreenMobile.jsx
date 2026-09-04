@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Heart, ChevronDown, ImageOff } from "lucide-react";
 import { useProductDetail } from "../../../hook/useProductDetail";
 import { useLikedProducts } from "../../../hook/useLikedProducts";
+import ProductBadge from "../../common/ProductBadge.jsx";
 import { Link } from "react-router-dom";
 
 function AccordionSection({ title, children }) {
@@ -77,11 +78,13 @@ export default function ProductDetailMobile() {
   return (
     <div className="min-h-screen bg-[#0d0e12] pb-40">
       <div className="relative overflow-hidden">
-        {/* HERITAGE BADGE */}
+        {/* BADGE */}
 
-        <span className="absolute top-3 left-3 z-20 bg-[#D4A34E] text-black text-[10px] px-2 py-0.5 rounded tracking-widest">
+        <ProductBadge badge={product.effectiveBadge} />
+
+        {/* <span className="absolute top-3 left-3 z-20 bg-[#D4A34E] text-black text-[10px] px-2 py-0.5 rounded tracking-widest">
           HERITAGE
-        </span>
+        </span> */}
 
         {/* WISHLIST HEART */}
 
@@ -210,7 +213,7 @@ export default function ProductDetailMobile() {
 
         <div className="flex items-center gap-2 mt-2">
           <span className="text-lg text-[#D4A34E]">
-            ₹{(product.discountPrice || product.price).toLocaleString("en-IN")}
+            ₹{product.effectivePrice.toLocaleString("en-IN")}
           </span>
 
           {product.discountPrice && (
@@ -224,6 +227,12 @@ export default function ProductDetailMobile() {
                 OFF
               </span>
             </>
+          )}
+
+          {product.isOnSale && (
+            <span className="text-gray-500 line-through text-xs ml-2">
+              ₹{product.price.toLocaleString("en-IN")}
+            </span>
           )}
         </div>
 
