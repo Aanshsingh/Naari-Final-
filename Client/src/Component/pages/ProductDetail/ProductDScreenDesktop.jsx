@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { useProductDetail } from "../../../hook/useProductDetail";
 import ZoomImage from "../../common/zoom";
+import ProductBadge from "../../common/ProductBadge.jsx"; // ← add this import
 
 function AccordionSection({ title, children }) {
   const [open, setOpen] = useState(false);
@@ -81,7 +82,9 @@ export default function ProductDetailDesktop() {
               </button>
             ))}
           </div>
-          <div className="flex-1 rounded-lg overflow-hidden bg-[#14151a]">
+          <div className="relative flex-1 rounded-lg overflow-hidden bg-[#14151a]">
+            {/* BADGE — added here, on the main image container */}
+            <ProductBadge badge={product.effectiveBadge} />
             <img
               src={
                 product.images?.[activeImage]?.url ||
@@ -104,11 +107,9 @@ export default function ProductDetailDesktop() {
 
           <div className="flex items-center gap-3 mt-4">
             <span className="text-2xl text-[#D4A34E]">
-              ₹
-              {product.discountPrice?.toLocaleString("en-IN") ||
-                product.price.toLocaleString("en-IN")}
+              ₹{product.effectivePrice.toLocaleString("en-IN")}
             </span>
-            {product.discountPrice && (
+            {product.isOnSale && (
               <span className="text-gray-500 line-through text-sm">
                 ₹{product.price.toLocaleString("en-IN")}
               </span>
@@ -153,12 +154,11 @@ export default function ProductDetailDesktop() {
                   <button
                     key={s.label}
                     onClick={() => setSelectedSize(s.label)}
-                    disabled={s.stock === 0}
                     className={`w-11 h-11 rounded border text-sm ${
                       selectedSize === s.label
                         ? "border-[#D4A34E] text-[#D4A34E]"
                         : "border-white/20 text-gray-300"
-                    } ${s.stock === 0 ? "opacity-30 cursor-not-allowed" : ""}`}
+                    }`}
                   >
                     {s.label}
                   </button>

@@ -74,22 +74,27 @@ export function getEffectivePrice(product) {
 // TOTAL STOCK
 // ============================================================
 
+// function getTotalStock(product) {
+//   if (!product) return 0;
+
+//   // If sizes exist, use size-level inventory
+//   if (
+//     Array.isArray(product.sizes) &&
+//     product.sizes.length > 0
+//   ) {
+//     return product.sizes.reduce(
+//       (sum, size) =>
+//         sum + (Number(size.stock) || 0),
+//       0
+//     );
+//   }
+
+//   return Number(product.stock) || 0;
+// }
+
 function getTotalStock(product) {
   if (!product) return 0;
-
-  // If sizes exist, use size-level inventory
-  if (
-    Array.isArray(product.sizes) &&
-    product.sizes.length > 0
-  ) {
-    return product.sizes.reduce(
-      (sum, size) =>
-        sum + (Number(size.stock) || 0),
-      0
-    );
-  }
-
-  return Number(product.stock) || 0;
+  return Number(product.stock) || 0; // single source of truth for now
 }
 
 

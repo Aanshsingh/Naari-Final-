@@ -18,7 +18,6 @@ function AccordionSection({ title, children }) {
         className="w-full flex justify-between items-center text-xs tracking-widest text-gray-300"
       >
         <span>{title}</span>
-
         <ChevronDown
           size={14}
           className={`transition-transform duration-200 ${
@@ -50,7 +49,6 @@ export default function ProductDetailMobile() {
   } = useProductDetail();
 
   const [wishlist, setWishlist] = useState(false);
-
   const { likedIds, toggleLike } = useLikedProducts();
 
   useEffect(() => {
@@ -79,15 +77,9 @@ export default function ProductDetailMobile() {
     <div className="min-h-screen bg-[#0d0e12] pb-40">
       <div className="relative overflow-hidden">
         {/* BADGE */}
-
         <ProductBadge badge={product.effectiveBadge} />
 
-        {/* <span className="absolute top-3 left-3 z-20 bg-[#D4A34E] text-black text-[10px] px-2 py-0.5 rounded tracking-widest">
-          HERITAGE
-        </span> */}
-
         {/* WISHLIST HEART */}
-
         <button
           type="button"
           onClick={(e) => {
@@ -107,10 +99,7 @@ export default function ProductDetailMobile() {
           />
         </button>
 
-        {/* =====================================================
-            IMAGE SLIDER
-        ====================================================== */}
-
+        {/* IMAGE SLIDER */}
         {images.length > 0 ? (
           <div
             className="w-full overflow-hidden touch-pan-y"
@@ -119,21 +108,12 @@ export default function ProductDetailMobile() {
             }}
             onTouchEnd={(e) => {
               const startX = Number(e.currentTarget.dataset.startX || 0);
-
               const endX = e.changedTouches[0].clientX;
-
               const difference = startX - endX;
 
-              /*
-               * SWIPE LEFT
-               */
               if (difference > 50) {
                 setActiveImage((prev) => Math.min(prev + 1, images.length - 1));
               }
-
-              /*
-               * SWIPE RIGHT
-               */
               if (difference < -50) {
                 setActiveImage((prev) => Math.max(prev - 1, 0));
               }
@@ -141,9 +121,7 @@ export default function ProductDetailMobile() {
           >
             <div
               className="flex transition-transform duration-300 ease-out"
-              style={{
-                transform: `translateX(-${activeImage * 100}%)`,
-              }}
+              style={{ transform: `translateX(-${activeImage * 100}%)` }}
             >
               {images.map((img, index) => (
                 <div
@@ -161,20 +139,13 @@ export default function ProductDetailMobile() {
             </div>
           </div>
         ) : (
-          /*
-           * NO IMAGE FALLBACK
-           */
           <div className="aspect-[3/4] bg-[#14151a] flex flex-col items-center justify-center text-gray-600">
             <ImageOff size={32} />
-
             <p className="text-xs mt-2">No image available</p>
           </div>
         )}
 
-        {/* =====================================================
-            IMAGE DOTS
-        ====================================================== */}
-
+        {/* IMAGE DOTS */}
         {images.length > 1 && (
           <div className="flex justify-center items-center gap-1.5 py-3">
             {images.map((_, i) => (
@@ -194,79 +165,48 @@ export default function ProductDetailMobile() {
         )}
       </div>
 
-      {/* =====================================================
-          PRODUCT INFORMATION
-      ====================================================== */}
-
+      {/* PRODUCT INFORMATION */}
       <div className="px-5 pt-4">
-        {/* COLLECTION */}
-
-        <p className="text-[10px] tracking-[0.3em] text-[#D4A34E]">
-          THE HERITAGE COLLECTION
-        </p>
-
-        {/* PRODUCT NAME */}
-
         <h1 className="text-lg text-white font-light mt-2">{product.name}</h1>
 
         {/* PRICE */}
-
         <div className="flex items-center gap-2 mt-2">
           <span className="text-lg text-[#D4A34E]">
             ₹{product.effectivePrice.toLocaleString("en-IN")}
           </span>
 
-          {product.discountPrice && (
+          {product.isOnSale && (
             <>
               <span className="text-gray-500 line-through text-xs">
                 ₹{product.price.toLocaleString("en-IN")}
               </span>
-
               <span className="text-[10px] text-green-400">
-                {Math.round((1 - product.discountPrice / product.price) * 100)}%
-                OFF
+                {Math.round((1 - product.discountPrice / product.price) * 100)}% OFF
               </span>
             </>
           )}
-
-          {product.isOnSale && (
-            <span className="text-gray-500 line-through text-xs ml-2">
-              ₹{product.price.toLocaleString("en-IN")}
-            </span>
-          )}
         </div>
 
-        {/* =====================================================
-            SIZE SELECTION
-        ====================================================== */}
-
+        {/* SIZE SELECTION */}
         {product.sizes?.length > 0 && (
           <div className="mt-5">
             <div className="flex justify-between items-center mb-2">
-              <p className="text-[10px] tracking-widest text-gray-400">
-                SELECT SIZE
-              </p>
-
-              <button
-                type="button"
-                className="text-[10px] text-[#D4A34E] underline"
-              >
+              <p className="text-[10px] tracking-widest text-gray-400">SELECT SIZE</p>
+              <button type="button" className="text-[10px] text-[#D4A34E] underline">
                 SIZE GUIDE
               </button>
             </div>
-
             <div className="flex gap-2">
               {product.sizes.map((s) => (
                 <button
                   key={s.label}
                   type="button"
                   onClick={() => setSelectedSize(s.label)}
-                  disabled={s.stock === 0}
                   className={`w-10 h-10 rounded border text-xs transition ${
                     selectedSize === s.label
                       ? "border-[#D4A34E] text-[#D4A34E]"
                       : "border-white/20 text-gray-300"
-                  } ${s.stock === 0 ? "opacity-30 cursor-not-allowed" : ""}`}
+                  }`}
                 >
                   {s.label}
                 </button>
@@ -275,10 +215,7 @@ export default function ProductDetailMobile() {
           </div>
         )}
 
-        {/* =====================================================
-            ACCORDIONS
-        ====================================================== */}
-
+        {/* ACCORDIONS */}
         <div className="mt-6">
           <AccordionSection title="FABRIC & CARE">
             {product.fabricCare || "Details coming soon for this piece."}
@@ -292,27 +229,17 @@ export default function ProductDetailMobile() {
           </AccordionSection>
         </div>
 
-        {/* =====================================================
-            RELATED PRODUCTS
-        ====================================================== */}
-
+        {/* RELATED PRODUCTS */}
         {related?.length > 0 && (
           <div className="mt-8">
             <h2 className="text-sm text-[#D4A34E] mb-3">You May Also Adore</h2>
-
             <div className="grid grid-cols-2 gap-3">
               {related.slice(0, 2).map((p) => (
                 <Link key={p._id} to={`/product/${p.slug}`} className="block">
                   <div className="aspect-[3/4] rounded overflow-hidden bg-[#14151a]">
-                    <img
-                      src={p.images?.[0]?.url}
-                      alt={p.name}
-                      className="w-full h-full object-cover"
-                    />
+                    <img src={p.images?.[0]?.url} alt={p.name} className="w-full h-full object-cover" />
                   </div>
-
                   <p className="text-white text-xs mt-1 truncate">{p.name}</p>
-
                   <p className="text-[#D4A34E] text-xs">
                     ₹{(p.discountPrice || p.price).toLocaleString("en-IN")}
                   </p>
@@ -323,14 +250,8 @@ export default function ProductDetailMobile() {
         )}
       </div>
 
-      {/* =====================================================
-          STICKY PRODUCT ACTION BAR
-          bottom-[64px] keeps it above mobile navbar
-      ====================================================== */}
-
+      {/* STICKY ACTION BAR */}
       <div className="fixed bottom-[64px] left-0 right-0 z-50 bg-[#0d0e12]/95 backdrop-blur-md border-t border-white/10 px-5 py-3 flex gap-3">
-        {/* WISHLIST */}
-
         <button
           type="button"
           onClick={(e) => {
@@ -343,8 +264,6 @@ export default function ProductDetailMobile() {
           <Heart size={14} className={wishlist ? "fill-[#D4A34E]" : ""} />
           WISHLIST
         </button>
-
-        {/* ADD TO BAG */}
 
         <button
           type="button"
