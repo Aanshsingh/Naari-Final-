@@ -1,14 +1,14 @@
 // Client/src/components/ProductBadge.jsx
 
 const badgeStyles = {
-  new: "bg-[#D4A34E] text-black",
+  new: "bg-[#D4A34E] text-black text-[14px]",
 
-  sale: "bg-red-500 text-white",
+  sale: "bg-red-500 text-white text-[14px]",
 
-  bestseller: "bg-purple-500 text-white",
+  bestseller: "bg-purple-500 text-white text-[13px] w-26",
 
   limited:
-    "bg-blue-500 text-white",
+    "bg-blue-500 text-white text-[14px]",
 
   "sold-out":
     "bg-gray-600 text-gray-200",
@@ -43,24 +43,29 @@ export default function ProductBadge({ badge }) {
     return null;
   }
 
-  return (
-    <span
-      className={`
-        absolute
-        top-3
-        left-3
-        z-30
-        rounded
-        px-2.5
-        py-1
-        text-[10px]
-        font-medium
-        tracking-widest
-        shadow-lg
-        ${badgeStyles[badge]}
-      `}
-    >
-      {badgeLabels[badge]}
-    </span>
-  );
+return (
+<span
+  className={`
+    absolute
+    top-18
+    left-3
+    z-30
+    flex
+    h-10
+    w-20
+    items-center
+    justify-center
+    rounded-xl
+    px-1
+    text-center
+    
+    font-semibold
+    tracking-widest
+    shadow-[0_2px_8px_rgba(0,0,0,0.5)]
+    ${badgeStyles[badge]}
+  `}
+>
+  {badgeLabels[badge]}
+</span>
+);
 }

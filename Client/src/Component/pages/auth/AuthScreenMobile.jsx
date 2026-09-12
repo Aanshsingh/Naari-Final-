@@ -7,22 +7,21 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
 
 export default function AuthScreenMobile() {
+  const { loginWithGoogle } = useAuth();
+  const navigate = useNavigate();
 
-const { loginWithGoogle } = useAuth();
-const navigate = useNavigate();
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      await loginWithGoogle(credentialResponse.credential);
+      navigate("/");
+    } catch (err) {
+      setError("Google sign-in failed — try again"); // reuses your existing error state
+    }
+  };
 
-const handleGoogleSuccess = async (credentialResponse) => {
-  try {
-    await loginWithGoogle(credentialResponse.credential);
-    navigate("/");
-  } catch (err) {
-    setError("Google sign-in failed — try again"); // reuses your existing error state
-  }
-};
-
-const handleGoogleError = () => {
-  setError("Google sign-in failed");
-};
+  const handleGoogleError = () => {
+    setError("Google sign-in failed");
+  };
 
   const {
     activeTab,
@@ -174,9 +173,12 @@ const handleGoogleError = () => {
           </div>
           {activeTab === "login" && (
             <div className="text-right -mt-3">
-              <button type="button" className="text-xs text-[#D4A34E]">
+              <Link
+                to="/forgot-password"
+                className="text-sm text-[#D4A34E] underline"
+              >
                 Forgot Password?
-              </button>
+              </Link>
             </div>
           )}
           {error && <p className="text-red-400 text-sm">{error}</p>}
@@ -200,17 +202,17 @@ const handleGoogleError = () => {
           </span>
           <div className="flex-1 h-px bg-white/10" />
         </div>
-     <div className="flex gap-4">
-  <div className="flex-1 [&>div]:!w-full">
-    <GoogleLogin
-      onSuccess={handleGoogleSuccess}
-      onError={handleGoogleError}
-      theme="filled_black"
-      size="large"
-      width="100%"
-    />
-  </div>
-</div>
+        <div className="flex gap-4">
+          <div className="flex-1 [&>div]:!w-full">
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={handleGoogleError}
+              theme="filled_black"
+              size="large"
+              width="100%"
+            />
+          </div>
+        </div>
         <p className="text-center text-xs text-gray-500 mt-8 pb-6">
           By continuing, you agree to Naari's{" "}
           <Link

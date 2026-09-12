@@ -1,14 +1,18 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { User } from "../models/User.model.js"
-import {ApiError} from "../utils/ApiError.js";
-import {ApiResponse} from "../utils/ApiResponse.js";
-import {asyncHandler} from "../utils/asyncHandler.js";
+import { User } from "../models/User.model.js";
+import { ApiError } from "../utils/ApiError.js";
+import { ApiResponse } from "../utils/ApiResponse.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 import { OAuth2Client } from "google-auth-library";
+import crypto from "crypto";
+import { sendEmail } from "../utils/sendEmail.js";
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
-
-import { generateVerificationToken, sendVerificationEmail } from "../utils/sendVerificationEmail.js"; 
+import {
+  generateVerificationToken,
+  sendVerificationEmail,
+} from "../utils/sendVerificationEmail.js";
 
 const generateAccessAndRefreshTokens = async (userId) => {
   try {
@@ -46,7 +50,11 @@ const cookieOptions = {
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password, phone, address } = req.body;
 
-  if ([name, email, password, phone].some((field) => !field || field.trim() === "")) {
+  if (
+    [name, email, password, phone].some(
+      (field) => !field || field.trim() === "",
+    )
+  ) {
     throw new ApiError(400, "Name, email, password, and phone are required");
   }
 
@@ -58,19 +66,25 @@ const registerUser = asyncHandler(async (req, res) => {
   const { token, expiry } = generateVerificationToken();
 
   const addresses = address
-    ? [{
-        label: address.label || "Home",
-        line1: address.line1,
-        line2: address.line2 || "",
-        city: address.city,
-        state: address.state,
-        pincode: address.pincode,
-        isDefault: true,
-      }]
+    ? [
+        {
+          label: address.label || "Home",
+          line1: address.line1,
+          line2: address.line2 || "",
+          city: address.city,
+          state: address.state,
+          pincode: address.pincode,
+          isDefault: true,
+        },
+      ]
     : [];
 
   const user = await User.create({
-    name, email, password, phone, addresses,
+    name,
+    email,
+    password,
+    phone,
+    addresses,
     emailVerificationToken: token,
     emailVerificationExpiry: expiry,
   });
@@ -83,12 +97,16 @@ const registerUser = asyncHandler(async (req, res) => {
     // don't fail registration just because the email didn't send — user account still exists
   }
 
-  const createdUser = await User.findById(user._id).select("-password -refreshToken -emailVerificationToken");
+  const createdUser = await User.findById(user._id).select(
+    "-password -refreshToken -emailVerificationToken",
+  );
   if (!createdUser) {
     throw new ApiError(500, "Something went wrong while registering user");
   }
 
-  return res.status(201).json(new ApiResponse(201, createdUser, "User registration completed"));
+  return res
+    .status(201)
+    .json(new ApiResponse(201, createdUser, "User registration completed"));
 });
 
 const login = asyncHandler(async (req, res) => {
@@ -108,22 +126,32 @@ const login = asyncHandler(async (req, res) => {
     throw new ApiError(401, "Invalid credentials");
   }
 
-  const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(user._id);
+  const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
+    user._id,
+  );
 
-  const loggedInUser = await User.findById(user._id).select("-password -refreshToken");
+  const loggedInUser = await User.findById(user._id).select(
+    "-password -refreshToken",
+  );
 
   return res
     .status(200)
     .cookie("accessToken", accessToken, cookieOptions)
     .cookie("refreshToken", refreshToken, cookieOptions)
-    .json(new ApiResponse(200, { user: loggedInUser, accessToken }, "User logged in"));
+    .json(
+      new ApiResponse(
+        200,
+        { user: loggedInUser, accessToken },
+        "User logged in",
+      ),
+    );
 });
 
 const logoutUser = asyncHandler(async (req, res) => {
   await User.findByIdAndUpdate(
     req.user._id,
     { $unset: { refreshToken: 1 } },
-    { new: true }
+    { new: true },
   );
 
   return res
@@ -134,14 +162,18 @@ const logoutUser = asyncHandler(async (req, res) => {
 });
 
 const refreshAccessToken = asyncHandler(async (req, res) => {
-  const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken;
+  const incomingRefreshToken =
+    req.cookies.refreshToken || req.body.refreshToken;
 
   if (!incomingRefreshToken) {
     throw new ApiError(401, "Unauthorized request");
   }
 
   try {
-    const decodedToken = jwt.verify(incomingRefreshToken, process.env.REFRESH_TOKEN_SECRET);
+    const decodedToken = jwt.verify(
+      incomingRefreshToken,
+      process.env.REFRESH_TOKEN_SECRET,
+    );
     const user = await User.findById(decodedToken?.id);
 
     if (!user) {
@@ -152,13 +184,20 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
       throw new ApiError(401, "Refresh token is expired or already used");
     }
 
-    const { accessToken, refreshToken: newRefreshToken } = await generateAccessAndRefreshTokens(user._id);
+    const { accessToken, refreshToken: newRefreshToken } =
+      await generateAccessAndRefreshTokens(user._id);
 
     return res
       .status(200)
       .cookie("accessToken", accessToken, cookieOptions)
       .cookie("refreshToken", newRefreshToken, cookieOptions)
-      .json(new ApiResponse(200, { accessToken, refreshToken: newRefreshToken }, "Access token refreshed"));
+      .json(
+        new ApiResponse(
+          200,
+          { accessToken, refreshToken: newRefreshToken },
+          "Access token refreshed",
+        ),
+      );
   } catch (error) {
     throw new ApiError(401, error?.message || "Invalid refresh token");
   }
@@ -181,11 +220,15 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
   user.password = newPassword;
   await user.save({ validateBeforeSave: false });
 
-  return res.status(200).json(new ApiResponse(200, {}, "Password changed successfully"));
+  return res
+    .status(200)
+    .json(new ApiResponse(200, {}, "Password changed successfully"));
 });
 
 const getCurrentUser = asyncHandler(async (req, res) => {
-  return res.status(200).json(new ApiResponse(200, req.user, "User fetched successfully"));
+  return res
+    .status(200)
+    .json(new ApiResponse(200, req.user, "User fetched successfully"));
 });
 
 const updateAccountDetails = asyncHandler(async (req, res) => {
@@ -198,10 +241,12 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
   const user = await User.findByIdAndUpdate(
     req.user?._id,
     { $set: { name, email, phone, addresses } },
-    { new: true }
+    { new: true },
   ).select("-password -refreshToken");
 
-  return res.status(200).json(new ApiResponse(200, user, "Account details updated successfully"));
+  return res
+    .status(200)
+    .json(new ApiResponse(200, user, "Account details updated successfully"));
 });
 
 // auth.controller.js — add these
@@ -222,7 +267,9 @@ const verifyEmail = asyncHandler(async (req, res) => {
   user.emailVerificationExpiry = undefined;
   await user.save({ validateBeforeSave: false });
 
-  return res.status(200).json(new ApiResponse(200, {}, "Email verified successfully"));
+  return res
+    .status(200)
+    .json(new ApiResponse(200, {}, "Email verified successfully"));
 });
 
 const resendVerificationEmail = asyncHandler(async (req, res) => {
@@ -239,7 +286,9 @@ const resendVerificationEmail = asyncHandler(async (req, res) => {
 
   await sendVerificationEmail(user, token);
 
-  return res.status(200).json(new ApiResponse(200, {}, "Verification email sent"));
+  return res
+    .status(200)
+    .json(new ApiResponse(200, {}, "Verification email sent"));
 });
 
 const googleLogin = asyncHandler(async (req, res) => {
@@ -277,18 +326,104 @@ const googleLogin = asyncHandler(async (req, res) => {
     });
   }
 
-  const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(user._id);
-  const loggedInUser = await User.findById(user._id).select("-password -refreshToken");
+  const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
+    user._id,
+  );
+  const loggedInUser = await User.findById(user._id).select(
+    "-password -refreshToken",
+  );
 
   return res
     .status(200)
     .cookie("accessToken", accessToken, cookieOptions)
     .cookie("refreshToken", refreshToken, cookieOptions)
-    .json(new ApiResponse(200, { user: loggedInUser, accessToken }, "Logged in with Google"));
+    .json(
+      new ApiResponse(
+        200,
+        { user: loggedInUser, accessToken },
+        "Logged in with Google",
+      ),
+    );
 });
 
+const forgotPassword = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+  if (!email) throw new ApiError(400, "Email is required");
 
+  const user = await User.findOne({ email });
 
+  // deliberately don't reveal whether the email exists — same principle as login's generic error
+  if (!user) {
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          {},
+          "If an account exists with this email, a reset link has been sent",
+        ),
+      );
+  }
+
+  const token = crypto.randomBytes(32).toString("hex");
+  user.resetPasswordToken = token;
+  user.resetPasswordExpiry = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
+  await user.save({ validateBeforeSave: false });
+
+  const resetUrl = `${process.env.CLIENT_URL}/reset-password/${token}`;
+
+  try {
+    await sendEmail({
+      to: user.email,
+      subject: "Reset your password — Naari",
+      html: `
+        <h2>Reset your Naari password</h2>
+        <p>Hi ${user.name}, we received a request to reset your password.</p>
+        <p><a href="${resetUrl}" style="background:#D4A34E;color:#000;padding:10px 24px;text-decoration:none;border-radius:4px;display:inline-block;margin-top:12px;">Reset Password</a></p>
+        <p style="color:#888;font-size:12px;margin-top:24px;">This link expires in 1 hour. If you didn't request this, you can safely ignore this email.</p>
+      `,
+    });
+  } catch (err) {
+    console.error("Failed to send reset email:", err);
+  }
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        {},
+        "If an account exists with this email, a reset link has been sent",
+      ),
+    );
+});
+
+const resetPassword = asyncHandler(async (req, res) => {
+  const { token } = req.params;
+  const { newPassword } = req.body;
+
+  if (!newPassword || newPassword.length < 6) {
+    throw new ApiError(400, "Password must be at least 6 characters");
+  }
+
+  const user = await User.findOne({
+    resetPasswordToken: token,
+    resetPasswordExpiry: { $gt: Date.now() },
+  });
+
+  if (!user) {
+    throw new ApiError(400, "Reset link is invalid or has expired");
+  }
+
+  user.password = newPassword; // your pre-save hook hashes this automatically
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpiry = undefined;
+  await user.save();
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, {}, "Password reset successfully"));
+});
 
 export {
   registerUser,
@@ -301,4 +436,6 @@ export {
   verifyEmail,
   resendVerificationEmail,
   googleLogin,
+  forgotPassword,
+  resetPassword,
 };

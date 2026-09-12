@@ -6,3 +6,6 @@ export const logoutApi = () => api.post("/auth/logout");
 export const getCurrentUserApi = () => api.get("/auth/current-user");
 export const verifyEmailApi = (token) => api.get(`/auth/verify-email/${token}`);
 export const resendVerificationApi = () => api.post("/auth/resend-verification");
+export const forgotPasswordApi = (email) => api.post("/auth/forgot-password", { email });
+export const resetPasswordApi = (token, newPassword) => api.post(`/auth/reset-password/${token}`, { newPassword });
+

@@ -6,9 +6,12 @@ import {
   refreshAccessToken,
   changeCurrentPassword,
   getCurrentUser,
-  updateAccountDetails,resendVerificationEmail,
+  updateAccountDetails,
   verifyEmail,
+  resendVerificationEmail,
   googleLogin,
+  forgotPassword,
+  resetPassword,
 } from "../Controllers/auth.Controller.js";
 import {verifyJWT} from "../middleware/auth.middleware.js";
 
@@ -28,5 +31,8 @@ router.route("/update-account").patch(verifyJWT, updateAccountDetails);
 // auth.routes.js — add these
 router.route("/verify-email/:token").get(verifyEmail); // public — clicked from email, no auth yet
 router.route("/resend-verification").post(verifyJWT, resendVerificationEmail); // must be logged in
+
+router.route("/forgot-password").post(forgotPassword);
+router.route("/reset-password/:token").post(resetPassword);
 
 export default router;
