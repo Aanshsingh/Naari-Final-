@@ -25,6 +25,9 @@ export default function AdminOrderDetail() {
       setNote("");
       queryClient.invalidateQueries({ queryKey: ["admin-order", orderId] });
       queryClient.invalidateQueries({ queryKey: ["admin-orders"] });
+    } catch (err) {
+      console.error("Failed to update order status:", err);
+      alert(err.response?.data?.message || "Could not update order status");
     } finally {
       setUpdating(false);
     }
@@ -43,11 +46,10 @@ export default function AdminOrderDetail() {
       <p className="text-gray-500 text-xs mb-6">
         {order.user?.name} · {order.user?.email}
       </p>
+
       {/* Manual status control */}
       <div className="bg-[#14151a] p-5 rounded-lg mb-6">
-        <p className="text-xs tracking-widest text-gray-400 mb-3">
-          UPDATE STATUS
-        </p>
+        <p className="text-xs tracking-widest text-gray-400 mb-3">UPDATE STATUS</p>
         <input
           value={note}
           onChange={(e) => setNote(e.target.value)}
@@ -73,26 +75,23 @@ export default function AdminOrderDetail() {
               </button>
             ))
           )}
-          {order.orderStatus !== "cancelled" &&
-            order.orderStatus !== "delivered" && (
-              <button
-                onClick={() => handleUpdate("cancelled")}
-                disabled={updating}
-                className="px-4 py-2 rounded text-xs tracking-widest border border-red-400/40 text-red-400"
-              >
-                CANCEL ORDER
-              </button>
-            )}
+          {order.orderStatus !== "cancelled" && order.orderStatus !== "delivered" && (
+            <button
+              onClick={() => handleUpdate("cancelled")}
+              disabled={updating}
+              className="px-4 py-2 rounded text-xs tracking-widest border border-red-400/40 text-red-400"
+            >
+              CANCEL ORDER
+            </button>
+          )}
         </div>
       </div>
-      // add this JSX block, right after the status badge at the top:
+
+      {/* Visual status timeline */}
       {order.orderStatus !== "cancelled" ? (
         <div className="flex items-center justify-between mt-6 mb-8">
           {stages.map((stage, i) => (
-            <div
-              key={stage}
-              className="flex-1 flex flex-col items-center relative"
-            >
+            <div key={stage} className="flex-1 flex flex-col items-center relative">
               {i > 0 && (
                 <div
                   className={`absolute top-2.5 right-1/2 w-full h-0.5 ${i <= currentIndex ? "bg-[#D4A34E]" : "bg-white/10"}`}
@@ -101,9 +100,7 @@ export default function AdminOrderDetail() {
               <div
                 className={`w-5 h-5 rounded-full z-10 ${i <= currentIndex ? "bg-[#D4A34E]" : "bg-white/10 border border-white/20"}`}
               />
-              <p
-                className={`text-[10px] mt-2 ${i <= currentIndex ? "text-[#D4A34E]" : "text-gray-600"}`}
-              >
+              <p className={`text-[10px] mt-2 ${i <= currentIndex ? "text-[#D4A34E]" : "text-gray-600"}`}>
                 {stage.charAt(0).toUpperCase() + stage.slice(1)}
               </p>
             </div>
@@ -112,31 +109,22 @@ export default function AdminOrderDetail() {
       ) : (
         <p className="text-red-400 text-sm mt-4">This order was cancelled.</p>
       )}
+
       {/* History log */}
       <div className="bg-[#14151a] p-5 rounded-lg">
-        <p className="text-xs tracking-widest text-gray-400 mb-3">
-          STATUS HISTORY
-        </p>
+        <p className="text-xs tracking-widest text-gray-400 mb-3">STATUS HISTORY</p>
         <div className="space-y-3">
-          {[...order.statusHistory].reverse().map((entry, i) => (
-            <div
-              key={i}
-              className="flex justify-between text-sm border-b border-white/5 pb-2"
-            >
+          {[...(order.statusHistory || [])].reverse().map((entry, i) => (
+            <div key={i} className="flex justify-between text-sm border-b border-white/5 pb-2">
               <div>
                 <p className="text-white">
                   {entry.status.charAt(0).toUpperCase() + entry.status.slice(1)}
                 </p>
-                {entry.note && (
-                  <p className="text-gray-500 text-xs mt-0.5">{entry.note}</p>
-                )}
+                {entry.note && <p className="text-gray-500 text-xs mt-0.5">{entry.note}</p>}
               </div>
               <p className="text-gray-500 text-xs">
                 {new Date(entry.updatedAt).toLocaleString("en-IN", {
-                  day: "numeric",
-                  month: "short",
-                  hour: "2-digit",
-                  minute: "2-digit",
+                  day: "numeric", month: "short", hour: "2-digit", minute: "2-digit",
                 })}
               </p>
             </div>

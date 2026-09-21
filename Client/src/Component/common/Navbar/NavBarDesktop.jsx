@@ -70,7 +70,7 @@ export default function NavbarDesktop() {
             <Link to="/search">
               <IoIosSearch
                 size={20}
-                className="text-white hover:text-[#ECB855] transition-colors"
+                className="text-primary hover:text-[#ECB855] transition-colors"
               />
             </Link>
           </li>
@@ -85,7 +85,7 @@ export default function NavbarDesktop() {
             >
               <FaShoppingBag
                 size={18}
-                className="text-white hover:text-[#ECB855] transition-colors"
+                className="text-primary hover:text-[#ECB855] transition-colors"
               />
 
               {itemCount > 0 && (
@@ -103,7 +103,7 @@ export default function NavbarDesktop() {
             <Link to="/account">
               <FaRegUser
                 size={18}
-                className="text-white hover:text-[#ECB855] transition-colors"
+                className="text-primary hover:text-[#ECB855] transition-colors"
               />
             </Link>
           </li>
@@ -118,7 +118,7 @@ export default function NavbarDesktop() {
             >
               <Heart
                 size={18}
-                className="text-white hover:text-[#ECB855] transition-colors"
+                className="text-primary hover:text-[#ECB855] transition-colors"
               />
 
               {likedCount > 0 && (

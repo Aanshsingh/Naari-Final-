@@ -1,16 +1,13 @@
 // src/components/NavbarMobile.jsx
 
 import { IoIosSearch } from "react-icons/io";
-import {
-  Home,
-  ShoppingBag,
-  User,
-  Grid,
-  Heart,
-} from "lucide-react";
+import { Home, ShoppingBag, User, Grid, Heart } from "lucide-react";
+import { useState } from "react";
 
+import { CiMenuBurger } from "react-icons/ci";
 import { Link, useLocation } from "react-router-dom";
 
+import MobileSideDrawer from "./MobileSideDrawer";
 import { useCartStore } from "../../../STORE/CartStore";
 import { useWishlistStore } from "../../../STORE/wishlistStore";
 
@@ -46,15 +43,12 @@ export default function NavbarMobile() {
   const location = useLocation();
 
   const itemCount = useCartStore((state) =>
-    state.items.reduce(
-      (sum, item) => sum + item.qty,
-      0
-    )
+    state.items.reduce((sum, item) => sum + item.qty, 0),
   );
 
-  const likedCount = useWishlistStore(
-    (state) => state.likedIds.length
-  );
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const likedCount = useWishlistStore((state) => state.likedIds.length);
 
   return (
     <>
@@ -63,20 +57,22 @@ export default function NavbarMobile() {
       ================================================== */}
 
       <header className="lg:hidden fixed top-0 left-0 right-0 z-[100] h-[70px] bg-[#0d0e12] border-b border-white/5">
-
-        <div className="relative h-full flex items-center justify-center px-5">
+        <div className="relative h-full flex items-center justify-between px-5">
+          <div className="Menu ">
+            <button onClick={() => setDrawerOpen(true)} className="text-[#EEBF5D] text-2xl">
+              <CiMenuBurger />
+            </button>
+            <MobileSideDrawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
+          </div>
 
           {/* LOGO - ALWAYS CENTERED */}
 
-          <Link
-            to="/"
-            className="absolute left-1/2 -translate-x-1/2"
-          >
-            <h1 className="text-[#D4A34E] text-3xl font-light tracking-wide font-logo">
-              Naari
+          <Link to="/" className="absolute left-1/2 -translate-x-1/2">
+            <h1 className="text-[#EEBF5D] text-4xl font-light tracking-[5px] font-logo uppercase">
+              NAARI
             </h1>
           </Link>
-  
+
           {/* WISHLIST */}
 
           <Link
@@ -84,42 +80,28 @@ export default function NavbarMobile() {
             className="absolute right-5 top-1/2 -translate-y-1/2"
           >
             <div className="relative">
-
-              <Heart
-                size={21}
-                strokeWidth={1.8}
-                className="text-white"
-              />
+              <Heart size={21} strokeWidth={1.8} className="text-[#EEBF5D]" />
 
               {likedCount > 0 && (
                 <span className="absolute -top-2 -right-2 bg-[#D4A34E] text-black text-[9px] w-4 h-4 rounded-full flex items-center justify-center">
                   {likedCount}
                 </span>
               )}
-
             </div>
           </Link>
-
         </div>
       </header>
-
 
       {/* =================================================
           FIXED BOTTOM NAVIGATION
       ================================================== */}
 
       <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-[100] h-[64px] bg-[#0d0e12] border-t border-white/10">
-
         <div className="h-full flex justify-around items-center">
-
           {tabs.map((tab) => {
-
             const isActive =
               location.pathname === tab.to ||
-              (
-                tab.to !== "/" &&
-                location.pathname.startsWith(tab.to)
-              );
+              (tab.to !== "/" && location.pathname.startsWith(tab.to));
 
             const Icon = tab.icon;
 
@@ -129,46 +111,35 @@ export default function NavbarMobile() {
                 to={tab.to}
                 className="relative flex flex-col items-center justify-center gap-1 w-16 h-full"
               >
-
                 {/* ICON */}
 
                 <Icon
                   size={20}
                   strokeWidth={1.8}
-                  className={
-                    isActive
-                      ? "text-[#D4A34E]"
-                      : "text-gray-400"
-                  }
+                  className={isActive ? "text-[#D4A34E]" : "text-gray-400"}
                 />
 
                 {/* BAG COUNT */}
 
-                {tab.label === "Bag" &&
-                  itemCount > 0 && (
-                    <span className="absolute top-1 right-2 bg-[#D4A34E] text-black text-[9px] w-4 h-4 rounded-full flex items-center justify-center">
-                      {itemCount}
-                    </span>
-                  )}
+                {tab.label === "Bag" && itemCount > 0 && (
+                  <span className="absolute top-1 right-2 bg-[#D4A34E] text-black text-[9px] w-4 h-4 rounded-full flex items-center justify-center">
+                    {itemCount}
+                  </span>
+                )}
 
                 {/* LABEL */}
 
                 <span
                   className={`text-[9px] ${
-                    isActive
-                      ? "text-[#D4A34E]"
-                      : "text-gray-500"
+                    isActive ? "text-[#D4A34E]" : "text-gray-500"
                   }`}
                 >
                   {tab.label}
                 </span>
-
               </Link>
             );
           })}
-
         </div>
-
       </nav>
     </>
   );

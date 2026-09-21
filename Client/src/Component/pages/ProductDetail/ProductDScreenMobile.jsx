@@ -1,15 +1,14 @@
 // src/pages/product/ProductDetailMobile.jsx
-
 import { useEffect, useState } from "react";
-import { Heart, ChevronDown, ImageOff } from "lucide-react";
+import { Heart, ChevronDown, ImageOff, ZoomIn } from "lucide-react";
+import { Link } from "react-router-dom";
 import { useProductDetail } from "../../../hook/useProductDetail";
 import { useLikedProducts } from "../../../hook/useLikedProducts";
 import ProductBadge from "../../common/ProductBadge.jsx";
-import { Link } from "react-router-dom";
+import ImageZoomModal from "../../common/ImageZoomModal.jsx";
 
 function AccordionSection({ title, children }) {
   const [open, setOpen] = useState(false);
-
   return (
     <div className="border-t border-white/10 py-4">
       <button
@@ -18,19 +17,9 @@ function AccordionSection({ title, children }) {
         className="w-full flex justify-between items-center text-xs tracking-widest text-gray-300"
       >
         <span>{title}</span>
-        <ChevronDown
-          size={14}
-          className={`transition-transform duration-200 ${
-            open ? "rotate-180" : ""
-          }`}
-        />
+        <ChevronDown size={14} className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`} />
       </button>
-
-      {open && (
-        <div className="mt-2 text-xs text-gray-400 leading-relaxed">
-          {children}
-        </div>
-      )}
+      {open && <div className="mt-2 text-xs text-gray-400 leading-relaxed">{children}</div>}
     </div>
   );
 }
@@ -43,32 +32,25 @@ export default function ProductDetailMobile() {
     related,
     activeImage,
     setActiveImage,
+    selectedColor,
+    setSelectedColor,
     selectedSize,
     setSelectedSize,
     handleAddToBag,
   } = useProductDetail();
 
-  const [wishlist, setWishlist] = useState(false);
   const { likedIds, toggleLike } = useLikedProducts();
+  const [zoomOpen, setZoomOpen] = useState(false);
 
   useEffect(() => {
     setActiveImage(0);
   }, [product?._id, setActiveImage]);
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen bg-[#0d0e12] flex items-center justify-center text-gray-400">
-        Loading...
-      </div>
-    );
+    return <div className="min-h-screen bg-[#0d0e12] flex items-center justify-center text-gray-400">Loading...</div>;
   }
-
   if (isError || !product) {
-    return (
-      <div className="min-h-screen bg-[#0d0e12] flex items-center justify-center text-red-400">
-        Product not found
-      </div>
-    );
+    return <div className="min-h-screen bg-[#0d0e12] flex items-center justify-center text-red-400">Product not found</div>;
   }
 
   const images = product.images || [];
@@ -76,30 +58,30 @@ export default function ProductDetailMobile() {
   return (
     <div className="min-h-screen bg-[#0d0e12] pb-40">
       <div className="relative overflow-hidden">
-        {/* BADGE */}
         <ProductBadge badge={product.effectiveBadge} />
 
-        {/* WISHLIST HEART */}
         <button
           type="button"
           onClick={(e) => {
             e.preventDefault();
             toggleLike(product._id);
-            setWishlist((prev) => !prev);
           }}
           className="absolute top-2 right-2 z-10 w-6 h-6 rounded-full bg-black/40 flex items-center justify-center"
         >
-          <Heart
-            size={12}
-            className={
-              likedIds.includes(product._id)
-                ? "text-[#D4A34E] fill-[#D4A34E]"
-                : "text-white"
-            }
-          />
+          <Heart size={12} className={likedIds.includes(product._id) ? "text-[#D4A34E] fill-[#D4A34E]" : "text-white"} />
         </button>
 
-        {/* IMAGE SLIDER */}
+        {/* Zoom hint icon — tapping the image opens the zoom modal */}
+        {images.length > 0 && (
+          <button
+            type="button"
+            onClick={() => setZoomOpen(true)}
+            className="absolute bottom-3 right-2 z-10 w-8 h-8 rounded-full bg-black/40 flex items-center justify-center"
+          >
+            <ZoomIn size={14} className="text-white" />
+          </button>
+        )}
+
         {images.length > 0 ? (
           <div
             className="w-full overflow-hidden touch-pan-y"
@@ -111,12 +93,8 @@ export default function ProductDetailMobile() {
               const endX = e.changedTouches[0].clientX;
               const difference = startX - endX;
 
-              if (difference > 50) {
-                setActiveImage((prev) => Math.min(prev + 1, images.length - 1));
-              }
-              if (difference < -50) {
-                setActiveImage((prev) => Math.max(prev - 1, 0));
-              }
+              if (difference > 50) setActiveImage((prev) => Math.min(prev + 1, images.length - 1));
+              if (difference < -50) setActiveImage((prev) => Math.max(prev - 1, 0));
             }}
           >
             <div
@@ -124,10 +102,7 @@ export default function ProductDetailMobile() {
               style={{ transform: `translateX(-${activeImage * 100}%)` }}
             >
               {images.map((img, index) => (
-                <div
-                  key={img.publicId || img.url || index}
-                  className="min-w-full aspect-[3/4] bg-[#14151a]"
-                >
+                <div key={img.publicId || img.url || index} className="min-w-full aspect-[3/4] bg-[#14151a]">
                   <img
                     src={img.url}
                     alt={`${product.name} ${index + 1}`}
@@ -145,7 +120,6 @@ export default function ProductDetailMobile() {
           </div>
         )}
 
-        {/* IMAGE DOTS */}
         {images.length > 1 && (
           <div className="flex justify-center items-center gap-1.5 py-3">
             {images.map((_, i) => (
@@ -155,9 +129,7 @@ export default function ProductDetailMobile() {
                 aria-label={`View image ${i + 1}`}
                 onClick={() => setActiveImage(i)}
                 className={`rounded-full transition-all duration-200 ${
-                  activeImage === i
-                    ? "w-4 h-1.5 bg-[#D4A34E]"
-                    : "w-1.5 h-1.5 bg-white/20"
+                  activeImage === i ? "w-4 h-1.5 bg-[#D4A34E]" : "w-1.5 h-1.5 bg-white/20"
                 }`}
               />
             ))}
@@ -165,21 +137,14 @@ export default function ProductDetailMobile() {
         )}
       </div>
 
-      {/* PRODUCT INFORMATION */}
       <div className="px-5 pt-4">
         <h1 className="text-lg text-white font-light mt-2">{product.name}</h1>
 
-        {/* PRICE */}
         <div className="flex items-center gap-2 mt-2">
-          <span className="text-lg text-[#D4A34E]">
-            ₹{product.effectivePrice.toLocaleString("en-IN")}
-          </span>
-
+          <span className="text-lg text-[#D4A34E]">₹{product.effectivePrice.toLocaleString("en-IN")}</span>
           {product.isOnSale && (
             <>
-              <span className="text-gray-500 line-through text-xs">
-                ₹{product.price.toLocaleString("en-IN")}
-              </span>
+              <span className="text-gray-500 line-through text-xs">₹{product.price.toLocaleString("en-IN")}</span>
               <span className="text-[10px] text-green-400">
                 {Math.round((1 - product.discountPrice / product.price) * 100)}% OFF
               </span>
@@ -187,14 +152,33 @@ export default function ProductDetailMobile() {
           )}
         </div>
 
-        {/* SIZE SELECTION */}
+        {product.description && (
+          <p className="text-gray-400 text-xs mt-3 leading-relaxed">{product.description}</p>
+        )}
+
+        {/* Colors — now on Mobile too, matching Desktop */}
+        {product.colors?.length > 0 && (
+          <div className="mt-5">
+            <p className="text-[10px] tracking-widest text-gray-400 mb-2">SELECT COLOUR</p>
+            <div className="flex gap-2.5">
+              {product.colors.map((c) => (
+                <button
+                  key={c.hex}
+                  onClick={() => setSelectedColor(c.name)}
+                  style={{ backgroundColor: c.hex }}
+                  className={`w-7 h-7 rounded-full border-2 ${selectedColor === c.name ? "border-[#D4A34E]" : "border-white/20"}`}
+                  title={c.name}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
         {product.sizes?.length > 0 && (
           <div className="mt-5">
             <div className="flex justify-between items-center mb-2">
               <p className="text-[10px] tracking-widest text-gray-400">SELECT SIZE</p>
-              <button type="button" className="text-[10px] text-[#D4A34E] underline">
-                SIZE GUIDE
-              </button>
+              <button type="button" className="text-[10px] text-[#D4A34E] underline">SIZE GUIDE</button>
             </div>
             <div className="flex gap-2">
               {product.sizes.map((s) => (
@@ -203,9 +187,7 @@ export default function ProductDetailMobile() {
                   type="button"
                   onClick={() => setSelectedSize(s.label)}
                   className={`w-10 h-10 rounded border text-xs transition ${
-                    selectedSize === s.label
-                      ? "border-[#D4A34E] text-[#D4A34E]"
-                      : "border-white/20 text-gray-300"
+                    selectedSize === s.label ? "border-[#D4A34E] text-[#D4A34E]" : "border-white/20 text-gray-300"
                   }`}
                 >
                   {s.label}
@@ -215,12 +197,10 @@ export default function ProductDetailMobile() {
           </div>
         )}
 
-        {/* ACCORDIONS */}
         <div className="mt-6">
           <AccordionSection title="FABRIC & CARE">
             {product.fabricCare || "Details coming soon for this piece."}
           </AccordionSection>
-
           <AccordionSection title="SHIPPING & RETURNS">
             ⚠️ NO COMPLETE OPENING VIDEO = NO DAMAGE/EXCHANGE CLAIM. We accept
             exchanges ONLY in case of a genuine manufacturing defect — not for
@@ -229,7 +209,6 @@ export default function ProductDetailMobile() {
           </AccordionSection>
         </div>
 
-        {/* RELATED PRODUCTS */}
         {related?.length > 0 && (
           <div className="mt-8">
             <h2 className="text-sm text-[#D4A34E] mb-3">You May Also Adore</h2>
@@ -240,9 +219,7 @@ export default function ProductDetailMobile() {
                     <img src={p.images?.[0]?.url} alt={p.name} className="w-full h-full object-cover" />
                   </div>
                   <p className="text-white text-xs mt-1 truncate">{p.name}</p>
-                  <p className="text-[#D4A34E] text-xs">
-                    ₹{(p.discountPrice || p.price).toLocaleString("en-IN")}
-                  </p>
+                  <p className="text-[#D4A34E] text-xs">₹{p.effectivePrice.toLocaleString("en-IN")}</p>
                 </Link>
               ))}
             </div>
@@ -250,18 +227,13 @@ export default function ProductDetailMobile() {
         )}
       </div>
 
-      {/* STICKY ACTION BAR */}
       <div className="fixed bottom-[64px] left-0 right-0 z-50 bg-[#0d0e12]/95 backdrop-blur-md border-t border-white/10 px-5 py-3 flex gap-3">
         <button
           type="button"
-          onClick={(e) => {
-            e.preventDefault();
-            toggleLike(product._id);
-            setWishlist((prev) => !prev);
-          }}
+          onClick={() => toggleLike(product._id)}
           className="flex-1 py-3 rounded border border-[#D4A34E] text-[#D4A34E] text-xs tracking-widest flex items-center justify-center gap-2"
         >
-          <Heart size={14} className={wishlist ? "fill-[#D4A34E]" : ""} />
+          <Heart size={14} className={likedIds.includes(product._id) ? "fill-[#D4A34E]" : ""} />
           WISHLIST
         </button>
 
@@ -273,6 +245,14 @@ export default function ProductDetailMobile() {
           ADD TO BAG
         </button>
       </div>
+
+      {zoomOpen && (
+        <ImageZoomModal
+          src={images[activeImage]?.url}
+          alt={product.name}
+          onClose={() => setZoomOpen(false)}
+        />
+      )}
     </div>
   );
 }

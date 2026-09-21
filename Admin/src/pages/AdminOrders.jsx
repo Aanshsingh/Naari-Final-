@@ -1,104 +1,104 @@
-// admin/src/pages/AdminOrders.jsx
-import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
-import { getAllOrdersAdminApi } from "../api/OrderApi";
+  // admin/src/pages/AdminOrders.jsx
+  import { useState } from "react";
+  import { useQuery } from "@tanstack/react-query";
+  import { Link } from "react-router-dom";
+  import { getAllOrdersAdminApi } from "../api/OrderApi";
 
-const statusColors = {
-  placed: "text-yellow-400 border-yellow-400/40",
-  processing: "text-blue-400 border-blue-400/40",
-  shipped: "text-[#D4A34E] border-[#D4A34E]/40",
-  delivered: "text-green-400 border-green-400/40",
-  cancelled: "text-red-400 border-red-400/40",
-};
+  const statusColors = {
+    placed: "text-yellow-400 border-yellow-400/40",
+    processing: "text-blue-400 border-blue-400/40",
+    shipped: "text-[#D4A34E] border-[#D4A34E]/40",
+    delivered: "text-green-400 border-green-400/40",
+    cancelled: "text-red-400 border-red-400/40",
+  };
 
-export default function AdminOrders() {
-  const [statusFilter, setStatusFilter] = useState("");
+  export default function AdminOrders() {
+    const [statusFilter, setStatusFilter] = useState("");
 
-  const { data: orders, isLoading } = useQuery({
-    queryKey: ["admin-orders", statusFilter],
-    queryFn: () => getAllOrdersAdminApi(statusFilter || undefined).then((res) => res.data.data),
-  });
+    const { data: orders, isLoading } = useQuery({
+      queryKey: ["admin-orders", statusFilter],
+      queryFn: () => getAllOrdersAdminApi(statusFilter || undefined).then((res) => res.data.data),
+    });
 
-  return (
-    <div>
-      <div className="flex justify-between items-center mb-6 flex-wrap gap-3">
-        <h1 className="text-white text-xl font-light">Orders</h1>
-        <select
-          value={statusFilter}
-          onChange={(e) => setStatusFilter(e.target.value)}
-          className="bg-[#14151a] border border-white/20 text-gray-300 text-xs px-3 py-2 rounded outline-none"
-        >
-          <option value="">All Statuses</option>
-          <option value="placed">Placed</option>
-          <option value="processing">Processing</option>
-          <option value="shipped">Shipped</option>
-          <option value="delivered">Delivered</option>
-          <option value="cancelled">Cancelled</option>
-        </select>
-      </div>
-
-      {isLoading && <p className="text-gray-500 text-sm">Loading orders...</p>}
-      {!isLoading && orders?.length === 0 && <p className="text-gray-500 text-sm">No orders found.</p>}
-
-      {/* Desktop: table */}
-      <div className="hidden lg:block bg-[#14151a] rounded-lg overflow-hidden">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="text-left text-gray-500 text-xs border-b border-white/5">
-              <th className="px-4 py-3">Order ID</th>
-              <th className="px-4 py-3">Customer</th>
-              <th className="px-4 py-3">Items</th>
-              <th className="px-4 py-3">Total</th>
-              <th className="px-4 py-3">Status</th>
-              <th className="px-4 py-3"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {orders?.map((order) => (
-              <tr key={order._id} className="border-b border-white/5">
-                <td className="px-4 py-3 text-gray-300">#{order._id.slice(-8).toUpperCase()}</td>
-                <td className="px-4 py-3 text-gray-300">{order.user?.name}</td>
-                <td className="px-4 py-3 text-gray-400">{order.items.length}</td>
-                <td className="px-4 py-3 text-[#D4A34E]">₹{order.totalPrice.toLocaleString("en-IN")}</td>
-                <td className="px-4 py-3">
-                  <span className={`text-[10px] px-2 py-1 rounded border ${statusColors[order.orderStatus]}`}>
-                    {order.orderStatus.toUpperCase()}
-                  </span>
-                </td>
-                <td className="px-4 py-3">
-                  <Link to={`/orders/${order._id}`} className="text-[#D4A34E] text-xs underline">Manage</Link>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      {/* Mobile: cards */}
-      <div className="lg:hidden space-y-3">
-        {orders?.map((order) => (
-          <Link
-            key={order._id}
-            to={`/orders/${order._id}`}
-            className="block bg-[#14151a] p-4 rounded-lg"
+    return (
+      <div>
+        <div className="flex justify-between items-center mb-6 flex-wrap gap-3">
+          <h1 className="text-white text-xl font-light">Orders</h1>
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className="bg-[#14151a] border border-white/20 text-gray-300 text-xs px-3 py-2 rounded outline-none"
           >
-            <div className="flex justify-between items-start mb-2">
-              <div>
-                <p className="text-gray-300 text-sm">#{order._id.slice(-8).toUpperCase()}</p>
-                <p className="text-gray-500 text-xs mt-0.5">{order.user?.name}</p>
+            <option value="">All Statuses</option>
+            <option value="placed">Placed</option>
+            <option value="processing">Processing</option>
+            <option value="shipped">Shipped</option>
+            <option value="delivered">Delivered</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+        </div>
+
+        {isLoading && <p className="text-gray-500 text-sm">Loading orders...</p>}
+        {!isLoading && orders?.length === 0 && <p className="text-gray-500 text-sm">No orders found.</p>}
+
+        {/* Desktop: table */}
+        <div className="hidden lg:block bg-[#14151a] rounded-lg overflow-hidden">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="text-left text-gray-500 text-xs border-b border-white/5">
+                <th className="px-4 py-3">Order ID</th>
+                <th className="px-4 py-3">Customer</th>
+                <th className="px-4 py-3">Items</th>
+                <th className="px-4 py-3">Total</th>
+                <th className="px-4 py-3">Status</th>
+                <th className="px-4 py-3"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {orders?.map((order) => (
+                <tr key={order._id} className="border-b border-white/5">
+                  <td className="px-4 py-3 text-gray-300">#{order._id.slice(-8).toUpperCase()}</td>
+                  <td className="px-4 py-3 text-gray-300">{order.user?.name}</td>
+                  <td className="px-4 py-3 text-gray-400">{order.items.length}</td>
+                  <td className="px-4 py-3 text-[#D4A34E]">₹{order.totalPrice.toLocaleString("en-IN")}</td>
+                  <td className="px-4 py-3">
+                    <span className={`text-[10px] px-2 py-1 rounded border ${statusColors[order.orderStatus]}`}>
+                      {order.orderStatus.toUpperCase()}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3">
+                    <Link to={`/orders/${order._id}`} className="text-[#D4A34E] text-xs underline">Manage</Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Mobile: cards */}
+        <div className="lg:hidden space-y-3">
+          {orders?.map((order) => (
+            <Link
+              key={order._id}
+              to={`/orders/${order._id}`}
+              className="block bg-[#14151a] p-4 rounded-lg"
+            >
+              <div className="flex justify-between items-start mb-2">
+                <div>
+                  <p className="text-gray-300 text-sm">#{order._id.slice(-8).toUpperCase()}</p>
+                  <p className="text-gray-500 text-xs mt-0.5">{order.user?.name}</p>
+                </div>
+                <span className={`text-[10px] px-2 py-1 rounded border ${statusColors[order.orderStatus]}`}>
+                  {order.orderStatus.toUpperCase()}
+                </span>
               </div>
-              <span className={`text-[10px] px-2 py-1 rounded border ${statusColors[order.orderStatus]}`}>
-                {order.orderStatus.toUpperCase()}
-              </span>
-            </div>
-            <div className="flex justify-between items-center text-xs text-gray-400 mt-3 pt-3 border-t border-white/5">
-              <span>{order.items.length} item{order.items.length > 1 ? "s" : ""}</span>
-              <span className="text-[#D4A34E] text-sm">₹{order.totalPrice.toLocaleString("en-IN")}</span>
-            </div>
-          </Link>
-        ))}
+              <div className="flex justify-between items-center text-xs text-gray-400 mt-3 pt-3 border-t border-white/5">
+                <span>{order.items.length} item{order.items.length > 1 ? "s" : ""}</span>
+                <span className="text-[#D4A34E] text-sm">₹{order.totalPrice.toLocaleString("en-IN")}</span>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }

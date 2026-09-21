@@ -142,9 +142,7 @@ export default function HomeScreenDesktop() {
                 className="group block bg-[#14151a] rounded-xl overflow-hidden"
               >
                 <div className="relative hover:border-primary">
-                  <span className="absolute top-3 left-3 z-10 bg-[#D4A34E] text-black text-xs px-2 py-1 rounded">
-                    NEW
-                  </span>
+               
 
                  <button
                 type="button"
@@ -159,7 +157,7 @@ export default function HomeScreenDesktop() {
                   className={
                     likedIds.includes(product._id)
                       ? "text-[#D4A34E] fill-[#D4A34E]"
-                      : "text-white"
+                      : "text-[#D4A34E]"
                   }
                 />
               </button>
@@ -170,7 +168,7 @@ export default function HomeScreenDesktop() {
                       "https://placehold.co/600x800/14151A/F0D68A?text=NAARI"
                     }
                     alt={product.name}
-                    className="w-full aspect-3/4 object-cover group-hover:scale-105 transition duration-500"
+                    className="w-[70%] aspect-3/4 object-cover group-hover:scale-105 transition duration-500"
                   />
                 </div>
 

@@ -49,7 +49,7 @@ export default function HomeMobile() {
               to={`/shop?category=${cat.slug}`}
               className="flex flex-col items-center gap-2 shrink-0"
             >
-              <div className="w-20 h-20 rounded-full border border-[#D4A34E]/80 flex items-center justify-center bg-[#14151a]">
+              <div className="w-18 h-18 rounded-full border border-[#D4A34E]/80 flex items-center justify-center bg-[#14151a]">
                 {cat.image ? (
                   <img
                     src={cat.image}
@@ -101,7 +101,7 @@ export default function HomeMobile() {
                   className={
                     likedIds.includes(product._id)
                       ? "text-[#D4A34E] fill-[#D4A34E]"
-                      : "text-white"
+                      : "text-[#D4A34E]"
                   }
                 />
               </button>

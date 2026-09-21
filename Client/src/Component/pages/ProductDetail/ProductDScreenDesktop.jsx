@@ -1,5 +1,6 @@
 // src/pages/product/ProductDetailDesktop.jsx
 import { useState } from "react";
+import { Link } from "react-router-dom"; // ← was missing, this alone was crashing the page
 import {
   Heart,
   ChevronDown,
@@ -8,8 +9,9 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { useProductDetail } from "../../../hook/useProductDetail";
+import { useLikedProducts } from "../../../hook/useLikedProducts";
 import ZoomImage from "../../common/zoom";
-import ProductBadge from "../../common/ProductBadge.jsx"; // ← add this import
+import ProductBadge from "../../common/ProductBadge.jsx";
 
 function AccordionSection({ title, children }) {
   const [open, setOpen] = useState(false);
@@ -49,6 +51,8 @@ export default function ProductDetailDesktop() {
     handleAddToBag,
   } = useProductDetail();
 
+  const { likedIds, toggleLike } = useLikedProducts();
+
   if (isLoading)
     return (
       <div className="min-h-screen bg-[#0d0e12] text-center py-32 text-gray-400">
@@ -65,7 +69,7 @@ export default function ProductDetailDesktop() {
   return (
     <div className="min-h-screen bg-[#0d0e12] px-16 py-10">
       <div className="grid grid-cols-2 gap-16">
-        {/* Left: gallery */}
+        {/* Left: gallery — thumbnails + zoomable main image */}
         <div className="flex gap-4">
           <div className="flex flex-col gap-3">
             {product.images?.map((img, i) => (
@@ -74,7 +78,7 @@ export default function ProductDetailDesktop() {
                 onClick={() => setActiveImage(i)}
                 className={`w-16 h-20 rounded overflow-hidden border ${activeImage === i ? "border-[#D4A34E]" : "border-white/10"}`}
               >
-                <ZoomImage
+                <img
                   src={img.url}
                   alt=""
                   className="w-full h-full object-cover"
@@ -82,10 +86,11 @@ export default function ProductDetailDesktop() {
               </button>
             ))}
           </div>
+
           <div className="relative flex-1 rounded-lg overflow-hidden bg-[#14151a]">
-            {/* BADGE — added here, on the main image container */}
             <ProductBadge badge={product.effectiveBadge} />
-            <img
+            {/* Hover-zoom on the main image — desktop has a mouse, this is the natural interaction here */}
+            <ZoomImage
               src={
                 product.images?.[activeImage]?.url ||
                 "https://placehold.co/600x800/14151A/F0D68A?text=NAARI"
@@ -110,9 +115,17 @@ export default function ProductDetailDesktop() {
               ₹{product.effectivePrice.toLocaleString("en-IN")}
             </span>
             {product.isOnSale && (
-              <span className="text-gray-500 line-through text-sm">
-                ₹{product.price.toLocaleString("en-IN")}
-              </span>
+              <>
+                <span className="text-gray-500 line-through text-sm">
+                  ₹{product.price.toLocaleString("en-IN")}
+                </span>
+                <span className="text-xs text-green-400">
+                  {Math.round(
+                    (1 - product.discountPrice / product.price) * 100,
+                  )}
+                  % OFF
+                </span>
+              </>
             )}
           </div>
 
@@ -173,8 +186,19 @@ export default function ProductDetailDesktop() {
           >
             ADD TO BAG
           </button>
-          <button className="w-full mt-3 py-4 rounded border border-[#D4A34E] text-[#D4A34E] text-sm tracking-[0.2em] flex items-center justify-center gap-2">
-            <Heart size={16} /> WISHLIST ITEM
+
+          {/* Now functional, matching Mobile's wishlist toggle */}
+          <button
+            onClick={() => toggleLike(product._id)}
+            className="w-full mt-3 py-4 rounded border border-[#D4A34E] text-[#D4A34E] text-sm tracking-[0.2em] flex items-center justify-center gap-2"
+          >
+            <Heart
+              size={16}
+              className={likedIds.includes(product._id) ? "fill-[#D4A34E]" : ""}
+            />
+            {likedIds.includes(product._id)
+              ? "IN YOUR WISHLIST"
+              : "WISHLIST ITEM"}
           </button>
 
           <div className="mt-8">
@@ -195,28 +219,19 @@ export default function ProductDetailDesktop() {
       <div className="mt-20 bg-[#14151a] rounded-lg py-14 px-10 text-center">
         <ShieldCheck className="mx-auto text-[#D4A34E]" size={28} />
         <h2 className="text-2xl text-[#D4A34E] font-light mt-4">
-          The Legacy of 1,000 Threads
+          Where Tradition Meets Timeless Elegance
         </h2>
         <p className="text-gray-400 text-sm max-w-xl mx-auto mt-3 leading-relaxed">
-          Every Naari saree is a labor of love, taking up to 300 hours for a
-          master weaver to complete. Our silk is sourced from the finest
-          mulberry farms, and our gold zari ensures your heirloom piece remains
-          as brilliant as the day it was woven.
+          At Naari, we believe Indian fashion is more than what you wear — it is
+          how you feel when you wear it. From intimate celebrations to grand
+          festivities, every Naari piece is chosen to make your special moments
+          even more beautiful.
         </p>
-        <div className="flex justify-center gap-16 mt-8">
-          <div>
-            <p className="text-xl text-white">400+</p>
-            <p className="text-xs text-gray-500 tracking-widest">ARTISANS</p>
-          </div>
-          <div>
-            <p className="text-xl text-white">100%</p>
-            <p className="text-xs text-gray-500 tracking-widest">PURE SILK</p>
-          </div>
-          <div>
-            <p className="text-xl text-white">24K</p>
-            <p className="text-xs text-gray-500 tracking-widest">GOLD ZARI</p>
-          </div>
-        </div>
+
+         <h2 className="text-2xl text-[#D4A34E] font-light mt-4">
+          Curated with love. Worn with confidence. Made for every Naari
+        </h2>
+    
       </div>
 
       {/* Related products */}
@@ -235,7 +250,7 @@ export default function ProductDetailDesktop() {
           </div>
           <div className="grid grid-cols-4 gap-6">
             {related.map((p) => (
-              <a key={p._id} href={`/product/${p.slug}`} className="block">
+              <Link key={p._id} to={`/product/${p.slug}`} className="block">
                 <div className="aspect-[3/4] rounded-lg overflow-hidden bg-[#14151a]">
                   <img
                     src={
@@ -248,9 +263,9 @@ export default function ProductDetailDesktop() {
                 </div>
                 <p className="text-white text-sm mt-2">{p.name}</p>
                 <p className="text-[#D4A34E] text-sm">
-                  ₹{(p.discountPrice || p.price).toLocaleString("en-IN")}
+                  ₹{p.effectivePrice.toLocaleString("en-IN")}
                 </p>
-              </a>
+              </Link>
             ))}
           </div>
         </div>

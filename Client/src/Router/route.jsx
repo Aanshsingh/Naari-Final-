@@ -6,7 +6,7 @@ import ProductDetail from "../Component/pages/ProductDetail/ProductsScreen.jsx";
 import Cart from "../Component/pages/cartPage.jsx";
 import ProtectedRoute from "../Component/common/ProtectedRoute.jsx";
 import Checkout from "../Component/pages/Checkout.jsx";
-import Search from "../Component/common/SearchBar.jsx";
+import Search from "../Component/common/SearchBar/SearchBar.jsx";
 import OrderConfirmation from "../Component/pages/orderCinformation.jsx";
 import Account from "../Component/pages/Acount.jsx";
 import Shop from "../Component/pages/Shop.jsx";

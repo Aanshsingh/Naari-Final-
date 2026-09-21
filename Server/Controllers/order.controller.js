@@ -122,23 +122,20 @@ const getAllOrdersAdmin = asyncHandler(async (req, res) => {
 });
 
 const updateOrderStatus = asyncHandler(async (req, res) => {
-  const { orderStatus } = req.body;
+  const { status, note } = req.body; // ← read "status", and also capture "note" which was being silently ignored
 
-  const ValidStatuses = [
-    "placed",
-    "processing",
-    "shipped",
-    "delivered",
-    "cancelled",
-  ];
+  const validStatuses = ["placed", "processing", "shipped", "delivered", "cancelled"];
 
-  if (!ValidStatuses.includes(orderStatus)) {
+  if (!validStatuses.includes(status)) {
     throw new ApiError(400, "Invalid order status");
   }
 
   const order = await Order.findByIdAndUpdate(
     req.params.id,
-    { orderStatus },
+    {
+      orderStatus: status,
+      $push: { statusHistory: { status, note } }, // ← Bug 2 fix, see below
+    },
     { new: true }
   );
 
@@ -146,13 +143,7 @@ const updateOrderStatus = asyncHandler(async (req, res) => {
     throw new ApiError(404, "Order not found");
   }
 
-  return res.status(200).json(
-    new ApiResponse(
-      200,
-      order,
-      "Order status updated"
-    )
-  );
+  return res.status(200).json(new ApiResponse(200, order, "Order status updated"));
 });
 
 // controllers/order.controller.js — add this
