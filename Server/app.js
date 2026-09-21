@@ -29,7 +29,7 @@ const allowedOrigins = [
 
   // Vercel
   "https://naari-final.vercel.app",
-  "https://naari-admin.vercel.app/",
+  "https://naari-admin.vercel.app", // ← trailing slash removed
 
   // Custom domain
   "https://naariethnicbyprerna.com",
@@ -50,9 +50,10 @@ app.use(
         return callback(null, true);
       }
 
-      // Allow Vercel preview deployments
+      // Allow Vercel preview deployments for BOTH client and admin
       if (
-        /^https:\/\/naari-final(?:-[a-z0-9-]+)?\.vercel\.app$/.test(origin)
+        /^https:\/\/naari-final(?:-[a-z0-9-]+)?\.vercel\.app$/.test(origin) ||
+        /^https:\/\/naari-admin(?:-[a-z0-9-]+)?\.vercel\.app$/.test(origin)
       ) {
         return callback(null, true);
       }
@@ -71,7 +72,7 @@ app.use(
 |--------------------------------------------------------------------------
 */
 
-// Stripe/payment webhook needs raw body
+// Payment webhook needs raw body
 app.use(
   "/api/v1/payments/webhook",
   express.raw({ type: "application/json" })
@@ -100,23 +101,14 @@ app.get("/", (req, res) => {
 */
 
 app.use("/api/v1/auth", authRouter);
-
 app.use("/api/v1/categories", categoryRouter);
-
 app.use("/api/v1/products", productRouter);
-
 app.use("/api/v1/orders", orderRouter);
-
 app.use("/api/v1/payments", paymentRouter);
-
 app.use("/api/v1/banners", bannerRouter);
-
 app.use("/api/v1/reviews", reviewRouter);
-
 app.use("/api/v1/contact", contactRouter);
-
 app.use("/api/v1/testimonials", testimonialRouter);
-
 app.use("/api/v1/instagram-posts", instagramPostRouter);
 
 /*
