@@ -29,6 +29,7 @@ const allowedOrigins = [
 
   // Vercel
   "https://naari-final.vercel.app",
+  "https://naari-admin.vercel.app/",
 
   // Custom domain
   "https://naariethnicbyprerna.com",
