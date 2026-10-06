@@ -1,5 +1,10 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { loginApi, logoutApi, getCurrentUserApi } from "../api/authApi";
+
+import {
+  loginApi,
+  logoutApi,
+  getCurrentUserApi,
+} from "../api/authApi";
 
 const AdminAuthContext = createContext();
 
@@ -7,41 +12,113 @@ export function AdminAuthProvider({ children }) {
   const [admin, setAdmin] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // =========================================================
+  // CHECK LOGIN
+  // =========================================================
+
   useEffect(() => {
     const checkLoggedIn = async () => {
       try {
         const res = await getCurrentUserApi();
+
         const user = res.data.data;
-        setAdmin(user.role === "admin" ? user : null); // silently ignore a valid session that isn't an admin
-      } catch {
+
+        if (user?.role === "admin") {
+          setAdmin(user);
+        } else {
+          setAdmin(null);
+          localStorage.removeItem("adminAccessToken");
+        }
+      } catch (error) {
         setAdmin(null);
       } finally {
         setLoading(false);
       }
     };
+
     checkLoggedIn();
   }, []);
 
+  // =========================================================
+  // LOGIN
+  // =========================================================
+
   const login = async (email, password) => {
-    const res = await loginApi({ email, password });
-    const user = res.data.data.user;
-    if (user.role !== "admin") {
-      await logoutApi(); // they had valid credentials but aren't an admin — clear the cookie immediately
-      throw { response: { data: { message: "This account does not have admin access" } } };
+    try {
+      const res = await loginApi({
+        email,
+        password,
+      });
+
+      const user = res.data.data.user;
+      const accessToken = res.data.data.accessToken;
+
+      // Check admin role
+      if (user?.role !== "admin") {
+        await logoutApi();
+
+        localStorage.removeItem("adminAccessToken");
+
+        throw {
+          response: {
+            data: {
+              message: "This account does not have admin access",
+            },
+          },
+        };
+      }
+
+      // =====================================================
+      // IMPORTANT:
+      // Save JWT for Admin API requests
+      // =====================================================
+
+      if (accessToken) {
+        localStorage.setItem(
+          "adminAccessToken",
+          accessToken
+        );
+      }
+
+      setAdmin(user);
+
+      return res.data;
+    } catch (error) {
+      throw error;
     }
-    setAdmin(user);
   };
 
+  // =========================================================
+  // LOGOUT
+  // =========================================================
+
   const logout = async () => {
-    await logoutApi();
-    setAdmin(null);
+    try {
+      await logoutApi();
+    } catch (error) {
+      console.error("Logout API error:", error);
+    } finally {
+      // Remove Admin JWT
+      localStorage.removeItem("adminAccessToken");
+
+      // Remove Admin from state
+      setAdmin(null);
+    }
   };
 
   return (
-    <AdminAuthContext.Provider value={{ admin, loading, login, logout }}>
+    <AdminAuthContext.Provider
+      value={{
+        admin,
+        loading,
+        login,
+        logout,
+      }}
+    >
       {children}
     </AdminAuthContext.Provider>
   );
 }
 
-export const useAdminAuth = () => useContext(AdminAuthContext);
+export const useAdminAuth = () =>
+  useContext(AdminAuthContext);
