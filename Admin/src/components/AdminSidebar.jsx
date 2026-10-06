@@ -11,7 +11,7 @@ const navItems = [
   { label: "Reviews", to: "/reviews", icon: Star },
   { label: "Testimonials", to: "/testimonials", icon: Star },
   { label: "Orders", to: "/orders", icon: ShoppingBag },
-  { label: "Marketing", to: "/marketing", icon: Mail },
+  { label: "Marketing", to: "/Marketing", icon: Mail },
   { label: "Sales", to: "/sales", icon: TrendingUp },
 ];
 
