@@ -12,6 +12,8 @@ import AdminReviews from "./pages/AdminReviews";
 import AdminSales from "./pages/AdminSales";
 import AdminCategories from "./pages/AdminCategories";
 import AdminInstagram from "./pages/AdminInstagram.jsx";
+import Marketing from "./pages/Marketing.jsx";
+import Testimonials from "./pages/Testimonials.jsx";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +38,8 @@ const router = createBrowserRouter([
           { path: "sales", element: <AdminSales /> },
           { path: "categories", element: <AdminCategories /> },
           { path: "instagram", element: <AdminInstagram /> },
+          { path: "Marketing ", element: <Marketing  /> },
+          { path: "Testimonials", element: <Testimonials /> },
         ],
       },
     ],
