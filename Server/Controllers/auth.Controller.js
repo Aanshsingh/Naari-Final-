@@ -43,8 +43,8 @@ const generateAccessAndRefreshTokens = async (userId) => {
 
 const cookieOptions = {
   httpOnly: true,
-  secure: true, // required for sameSite: "none" — must be unconditional, not tied to NODE_ENV
-  sameSite: "none", // required for cross-domain cookies between your frontend and Render backend
+  secure: true,
+  sameSite: "none",
 };
 
 const registerUser = asyncHandler(async (req, res) => {

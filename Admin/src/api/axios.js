@@ -1,19 +1,7 @@
-// import axios from "axios";
-
-// const api = axios.create({
-//   baseURL:
-//     import.meta.env.VITE_API_URL ||
-//     "https://naari-final-3.onrender.com/api/v1",
-
-//   withCredentials: true,
-// });
-
-// export default api;
-
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "/api/v1",
+  baseURL: "https://naari-final-3.onrender.com/api/v1",
   withCredentials: true,
 });
 

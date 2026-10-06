@@ -1,10 +1,6 @@
 {
   "rewrites": [
     {
-      "source": "/api/v1/:path*",
-      "destination": "https://naari-final-3.onrender.com/api/v1/:path*"
-    },
-    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
